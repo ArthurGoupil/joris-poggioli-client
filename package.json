@@ -1,5 +1,5 @@
 {
-  "name": "test-aoo",
+  "name": "joris-poggioli",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,15 +8,35 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": ">=18.12.1"
+  },
   "dependencies": {
+    "@next/font": "^13.0.5",
+    "@plaiceholder/next": "^2.5.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
+    "@vanilla-extract/css": "^1.9.2",
+    "@vanilla-extract/dynamic": "^2.0.3",
+    "axios": "^1.2.0",
+    "classcat": "^5.0.4",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
-    "next": "13.0.4",
+    "next": "^13.0.5",
+    "node-base64-image": "^2.0.4",
     "react": "18.2.0",
+    "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "18.2.0",
+    "react-query": "^3.39.2",
+    "react-transition-group": "^4.4.5",
+    "sharp": "^0.31.2",
     "typescript": "4.9.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@vanilla-extract/next-plugin": "^2.1.1",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.8.0"
   }
 }
