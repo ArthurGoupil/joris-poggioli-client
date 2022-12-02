@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { dehydrate, useQuery } from 'react-query'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
-import { DesignProductGrid } from '../../../features/DesignProduct/presentation/DesignProductGrid'
+import { DesignProductGrid } from '../../../features/DesignProduct/presentation/DesignProductGrid/DesignProductGrid'
 import { queryClient } from '../../_app'
 
 const DesignCategoryArticlePage: NextPage<
@@ -18,12 +18,9 @@ const DesignCategoryArticlePage: NextPage<
       ),
     }),
   })
+
   if (data?.designItem) {
-    return (
-      <DesignProductGrid
-        imagesProductPage={data.designItem.imagesProductPage}
-      />
-    )
+    return <DesignProductGrid designItem={data.designItem} />
   }
 
   return <div>loading</div>

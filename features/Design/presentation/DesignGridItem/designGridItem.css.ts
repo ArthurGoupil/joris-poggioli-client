@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css'
 import { themeVars } from '../../../../styles/theme.css'
 
 const itemContainer = style({
-  padding: '3vw',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -32,6 +31,7 @@ const image = style({
   maxHeight: '100%',
   objectFit: 'contain',
   transition: 'opacity 0.3s',
+  padding: '3vw',
 
   selectors: {
     [`${itemContainer}:hover &`]: {

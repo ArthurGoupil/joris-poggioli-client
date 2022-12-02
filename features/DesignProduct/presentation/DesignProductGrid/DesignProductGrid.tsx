@@ -1,13 +1,19 @@
 import Image from 'next/image'
-import { Grid, GridProps } from '../../../components/layout/Grid/Grid'
-import { DesignItem, PortraitColumn } from '../../Design/domain/entities/design'
 import { styles } from './designProductGrid.css'
+import cc from 'classcat'
+import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'
+import {
+  DesignItem,
+  PortraitColumn,
+} from '../../../Design/domain/entities/design'
+import { DesignProductPresentation } from '../DesignProductPresentation/DesignProductPresentation'
 
 type GridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn
   lineNumber: number
   columnNumber: number
   gridColumn: string
+  hideBorderBottom: boolean
 }
 
 const gridItemFromPortraitColumn = ({
@@ -15,38 +21,37 @@ const gridItemFromPortraitColumn = ({
   lineNumber,
   columnNumber,
   gridColumn,
+  hideBorderBottom,
 }: GridItemFromPortraitColumnProps): GridProps['gridItems'][number] => {
   if (portraitColumn.type === 'blank') {
     return {
       key: `blank-${lineNumber}-${columnNumber}`,
       gridColumn,
-      component: <div />,
+      component: (
+        <div
+          className={cc([
+            styles.blankContainer,
+            { [styles.hideBorderBottom]: hideBorderBottom },
+          ])}
+        />
+      ),
     }
   } else {
-    console.log(
-      'portraitColumn.image.base64Thumbnail',
-      portraitColumn.image.base64Thumbnail
-    )
-
     return {
       key: portraitColumn.image.title,
       gridColumn,
       component: (
         <div
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-          }}
+          className={cc([
+            styles.imageContainer,
+            { [styles.hideBorderBottom]: hideBorderBottom },
+          ])}
         >
           <Image
             src={portraitColumn.image.url}
             alt={portraitColumn.image.alt ?? portraitColumn.image.title}
             className={styles.image}
             priority
-            placeholder="blur"
-            blurDataURL={portraitColumn.image.base64Thumbnail}
-            quality={30}
             fill
           />
         </div>
@@ -58,27 +63,33 @@ const gridItemFromPortraitColumn = ({
 type GetGridItemsFromImageLineProps = {
   line: DesignItem['imagesProductPage'][number]
   lineNumber: number
+  hideBorderBottom: boolean
 }
 
 const getGridItemsFromImageLine = ({
   line,
   lineNumber,
+  hideBorderBottom,
 }: GetGridItemsFromImageLineProps): GridProps['gridItems'] => {
   if (line.imageType === 'landscape') {
     return [
       {
         key: line.landscapeImage.title,
         component: (
-          <Image
-            src={line.landscapeImage.url}
-            alt={line.landscapeImage.alt ?? line.landscapeImage.title}
-            className={styles.image}
-            width={line.landscapeImage.width}
-            height={line.landscapeImage.height}
-            priority
-            placeholder="blur"
-            blurDataURL={line.landscapeImage.base64Thumbnail}
-          />
+          <div
+            className={cc([
+              styles.imageContainer,
+              { [styles.hideBorderBottom]: hideBorderBottom },
+            ])}
+          >
+            <Image
+              src={line.landscapeImage.url}
+              alt={line.landscapeImage.alt ?? line.landscapeImage.title}
+              className={styles.image}
+              priority
+              fill
+            />
+          </div>
         ),
         gridColumn: '1 / 3',
       },
@@ -90,32 +101,37 @@ const getGridItemsFromImageLine = ({
         lineNumber,
         columnNumber: 1,
         gridColumn: '1',
+        hideBorderBottom,
       }),
       gridItemFromPortraitColumn({
         portraitColumn: line.secondColumn,
         lineNumber,
         columnNumber: 2,
         gridColumn: '2 / 3',
+        hideBorderBottom,
       }),
     ]
   }
 }
 
 const getGridItemsFromImageLines = (
-  imageLines: DesignItem['imagesProductPage'] | undefined
+  designItem: DesignItem
 ): GridProps['gridItems'] => {
   const gridItems: GridProps['gridItems'] = []
 
-  imageLines?.forEach((imageLine, index) => {
+  designItem.imagesProductPage.forEach((imageLine, index) => {
+    const hideBorderBottom = index === designItem.imagesProductPage.length - 1
+
     if (index === 0) {
       gridItems.push(
         ...getGridItemsFromImageLine({
           line: imageLine,
           lineNumber: index + 1,
+          hideBorderBottom,
         }),
         {
           key: 'product-presention',
-          component: <div>presentation</div>,
+          component: <DesignProductPresentation {...designItem} />,
           gridColumn: '3 / 4',
         }
       )
@@ -124,10 +140,11 @@ const getGridItemsFromImageLines = (
         ...getGridItemsFromImageLine({
           line: imageLine,
           lineNumber: index + 1,
+          hideBorderBottom,
         }),
         {
           key: 'technical-sheet',
-          component: <div>technical-sheet</div>,
+          component: null,
           gridColumn: '3 / 4',
         }
       )
@@ -136,6 +153,7 @@ const getGridItemsFromImageLines = (
         ...getGridItemsFromImageLine({
           line: imageLine,
           lineNumber: index + 1,
+          hideBorderBottom,
         }),
         {
           key: `blank-${index + 1}`,
@@ -149,15 +167,15 @@ const getGridItemsFromImageLines = (
 }
 
 type DesignProductGridProps = {
-  imagesProductPage: DesignItem['imagesProductPage']
+  designItem: DesignItem
 }
 
 export const DesignProductGrid = ({
-  imagesProductPage,
+  designItem,
 }: DesignProductGridProps): JSX.Element => (
   <Grid
-    gridAutoRows="40vw"
+    gridAutoRows="37vw"
     gridTemplateColumns="repeat(3, 1fr)"
-    gridItems={getGridItemsFromImageLines(imagesProductPage)}
+    gridItems={getGridItemsFromImageLines(designItem)}
   />
 )

@@ -30,6 +30,12 @@ globalStyle('main', {
   flexGrow: 1,
 })
 
+globalStyle('h2', {
+  fontWeight: 700,
+  fontSize: '4vw',
+  lineHeight: '5vw',
+})
+
 globalStyle('a', {
   color: themeVars.colors.fontPrimary,
 })

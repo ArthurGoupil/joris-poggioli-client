@@ -6,26 +6,20 @@ import { slugify } from '../../../../components/layout/shared/slugify'
 
 type DesignGridItemProps = {
   src: string
-  blurDataURL: string
   alt: string
   name: string
   slug: string
   designType: string
-  width: number
-  height: number
   hasBorderRight: boolean
   hasBorderBottom: boolean
 }
 
 export const DesignGridItem = ({
   src,
-  blurDataURL,
   alt,
   name,
   slug,
   designType,
-  width,
-  height,
   hasBorderRight,
   hasBorderBottom,
 }: DesignGridItemProps): JSX.Element => (
@@ -39,16 +33,7 @@ export const DesignGridItem = ({
       },
     ])}
   >
-    <Image
-      src={src}
-      alt={alt}
-      className={styles.image}
-      width={width}
-      height={height}
-      priority
-      placeholder="blur"
-      blurDataURL={blurDataURL}
-    />
+    <Image src={src} alt={alt} className={styles.image} priority fill />
     <div className={styles.imageTitle}>{name.toUpperCase()}</div>
   </Link>
 )

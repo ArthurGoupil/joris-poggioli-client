@@ -4,7 +4,7 @@ export const [themeClass, themeVars] = createTheme({
   colors: {
     lightBackground: '#fafafa',
     background: '#edecec',
-    greyAccent: '#c6c6c6',
+    greyAccent: '#cdcdcd',
     fontPrimary: '#000000',
     fontSecondary: '#9f9f9f',
   },

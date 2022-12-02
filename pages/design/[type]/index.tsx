@@ -38,8 +38,9 @@ const DesignCategoryPage: NextPage<
       </Head>
       {designItems && designItems.length > 0 && (
         <Grid
+          key={categoryParam}
           gridTemplateColumns="repeat(3, 1fr)"
-          gridAutoRows="40vw"
+          gridAutoRows="38vw"
           gridItems={designItems.map((item, index) => {
             const isFirstColumn = index === 0 || index % 3 === 0
             const isSecondColumn = (index - 1) % 3 === 0
@@ -54,21 +55,16 @@ const DesignCategoryPage: NextPage<
               return '3 / 4'
             }
 
-            console.log('zefhzehfzefzehfhzef', item.imageGrid.base64Thumbnail)
-
             return {
               key: item.id,
               gridColumn: getGridColumn(),
               component: (
                 <DesignGridItem
                   src={item.imageGrid.url}
-                  blurDataURL={item.imageGrid.base64Thumbnail}
                   alt={item.imageGrid.alt ?? item.imageGrid.title}
                   name={item.name}
                   slug={item.slug}
                   designType={item.designType}
-                  width={item.imageGrid.width}
-                  height={item.imageGrid.height}
                   hasBorderRight={isFirstColumn || isSecondColumn}
                   hasBorderBottom={index < firstlastRowItemIndex}
                 />
