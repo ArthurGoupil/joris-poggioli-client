@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { notFound, notFoundContainer } from './styles/globals.css'
+import { notFound, notFoundContainer } from '../styles/globals.css'
 
 const Home = (): JSX.Element => {
   return (

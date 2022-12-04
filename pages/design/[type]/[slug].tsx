@@ -42,7 +42,11 @@ export const getServerSideProps: GetServerSideProps<{
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      previousPage: context.req.headers.referer ?? null,
+      previousPage:
+        `http://localhost:3000${context.resolvedUrl}` ===
+        context.req.headers.referer
+          ? null
+          : context.req.headers.referer ?? null,
     },
   }
 }

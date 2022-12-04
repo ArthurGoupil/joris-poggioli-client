@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
-import './styles/reset.css'
-import './styles/globals.css'
+import '../styles/reset.css'
+import '../styles/globals.css'
 import { Footer } from '../components/layout/Footer/Footer'
 import { Header } from '../components/layout/Header/Header'
 import React, { useRef } from 'react'
@@ -15,7 +15,7 @@ import {
   scrollbarContainer,
   scrollbarThumb,
   scrollbarView,
-} from './styles/globals.css'
+} from '../styles/globals.css'
 import localFont from '@next/font/local'
 import { useRouter } from 'next/router'
 import {
