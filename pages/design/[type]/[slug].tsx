@@ -1,13 +1,14 @@
 import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { dehydrate, useQuery } from 'react-query'
+import { LogoLoader } from '../../../components/feedback/LogoLoader/LogoLoader'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
-import { DesignProductGrid } from '../../../features/DesignProduct/presentation/DesignProductGrid/DesignProductGrid'
+import { DesignProductGrid } from '../../../features/Design/presentation/DesignProductGrid/DesignProductGrid'
 import { queryClient } from '../../_app'
 
 const DesignCategoryArticlePage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = (): JSX.Element => {
+> = ({ previousPage }): JSX.Element => {
   const router = useRouter()
   const slug = router.query.slug as string
 
@@ -20,18 +21,30 @@ const DesignCategoryArticlePage: NextPage<
   })
 
   if (data?.designItem) {
-    return <DesignProductGrid designItem={data.designItem} />
+    return (
+      <DesignProductGrid
+        designItem={data.designItem}
+        previousPage={previousPage}
+      />
+    )
   }
 
-  return <div>loading</div>
+  return <LogoLoader />
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps<{
+  previousPage: string | null
+}> = async (context) => {
   if (queryClient.getQueryCache().find('design-items') === undefined) {
     await queryClient.prefetchQuery('design-items', fetchDesignItems)
   }
 
-  return { props: { dehydratedState: dehydrate(queryClient) } }
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      previousPage: context.req.headers.referer ?? null,
+    },
+  }
 }
 
 export default DesignCategoryArticlePage

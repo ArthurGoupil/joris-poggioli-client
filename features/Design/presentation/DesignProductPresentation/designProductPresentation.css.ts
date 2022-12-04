@@ -15,11 +15,13 @@ const titleContainer = style({
 })
 
 const back = style({
-  textDecoration: 'none',
   fontSize: '2vw',
-  lineHeight: '4vw',
+  height: '4vw',
   fontWeight: 500,
   marginRight: themeVars.spacing.l,
+  border: 'none',
+  cursor: 'pointer',
+  backgroundColor: 'transparent',
 
   selectors: {
     '&:hover': {
@@ -34,10 +36,6 @@ const title = style({
 
 const paragraph = style({
   marginBottom: '1.5vw',
-})
-
-const freeText = style({
-  whiteSpace: 'pre-wrap',
 })
 
 const buttonContainer = style({
@@ -93,7 +91,6 @@ export const styles = {
   back,
   title,
   paragraph,
-  freeText,
   buttonContainer,
   technicalSheet,
   priceInformation,

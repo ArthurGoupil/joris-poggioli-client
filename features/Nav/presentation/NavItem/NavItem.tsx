@@ -2,20 +2,8 @@ import { styles } from './navItem.css'
 import cc from 'classcat'
 import React from 'react'
 import Link from 'next/link'
-import { slugify } from '../../shared/slugify'
-
-export type NavItemStatus = 'default' | 'active' | 'inactive'
-
-export type NavItemProps = {
-  name: 'design' | 'architecture' | 'about'
-  subItems: string[]
-  showSubItems: boolean
-  status: NavItemStatus
-  onMouseEnter: () => void
-  onMouseLeave: () => void
-  checkSubItemIsSelected: (name: string) => boolean
-  hasBorderRight?: boolean
-}
+import { slugify } from '../../../../components/layout/shared/logic/slugify'
+import { NavItemProps } from '../../domain/entities/nav'
 
 export const NavItem = ({
   name,

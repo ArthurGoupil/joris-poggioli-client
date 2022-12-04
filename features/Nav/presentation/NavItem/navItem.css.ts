@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { themeVars } from '../../../../styles/theme.css'
-import { styles as gridStyles } from '../../Grid/grid.css'
+import { styles as gridStyles } from '../../../../components/layout/Grid/grid.css'
 
 const navItemContainer = style({
   position: 'relative',

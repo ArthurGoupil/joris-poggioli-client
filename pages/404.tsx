@@ -11,7 +11,9 @@ const Home = (): JSX.Element => {
       </Head>
       <div className={notFoundContainer}>
         <div className={notFound}>PAGE NOT FOUND</div>
-        <Link href="/">GO BACK HOME</Link>
+        <Link href="/" style={{ textDecoration: 'underline' }}>
+          GO BACK HOME
+        </Link>
       </div>
     </>
   )

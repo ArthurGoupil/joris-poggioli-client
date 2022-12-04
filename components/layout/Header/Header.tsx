@@ -1,12 +1,20 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+import {
+  BaseNavItemsProps,
+  NavItemProps,
+  NavItemStatus,
+} from '../../../features/Nav/domain/entities/nav'
 import { Grid } from '../Grid/Grid'
-import { navItems } from './constants/navItems'
 import { styles } from './header.css'
-import { NavItem, NavItemProps, NavItemStatus } from './NavItem/NavItem'
+import { NavItem } from '../../../features/Nav/presentation/NavItem/NavItem'
 
-export const Header = (): JSX.Element => {
+type HeaderProps = {
+  navItems: BaseNavItemsProps[]
+}
+
+export const Header = ({ navItems }: HeaderProps): JSX.Element => {
   const [openMenu, setOpenMenu] = React.useState<NavItemProps['name']>()
   const router = useRouter()
   const navListRef = React.useRef<HTMLUListElement>(null)

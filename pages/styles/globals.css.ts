@@ -16,7 +16,11 @@ globalStyle('body', {
   overflowY: 'hidden',
 })
 
-globalStyle('body, button', {
+globalStyle('button', {
+  margin: 0,
+})
+
+globalStyle('body, button, pre', {
   fontFamily: themeVars.fontFamily,
   fontSize: themeVars.font.base.size,
   lineHeight: themeVars.font.base.lineHeight,
@@ -38,6 +42,7 @@ globalStyle('h2', {
 
 globalStyle('a', {
   color: themeVars.colors.fontPrimary,
+  textDecoration: 'none',
 })
 
 export const scrollbarContainer = style({

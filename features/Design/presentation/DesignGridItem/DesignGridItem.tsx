@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { styles } from './designGridItem.css'
 import cc from 'classcat'
-import { slugify } from '../../../../components/layout/shared/slugify'
+import { slugify } from '../../../../components/layout/shared/logic/slugify'
 
 type DesignGridItemProps = {
   src: string

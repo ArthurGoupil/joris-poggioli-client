@@ -6,6 +6,7 @@ import { fetchDesignItems } from '../../../features/Design/domain/repository/fet
 import { queryClient } from '../../_app'
 import { dehydrate, useQuery } from 'react-query'
 import { useRouter } from 'next/router'
+import React from 'react'
 
 const DesignCategoryPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -13,15 +14,21 @@ const DesignCategoryPage: NextPage<
   const router = useRouter()
   const categoryParam = router.query.type as string
 
-  const { data } = useQuery('design-items', fetchDesignItems, {
-    select: (data) => ({
-      designItems: data.designItems.filter(
-        (item) => item.designType.toLowerCase() === categoryParam.toLowerCase()
-      ),
-    }),
-  })
+  const { data } = useQuery('design-items', fetchDesignItems)
 
-  const designItems = data?.designItems.flatMap((i) => [i, i, i, i, i, i, i, i])
+  const designItems = React.useMemo(
+    () =>
+      data?.designItems
+        .flatMap((i) => [i, i, i, i, i, i, i, i])
+        .filter(
+          (item) =>
+            categoryParam &&
+            item.designType.toLowerCase() === categoryParam.toLowerCase()
+        ),
+    // update items not too early so that it doesn't blink on page animation
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data?.designItems]
+  )
 
   const firstlastRowItemIndex = designItems
     ? designItems.length % 3 === 0

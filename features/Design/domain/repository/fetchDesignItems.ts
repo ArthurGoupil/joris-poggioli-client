@@ -5,19 +5,19 @@ import {
   DesignItem,
 } from '../entities/design'
 
-type FetchItems = {
+type FetchDesignItems = {
   designItems: DesignItem[]
   error?: AxiosError
 }
 
-export const fetchDesignItems = async (): Promise<FetchItems> => {
+export const fetchDesignItems = async (): Promise<FetchDesignItems> => {
   try {
     const response = await axios.get<ApiDesignItem[]>(
       'https://jorispoggioli.com/admin/wp-json/wp/v2/design?_fields=id,acf'
     )
 
     return {
-      designItems: await decodeDesignItems(response.data),
+      designItems: decodeDesignItems(response.data),
     }
   } catch (error) {
     return {

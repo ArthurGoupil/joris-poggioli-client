@@ -1,18 +1,14 @@
-import { slugify } from '../../../../components/layout/shared/slugify'
+import { slugify } from '../../../../components/layout/shared/logic/slugify'
+import {
+  ApiImage,
+  decodeApiImage,
+  Image,
+} from '../../../shared/domain/entities/image'
 
 type Dimensions = {
   width?: string
   height?: string
   diameter?: string
-}
-
-type ApiImage = {
-  url: string
-  title: string
-  width: number
-  height: number
-  sizes: { thumbnail: string }
-  alt?: string
 }
 
 type ApiImageProductLine = {
@@ -48,25 +44,14 @@ type ApiDesignItemAcf = {
   image_product_line_4?: ApiImageProductLine
   image_product_line_5?: ApiImageProductLine
   image_product_line_6?: ApiImageProductLine
-  image_product_line_7?: ApiImageProductLine
-  image_product_line_8?: ApiImageProductLine
-  image_product_line_9?: ApiImageProductLine
-  image_product_line_10?: ApiImageProductLine
   free_text?: string
+  home_display?: boolean
+  home_position?: string
 }
 
 export type ApiDesignItem = {
   id: string
   acf: ApiDesignItemAcf
-}
-
-type Image = {
-  url: string
-  base64Thumbnail: string
-  title: string
-  width: number
-  height: number
-  alt: string | null
 }
 
 type LandscapeLine = {
@@ -104,24 +89,17 @@ export type DesignItem = {
   imageGrid: Image
   imagesProductPage: ImagesProductPage
   freeText: string | null
+  displayOnHome: boolean
+  homePosition: number | null
 }
 
-const decodeApiImage = async (apiImage: ApiImage): Promise<Image> => ({
-  url: apiImage.url,
-  alt: apiImage.alt || null,
-  title: apiImage.title,
-  base64Thumbnail: apiImage.sizes.thumbnail,
-  width: apiImage.width,
-  height: apiImage.height,
-})
-
-const decodeImageProductLine = async (
+const decodeImageProductLine = (
   line: ApiImageProductLine
-): Promise<ImagesProductPage[number] | undefined> => {
+): ImagesProductPage[number] | undefined => {
   if (line.images_type === 'landscape') {
     return {
       imageType: 'landscape',
-      landscapeImage: await decodeApiImage(line.landscape_image),
+      landscapeImage: decodeApiImage(line.landscape_image),
     }
   } else if (line.images_type === 'portrait') {
     return {
@@ -131,7 +109,7 @@ const decodeImageProductLine = async (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: await decodeApiImage(
+              image: decodeApiImage(
                 line.portrait_images.first_column_image as ApiImage
               ),
             },
@@ -140,7 +118,7 @@ const decodeImageProductLine = async (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: await decodeApiImage(
+              image: decodeApiImage(
                 line.portrait_images.second_column_image as ApiImage
               ),
             },
@@ -148,18 +126,18 @@ const decodeImageProductLine = async (
   }
 }
 
-export const decodeDesignItems = async (
+export const decodeDesignItems = (
   apiDesignItems: ApiDesignItem[]
-): Promise<DesignItem[]> => {
+): DesignItem[] => {
   const designItems: DesignItem[] = []
 
   for (const apiItem of apiDesignItems) {
     const imagesProductPage: ImagesProductPage = []
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 6; i++) {
       const acfIndex = `image_product_line_${i}` as keyof ApiDesignItemAcf
       if (apiItem.acf[acfIndex]) {
-        const imageProductLine = await decodeImageProductLine(
+        const imageProductLine = decodeImageProductLine(
           apiItem.acf[acfIndex] as ApiImageProductLine
         )
         if (imageProductLine) {
@@ -180,9 +158,11 @@ export const decodeDesignItems = async (
       material: apiItem.acf.material ?? null,
       dimensions: apiItem.acf.dimensions ?? null,
       technicalSheet: apiItem.acf.technical_sheet || null,
-      imageGrid: await decodeApiImage(apiItem.acf.image_grid),
+      imageGrid: decodeApiImage(apiItem.acf.image_grid),
       imagesProductPage,
       freeText: apiItem.acf.free_text ?? null,
+      displayOnHome: apiItem.acf.home_display ?? false,
+      homePosition: Number(apiItem.acf.home_position) ?? null,
     })
   }
 

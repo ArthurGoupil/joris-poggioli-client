@@ -2,10 +2,7 @@ import Image from 'next/image'
 import { styles } from './designProductGrid.css'
 import cc from 'classcat'
 import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'
-import {
-  DesignItem,
-  PortraitColumn,
-} from '../../../Design/domain/entities/design'
+import { DesignItem, PortraitColumn } from '../../domain/entities/design'
 import { DesignProductPresentation } from '../DesignProductPresentation/DesignProductPresentation'
 
 type GridItemFromPortraitColumnProps = {
@@ -115,7 +112,8 @@ const getGridItemsFromImageLine = ({
 }
 
 const getGridItemsFromImageLines = (
-  designItem: DesignItem
+  designItem: DesignItem,
+  previousPage: string | null
 ): GridProps['gridItems'] => {
   const gridItems: GridProps['gridItems'] = []
 
@@ -131,7 +129,12 @@ const getGridItemsFromImageLines = (
         }),
         {
           key: 'product-presention',
-          component: <DesignProductPresentation {...designItem} />,
+          component: (
+            <DesignProductPresentation
+              designItem={designItem}
+              previousPage={previousPage}
+            />
+          ),
           gridColumn: '3 / 4',
         }
       )
@@ -168,14 +171,16 @@ const getGridItemsFromImageLines = (
 
 type DesignProductGridProps = {
   designItem: DesignItem
+  previousPage: string | null
 }
 
 export const DesignProductGrid = ({
   designItem,
+  previousPage,
 }: DesignProductGridProps): JSX.Element => (
   <Grid
     gridAutoRows="37vw"
     gridTemplateColumns="repeat(3, 1fr)"
-    gridItems={getGridItemsFromImageLines(designItem)}
+    gridItems={getGridItemsFromImageLines(designItem, previousPage)}
   />
 )

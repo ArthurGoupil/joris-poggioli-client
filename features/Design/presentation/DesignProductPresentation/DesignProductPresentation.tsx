@@ -3,6 +3,7 @@ import { styles } from './designProductPresentation.css'
 import parse from 'html-react-parser'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import React from 'react'
 
 const formatStringNumber = (number: string): string =>
   Number(number)
@@ -11,29 +12,46 @@ const formatStringNumber = (number: string): string =>
 const formatStringNumberToInches = (number: string): string =>
   (Number(number) / 2.54).toFixed(2).replace(/\.?0+$/, '')
 
+type DesignProductPresentationProps = {
+  designItem: DesignItem
+  previousPage: string | null
+}
+
 export const DesignProductPresentation = ({
-  name,
-  year,
-  designBy,
-  madeIn,
-  hasNumberedSignedPieces,
-  material,
-  dimensions,
-  freeText,
-  technicalSheet,
-}: DesignItem): JSX.Element => {
+  designItem,
+  previousPage,
+}: DesignProductPresentationProps): JSX.Element => {
   const router = useRouter()
+
+  const {
+    name,
+    year,
+    designBy,
+    madeIn,
+    hasNumberedSignedPieces,
+    material,
+    dimensions,
+    freeText,
+    technicalSheet,
+  } = designItem
 
   const showFirstParagraph =
     year ?? designBy ?? madeIn ?? hasNumberedSignedPieces
+
+  const backSlug = previousPage ?? `/design/${router.query.type}`
 
   return (
     <div className={styles.presentationContainer}>
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>{name}</h2>
-        <Link href={`/design/${router.query.type}`} className={styles.back}>
+        <button
+          onClick={(): void => {
+            router.push(backSlug)
+          }}
+          className={styles.back}
+        >
           BACK
-        </Link>
+        </button>
       </div>
       {showFirstParagraph && (
         <div className={styles.paragraph}>
@@ -73,7 +91,7 @@ export const DesignProductPresentation = ({
           </div>
         </div>
       )}
-      {freeText && <div className={styles.freeText}>{parse(freeText)}</div>}
+      {freeText && <div>{parse(freeText)}</div>}
 
       <div className={styles.buttonContainer}>
         {technicalSheet && (
