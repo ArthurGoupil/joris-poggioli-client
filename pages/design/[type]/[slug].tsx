@@ -39,14 +39,17 @@ export const getServerSideProps: GetServerSideProps<{
     await queryClient.prefetchQuery('design-items', fetchDesignItems)
   }
 
+  const hasNotPreviousPage =
+    `${process.env.FRONT_URL}${context.resolvedUrl}` ===
+      context.req.headers.referer ||
+    !context.req.headers.referer?.includes(process.env.FRONT_URL ?? '')
+
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      previousPage:
-        `http://localhost:3000${context.resolvedUrl}` ===
-        context.req.headers.referer
-          ? null
-          : context.req.headers.referer ?? null,
+      previousPage: hasNotPreviousPage
+        ? null
+        : context.req.headers.referer ?? null,
     },
   }
 }
