@@ -27,6 +27,7 @@ import {
 } from 'framer-motion'
 import { fetchNavItems } from '../features/Nav/domain/repository/fetchNavItems'
 import { CounterLoader } from '../components/feedback/CounterLoader/CounterLoader'
+import { useFixPageTransitionIssue } from '../styles/hooks/useFixPageTransitionIssue'
 
 export const queryClient = new QueryClient()
 const myFont = localFont({
@@ -46,7 +47,7 @@ const myFont = localFont({
   ],
 })
 
-const slideUp: AnimationProps = {
+const fade: AnimationProps = {
   variants: {
     initial: {
       opacity: 0,
@@ -68,7 +69,6 @@ const AppWithQueryClient = ({
   pageProps,
 }: AppProps): JSX.Element => {
   const router = useRouter()
-  const ref = useRef<Scrollbars>(null)
 
   const [isFakeLoading, setIsFakeLoading] = React.useState(true)
 
@@ -80,6 +80,10 @@ const AppWithQueryClient = ({
     }, 2000)
   }, [])
 
+  // Next removes css modules too early on page transitions.
+  // see: https://github.com/vercel/next.js/issues/17464
+  const { removeFixStyles } = useFixPageTransitionIssue()
+
   if (!data?.navItems || isFakeLoading) {
     return (
       <LazyMotion features={domAnimation}>
@@ -89,8 +93,8 @@ const AppWithQueryClient = ({
             initial="initial"
             animate="animate"
             exit="exit"
-            variants={slideUp.variants}
-            transition={slideUp.transition}
+            variants={fade.variants}
+            transition={fade.transition}
           >
             <CounterLoader />
           </m.div>
@@ -103,26 +107,20 @@ const AppWithQueryClient = ({
     <Hydrate state={pageProps.dehydratedState}>
       <Header navItems={data.navItems} />
       <LazyMotion features={domAnimation}>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" onExitComplete={removeFixStyles}>
           <m.div
             key={router.asPath}
             initial="initial"
             animate="animate"
             exit="exit"
-            variants={slideUp.variants}
-            transition={slideUp.transition}
-            onAnimationEnd={(): void => {
-              if (ref.current) {
-                ref.current?.scrollToTop()
-              }
-            }}
+            variants={fade.variants}
+            transition={fade.transition}
           >
             {!data?.navItems || isFakeLoading ? (
               <CounterLoader />
             ) : (
               <div className={scrollbarContainer}>
                 <Scrollbars
-                  ref={ref}
                   universal
                   renderThumbVertical={(): JSX.Element => (
                     <div className={scrollbarThumb} />
