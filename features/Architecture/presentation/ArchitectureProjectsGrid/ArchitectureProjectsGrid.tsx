@@ -39,6 +39,7 @@ export const ArchitectureProjectsGrid = ({
               priority
               fill
               sizes="33vw"
+              quality={20}
             />
           </Link>
         ),

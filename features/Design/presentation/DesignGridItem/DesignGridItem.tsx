@@ -33,7 +33,15 @@ export const DesignGridItem = ({
       },
     ])}
   >
-    <Image src={src} alt={alt} className={styles.image} priority fill />
+    <Image
+      src={src}
+      alt={alt}
+      className={styles.image}
+      priority
+      fill
+      sizes="33vw"
+      quality={20}
+    />
     <div className={styles.imageTitle}>{name.toUpperCase()}</div>
   </Link>
 )

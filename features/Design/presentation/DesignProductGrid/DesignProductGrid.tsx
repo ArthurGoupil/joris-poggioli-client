@@ -50,6 +50,8 @@ const gridItemFromPortraitColumn = ({
             className={styles.image}
             priority
             fill
+            sizes="33vw"
+            quality={20}
           />
         </div>
       ),
@@ -85,6 +87,8 @@ const getGridItemsFromImageLine = ({
               className={styles.image}
               priority
               fill
+              sizes="66vw"
+              quality={20}
             />
           </div>
         ),
