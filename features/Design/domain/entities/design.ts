@@ -79,6 +79,7 @@ export type DesignItem = {
   name: string
   slug: string
   designType: string
+  designTypeSlug: string
   year: string | null
   designBy: string | null
   madeIn: string | null
@@ -151,6 +152,7 @@ export const decodeDesignItems = (
       name: apiItem.acf.name,
       slug: slugify(apiItem.acf.name),
       designType: apiItem.acf.design_item_type[0].post_title,
+      designTypeSlug: slugify(apiItem.acf.design_item_type[0].post_title),
       year: apiItem.acf.year ?? null,
       designBy: apiItem.acf.design_by ?? null,
       madeIn: apiItem.acf.made_in ?? null,

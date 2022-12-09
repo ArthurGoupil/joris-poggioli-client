@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import {
   ApiArchitectureProject,
   ArchitectureProject,
@@ -7,7 +7,7 @@ import {
 
 type FetchArchitectureProjects = {
   architectureProjects: ArchitectureProject[]
-  error?: AxiosError
+  error?: boolean
 }
 
 export const fetchArchitectureProjects =
@@ -21,9 +21,11 @@ export const fetchArchitectureProjects =
         architectureProjects: decodeArchitectureProjects(response.data),
       }
     } catch (error) {
+      console.log('Archi', error)
+
       return {
         architectureProjects: [],
-        error: error as AxiosError,
+        error: true,
       }
     }
   }

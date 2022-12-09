@@ -1,13 +1,13 @@
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
-import { dehydrate, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import { fetchDesignItems } from '../features/Design/domain/repository/fetchDesignItems'
 import { Grid } from '../components/layout/Grid/Grid'
 import { DesignGridItem } from '../features/Design/presentation/DesignGridItem/DesignGridItem'
-import { queryClient } from './_app'
+import { customPrefetch } from '../dev-tools/react-query/customPrefetch'
 
 const Home: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
+  InferGetStaticPropsType<typeof getStaticProps>
 > = (): JSX.Element => {
   const { data } = useQuery('design-items', fetchDesignItems, {
     select: (data) => ({
@@ -78,12 +78,8 @@ const Home: NextPage<
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  if (queryClient.getQueryCache().find('design-items') === undefined) {
-    await queryClient.prefetchQuery('design-items', fetchDesignItems)
-  }
-
-  return { props: { dehydratedState: dehydrate(queryClient) } }
+export const getStaticProps: GetStaticProps = async () => {
+  return customPrefetch([{ key: 'design-items', fetch: fetchDesignItems }])
 }
 
 export default Home

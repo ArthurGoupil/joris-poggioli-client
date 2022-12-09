@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import {
   ApiDesignItem,
   decodeDesignItems,
@@ -7,7 +7,7 @@ import {
 
 type FetchDesignItems = {
   designItems: DesignItem[]
-  error?: AxiosError
+  error?: boolean
 }
 
 export const fetchDesignItems = async (): Promise<FetchDesignItems> => {
@@ -20,9 +20,11 @@ export const fetchDesignItems = async (): Promise<FetchDesignItems> => {
       designItems: decodeDesignItems(response.data),
     }
   } catch (error) {
+    console.log('Design', error)
+
     return {
       designItems: [],
-      error: error as AxiosError,
+      error: true,
     }
   }
 }

@@ -1,3 +1,4 @@
+import { slugify } from '../../../../components/layout/shared/logic/slugify'
 import {
   ApiImage,
   decodeApiImage,
@@ -58,6 +59,7 @@ type ImagesProjectPage = (LandscapeLine | PortraitLine)[]
 export type ArchitectureProject = {
   id: number
   name: string
+  slug: string
   imageList: Image
   description: string
   imagesProjectPage: ImagesProjectPage
@@ -93,7 +95,7 @@ const decodeImageProductLine = (
               ),
             },
       thirdColumn:
-        line.portrait_images.second_column_type === 'blank'
+        line.portrait_images.third_column_type === 'blank'
           ? { type: 'blank' }
           : {
               type: 'image',
@@ -129,6 +131,7 @@ export const decodeArchitectureProjects = (
     architectureProjects.push({
       id: apiProject.id,
       name: apiProject.acf.name,
+      slug: slugify(apiProject.acf.name),
       description: apiProject.acf.description,
       imageList: decodeApiImage(apiProject.acf.image_list),
       imagesProjectPage,

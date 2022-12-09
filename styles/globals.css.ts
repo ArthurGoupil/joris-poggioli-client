@@ -36,8 +36,9 @@ globalStyle('main', {
 
 globalStyle('h2', {
   fontWeight: 700,
-  fontSize: '4vw',
-  lineHeight: '5vw',
+  fontSize: '3vw',
+  lineHeight: '4vw',
+  marginBottom: '2vw',
 })
 
 globalStyle('a', {

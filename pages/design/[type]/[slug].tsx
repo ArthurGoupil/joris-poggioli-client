@@ -1,14 +1,12 @@
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { dehydrate, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import { LogoLoader } from '../../../components/feedback/LogoLoader/LogoLoader'
+import { customPrefetch } from '../../../dev-tools/react-query/customPrefetch'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
 import { DesignProductGrid } from '../../../features/Design/presentation/DesignProductGrid/DesignProductGrid'
-import { queryClient } from '../../_app'
 
-const DesignCategoryArticlePage: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ previousPage }): JSX.Element => {
+const DesignArticlePage: NextPage = (): JSX.Element => {
   const router = useRouter()
   const slug = router.query.slug as string
 
@@ -17,41 +15,33 @@ const DesignCategoryArticlePage: NextPage<
       designItem: data.designItems.find(
         (item) => item.slug.toLowerCase() === slug.toLowerCase()
       ),
+      error: data.error,
     }),
   })
 
   if (data?.designItem) {
-    return (
-      <DesignProductGrid
-        designItem={data.designItem}
-        previousPage={previousPage}
-      />
-    )
+    return <DesignProductGrid designItem={data.designItem} />
   }
 
   return <LogoLoader />
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  previousPage: string | null
-}> = async (context) => {
-  if (queryClient.getQueryCache().find('design-items') === undefined) {
-    await queryClient.prefetchQuery('design-items', fetchDesignItems)
-  }
-
-  const hasNotPreviousPage =
-    `${process.env.FRONT_URL}${context.resolvedUrl}` ===
-      context.req.headers.referer ||
-    !context.req.headers.referer?.includes(process.env.FRONT_URL ?? '')
+export const getStaticPaths: GetStaticPaths<{
+  type: string
+  slug: string
+}> = async () => {
+  const { designItems } = await fetchDesignItems()
 
   return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-      previousPage: hasNotPreviousPage
-        ? null
-        : context.req.headers.referer ?? null,
-    },
+    paths: designItems.map((item) => ({
+      params: { type: item.designTypeSlug, slug: item.slug },
+    })),
+    fallback: false,
   }
 }
 
-export default DesignCategoryArticlePage
+export const getStaticProps: GetStaticProps = async () => {
+  return customPrefetch([{ key: 'design-items', fetch: fetchDesignItems }])
+}
+
+export default DesignArticlePage

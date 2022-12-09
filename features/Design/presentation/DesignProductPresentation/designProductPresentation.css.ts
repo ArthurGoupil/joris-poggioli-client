@@ -7,31 +7,14 @@ const presentationContainer = style({
   padding: '2vw',
   borderBottom: themeVars.borders.default,
   position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 })
 
 const titleContainer = style({
   display: 'flex',
   justifyContent: 'space-between',
-})
-
-const back = style({
-  fontSize: '2vw',
-  height: '4vw',
-  fontWeight: 500,
-  marginRight: themeVars.spacing.l,
-  border: 'none',
-  cursor: 'pointer',
-  backgroundColor: 'transparent',
-
-  selectors: {
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-})
-
-const title = style({
-  marginBottom: '1vw',
 })
 
 const paragraph = style({
@@ -85,11 +68,16 @@ const link = style({
   textDecoration: 'none',
 })
 
+const back = style({
+  textDecoration: 'underline',
+  marginTop: '1vw',
+  display: 'flex',
+})
+
 export const styles = {
   presentationContainer,
   titleContainer,
   back,
-  title,
   paragraph,
   buttonContainer,
   technicalSheet,

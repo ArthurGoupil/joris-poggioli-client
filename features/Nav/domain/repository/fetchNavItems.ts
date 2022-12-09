@@ -1,16 +1,16 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import {
   ApiArchitectureProjectItem,
   ApiDesignTypeItem,
   BaseNavItemsProps,
 } from '../entities/nav'
 
-type FetchHeaderItems = {
+type FetchNavItems = {
   navItems: BaseNavItemsProps[]
-  error?: AxiosError
+  error?: boolean
 }
 
-export const fetchNavItems = async (): Promise<FetchHeaderItems> => {
+export const fetchNavItems = async (): Promise<FetchNavItems> => {
   try {
     const designTypesPromise = axios.get<ApiDesignTypeItem[]>(
       'https://jorispoggioli.com/admin/wp-json/wp/v2/design-types?_fields=id,acf,title'
@@ -55,9 +55,11 @@ export const fetchNavItems = async (): Promise<FetchHeaderItems> => {
       ],
     }
   } catch (error) {
+    console.log('Navitem', error)
+
     return {
       navItems: [],
-      error: error as AxiosError,
+      error: true,
     }
   }
 }

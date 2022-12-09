@@ -1,10 +1,14 @@
 import Image from 'next/image'
-import { styles } from './designProductGrid.css'
 import cc from 'classcat'
 import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'
-import { DesignItem, PortraitColumn } from '../../domain/entities/design'
-import { DesignProductPresentation } from '../DesignProductPresentation/DesignProductPresentation'
+import { styles } from './architectureProjectGrid.css'
+import {
+  ArchitectureProject,
+  PortraitColumn,
+} from '../../domain/entities/architecture'
+import parse from 'html-react-parser'
 import { themeVars } from '../../../../styles/theme.css'
+import Link from 'next/link'
 
 type GridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn
@@ -12,6 +16,7 @@ type GridItemFromPortraitColumnProps = {
   columnNumber: number
   gridColumn: string
   hideBorderBottom: boolean
+  hideBorderRight: boolean
 }
 
 const gridItemFromPortraitColumn = ({
@@ -20,6 +25,7 @@ const gridItemFromPortraitColumn = ({
   columnNumber,
   gridColumn,
   hideBorderBottom,
+  hideBorderRight,
 }: GridItemFromPortraitColumnProps): GridProps['gridItems'][number] => {
   if (portraitColumn.type === 'blank') {
     return {
@@ -29,7 +35,10 @@ const gridItemFromPortraitColumn = ({
         <div
           className={cc([
             styles.blankContainer,
-            { [styles.hideBorderBottom]: hideBorderBottom },
+            {
+              [styles.hideBorderBottom]: hideBorderBottom,
+              [styles.hideBorderRight]: hideBorderRight,
+            },
           ])}
         />
       ),
@@ -42,7 +51,10 @@ const gridItemFromPortraitColumn = ({
         <div
           className={cc([
             styles.imageContainer,
-            { [styles.hideBorderBottom]: hideBorderBottom },
+            {
+              [styles.hideBorderBottom]: hideBorderBottom,
+              [styles.hideBorderRight]: columnNumber === 3,
+            },
           ])}
         >
           <Image
@@ -52,7 +64,7 @@ const gridItemFromPortraitColumn = ({
             priority
             fill
             sizes="33vw"
-            quality={20}
+            quality={40}
           />
         </div>
       ),
@@ -61,7 +73,7 @@ const gridItemFromPortraitColumn = ({
 }
 
 type GetGridItemsFromImageLineProps = {
-  line: DesignItem['imagesProductPage'][number]
+  line: ArchitectureProject['imagesProjectPage'][number]
   lineNumber: number
   hideBorderBottom: boolean
 }
@@ -79,6 +91,7 @@ const getGridItemsFromImageLine = ({
           <div
             className={cc([
               styles.imageContainer,
+              styles.hideBorderRight,
               { [styles.hideBorderBottom]: hideBorderBottom },
             ])}
           >
@@ -89,11 +102,11 @@ const getGridItemsFromImageLine = ({
               priority
               fill
               sizes="66vw"
-              quality={20}
+              quality={40}
             />
           </div>
         ),
-        gridColumn: '1 / 3',
+        gridColumn: '1 / 4',
       },
     ]
   } else {
@@ -104,6 +117,9 @@ const getGridItemsFromImageLine = ({
         columnNumber: 1,
         gridColumn: '1',
         hideBorderBottom,
+        hideBorderRight:
+          line.firstColumn.type === 'blank' &&
+          line.secondColumn.type === 'blank',
       }),
       gridItemFromPortraitColumn({
         portraitColumn: line.secondColumn,
@@ -111,73 +127,74 @@ const getGridItemsFromImageLine = ({
         columnNumber: 2,
         gridColumn: '2 / 3',
         hideBorderBottom,
+        hideBorderRight:
+          line.secondColumn.type === 'blank' &&
+          line.thirdColumn.type === 'blank',
+      }),
+      gridItemFromPortraitColumn({
+        portraitColumn: line.thirdColumn,
+        lineNumber,
+        columnNumber: 3,
+        gridColumn: '3 / 4',
+        hideBorderBottom,
+        hideBorderRight: true,
       }),
     ]
   }
 }
 
 const getGridItemsFromImageLines = (
-  designItem: DesignItem
+  architectureProject: ArchitectureProject
 ): GridProps['gridItems'] => {
   const gridItems: GridProps['gridItems'] = []
 
-  designItem.imagesProductPage.forEach((imageLine, index) => {
-    const hideBorderBottom = index === designItem.imagesProductPage.length - 1
+  architectureProject.imagesProjectPage.forEach((imageLine, index) => {
+    const hideBorderBottom =
+      index === architectureProject.imagesProjectPage.length - 1
 
-    if (index === 0) {
-      gridItems.push(
-        ...getGridItemsFromImageLine({
-          line: imageLine,
-          lineNumber: index + 1,
-          hideBorderBottom,
-        }),
-        {
-          key: 'product-presention',
-          component: <DesignProductPresentation designItem={designItem} />,
-          gridColumn: '3 / 4',
-        }
-      )
-    } else if (index === 1) {
-      gridItems.push(
-        ...getGridItemsFromImageLine({
-          line: imageLine,
-          lineNumber: index + 1,
-          hideBorderBottom,
-        }),
-        {
-          key: 'technical-sheet',
-          component: null,
-          gridColumn: '3 / 4',
-        }
-      )
-    } else {
-      gridItems.push(
-        ...getGridItemsFromImageLine({
-          line: imageLine,
-          lineNumber: index + 1,
-          hideBorderBottom,
-        }),
-        {
-          key: `blank-${index + 1}`,
-          component: <div />,
-          gridColumn: '3 / 4',
-        }
-      )
-    }
+    gridItems.push(
+      ...getGridItemsFromImageLine({
+        line: imageLine,
+        lineNumber: index + 1,
+        hideBorderBottom,
+      })
+    )
   })
+
   return gridItems
 }
 
-type DesignProductGridProps = {
-  designItem: DesignItem
+type ArchitectureProjectGridProps = {
+  architectureProject: ArchitectureProject
 }
 
-export const DesignProductGrid = ({
-  designItem,
-}: DesignProductGridProps): JSX.Element => (
-  <Grid
-    gridAutoRows={`calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`}
-    gridTemplateColumns="repeat(3, 1fr)"
-    gridItems={getGridItemsFromImageLines(designItem)}
-  />
+export const ArchitectureProjectGrid = ({
+  architectureProject,
+}: ArchitectureProjectGridProps): JSX.Element => (
+  <>
+    <Grid
+      gridAutoRows={`calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`}
+      gridTemplateColumns="repeat(3, 1fr)"
+      gridItems={getGridItemsFromImageLines(architectureProject)}
+    />
+    <Grid
+      gridAutoRows="auto"
+      gridTemplateColumns="repeat(3, 1fr)"
+      gridItems={[
+        {
+          key: 'description',
+          gridColumn: '3 / 4',
+          component: (
+            <div className={styles.text}>
+              <h2>{architectureProject.name.toUpperCase()}</h2>
+              {parse(architectureProject.description)}
+              <Link href="/architecture/all" className={styles.back}>
+                BACK
+              </Link>
+            </div>
+          ),
+        },
+      ]}
+    />
+  </>
 )

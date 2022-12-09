@@ -1,16 +1,16 @@
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { DesignGridItem } from '../../../features/Design/presentation/DesignGridItem/DesignGridItem'
 import { Grid } from '../../../components/layout/Grid/Grid'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
-import { queryClient } from '../../_app'
-import { dehydrate, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { fetchNavItems } from '../../../features/Nav/domain/repository/fetchNavItems'
+import { slugify } from '../../../components/layout/shared/logic/slugify'
+import { customPrefetch } from '../../../dev-tools/react-query/customPrefetch'
 
-const DesignCategoryPage: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = (): JSX.Element => {
+const DesignCategoryPage: NextPage = (): JSX.Element => {
   const router = useRouter()
   const categoryParam = router.query.type as string
 
@@ -84,12 +84,23 @@ const DesignCategoryPage: NextPage<
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  if (queryClient.getQueryCache().find('design-items') === undefined) {
-    await queryClient.prefetchQuery('design-items', fetchDesignItems)
-  }
+export const getStaticPaths: GetStaticPaths<{
+  type: string
+}> = async () => {
+  const { navItems } = await fetchNavItems()
 
-  return { props: { dehydratedState: dehydrate(queryClient) } }
+  const paths = navItems[0].subItems.map((item) => ({
+    params: { type: slugify(item) },
+  }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  return customPrefetch([{ key: 'design-items', fetch: fetchDesignItems }])
 }
 
 export default DesignCategoryPage

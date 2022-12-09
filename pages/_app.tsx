@@ -3,7 +3,7 @@ import '../styles/reset.css'
 import '../styles/globals.css'
 import { Footer } from '../components/layout/Footer/Footer'
 import { Header } from '../components/layout/Header/Header'
-import React, { useRef } from 'react'
+import React from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import {
   Hydrate,
@@ -116,7 +116,7 @@ const AppWithQueryClient = ({
             variants={fade.variants}
             transition={fade.transition}
           >
-            {!data?.navItems || isFakeLoading ? (
+            {isFakeLoading ? (
               <CounterLoader />
             ) : (
               <div className={scrollbarContainer}>

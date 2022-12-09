@@ -12,7 +12,6 @@ export const useFixPageTransitionIssue =
 
     React.useEffect(() => {
       savePageStyles()
-      console.log('initial')
     }, [])
 
     React.useEffect(() => {

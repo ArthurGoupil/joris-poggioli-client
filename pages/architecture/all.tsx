@@ -1,14 +1,12 @@
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
-import { dehydrate, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import React from 'react'
 import { fetchArchitectureProjects } from '../../features/Architecture/domain/repository/fetchArchitectureProjects'
-import { queryClient } from '../_app'
-import { ArchitectureProjectsGrid } from '../../features/Architecture/presentation/ArchitectureProjectsGrid/ArchitectureProjectsGrid'
+import { ArchitectureProjectsListGrid } from '../../features/Architecture/presentation/ArchitectureProjectsListGrid/ArchitectureProjectsListGrid'
+import { customPrefetch } from '../../dev-tools/react-query/customPrefetch'
 
-const ArchitectureProjectsPage: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = (): JSX.Element => {
+const ArchitectureProjectsPage: NextPage = (): JSX.Element => {
   const { data } = useQuery('architecture-projects', fetchArchitectureProjects)
 
   const architectureProjects = data?.architectureProjects
@@ -24,21 +22,18 @@ const ArchitectureProjectsPage: NextPage<
         <link rel="icon" href="/favicon.png" />
       </Head>
       {architectureProjects && architectureProjects.length > 0 && (
-        <ArchitectureProjectsGrid architectureProjects={architectureProjects} />
+        <ArchitectureProjectsListGrid
+          architectureProjects={architectureProjects}
+        />
       )}
     </div>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  if (queryClient.getQueryCache().find('architecture-projects') === undefined) {
-    await queryClient.prefetchQuery(
-      'architecture-projects',
-      fetchArchitectureProjects
-    )
-  }
-
-  return { props: { dehydratedState: dehydrate(queryClient) } }
+export const getStaticProps: GetStaticProps = async () => {
+  return customPrefetch([
+    { key: 'architecture-projects', fetch: fetchArchitectureProjects },
+  ])
 }
 
 export default ArchitectureProjectsPage

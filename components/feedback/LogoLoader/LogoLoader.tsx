@@ -1,11 +1,11 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { styles } from './logoLoader.css'
 
 export const LogoLoader = (): JSX.Element => {
-  const letters = Array.from('JORIS POGGIOLI')
+  const letters = Array.from('LOADING...')
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
@@ -16,30 +16,14 @@ export const LogoLoader = (): JSX.Element => {
     }),
   }
 
-  const child = {
+  const child: Variants = {
     visible: {
       opacity: 1,
       x: 0,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-        duration: 0.5,
-        yoyo: Infinity,
-        ease: 'easeInOut',
-      },
     },
     hidden: {
       opacity: 0,
       x: -20,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-        duration: 0.5,
-        yoyo: Infinity,
-        ease: 'easeInOut',
-      },
     },
   }
 
@@ -49,10 +33,21 @@ export const LogoLoader = (): JSX.Element => {
       variants={container}
       initial="hidden"
       animate="visible"
-      transition={{ duration: 0.5, yoyo: Infinity, ease: 'easeInOut' }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       {letters.map((letter, index) => (
-        <motion.span variants={child} key={index}>
+        <motion.span
+          variants={child}
+          // transition={{
+          //   type: 'spring',
+          //   duration: 0.5,
+          //   damping: 12,
+          //   stiffness: 100,
+          //   repeat: Infinity,
+          //   repeatType: 'reverse',
+          // }}
+          key={index}
+        >
           {letter === ' ' ? '\u00A0' : letter}
         </motion.span>
       ))}
