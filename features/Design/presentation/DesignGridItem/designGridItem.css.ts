@@ -9,6 +9,7 @@ const itemContainer = style({
   transition: 'background-color 0.5s',
   cursor: 'pointer',
   height: '100%',
+  backgroundColor: themeVars.colors.background,
 
   selectors: {
     '&:hover': {

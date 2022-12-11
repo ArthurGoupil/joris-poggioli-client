@@ -8,6 +8,7 @@ import React from 'react'
 import { fetchNavItems } from '../../../features/Nav/domain/repository/fetchNavItems'
 import { slugify } from '../../../components/layout/shared/logic/slugify'
 import { getCustomGetStaticProps } from '../../../dev-tools/static-props/getCustomGetStaticProps'
+import { themeVars } from '../../../styles/theme.css'
 
 const DesignCategoryPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -33,6 +34,7 @@ const DesignCategoryPage: NextPage<
           key={categoryParam}
           gridTemplateColumns="repeat(3, 1fr)"
           gridAutoRows="38vw"
+          gridBackgroundColor={themeVars.colors.background}
           gridItems={designItems.map((item, index) => {
             const isFirstColumn = index === 0 || index % 3 === 0
             const isSecondColumn = (index - 1) % 3 === 0

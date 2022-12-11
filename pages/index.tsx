@@ -6,6 +6,7 @@ import { DesignGridItem } from '../features/Design/presentation/DesignGridItem/D
 import { getCustomGetStaticProps } from '../dev-tools/static-props/getCustomGetStaticProps'
 import { useLoadedImagesCount } from '../context/loaded-images-count.context'
 import React from 'react'
+import { themeVars } from '../styles/theme.css'
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   designItems,
@@ -33,6 +34,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <Grid
           gridTemplateColumns="repeat(3, 1fr)"
           gridAutoRows="38vw"
+          gridBackgroundColor={themeVars.colors.background}
           gridItems={designItems.map((item, index) => {
             const isFirstColumn = index === 0 || index % 3 === 0
             const isSecondColumn = (index - 1) % 3 === 0

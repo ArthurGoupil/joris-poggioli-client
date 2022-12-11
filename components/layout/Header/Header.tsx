@@ -129,7 +129,7 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                       setOpenMenu(undefined)
                     }}
                     checkSubItemIsSelected={(slug): boolean =>
-                      router.query.category === slug
+                      router.pathname.includes(slug)
                     }
                     status={getNavItemStatus(navItems[2].name)}
                   />
