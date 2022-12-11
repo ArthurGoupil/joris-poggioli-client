@@ -15,6 +15,7 @@ const loaderContainer = style({
   right: 0,
   left: 0,
   bottom: 0,
+  zIndex: 2,
 })
 
 export const styles = {
