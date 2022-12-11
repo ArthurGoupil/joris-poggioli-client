@@ -90,13 +90,17 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
 
   return (
     <>
-      {showCounterLoader && (
-        <CounterLoader
-          percentage={
-            isFakeLoading ? 100 : (loadedImagesCount / imagesToLoad) * 100
-          }
-        />
-      )}
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence>
+          {showCounterLoader && (
+            <CounterLoader
+              percentage={
+                isFakeLoading ? 100 : (loadedImagesCount / imagesToLoad) * 100
+              }
+            />
+          )}
+        </AnimatePresence>
+      </LazyMotion>
       <Header navItems={pageProps.navItems} />
       <LazyMotion features={domAnimation}>
         <AnimatePresence mode="wait" onExitComplete={removeFixStyles}>

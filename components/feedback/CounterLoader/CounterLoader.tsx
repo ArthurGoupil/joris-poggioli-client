@@ -1,5 +1,6 @@
 import React from 'react'
 import { styles } from './counterLoader.css'
+import { m } from 'framer-motion'
 
 export const CounterLoader = ({
   percentage,
@@ -23,5 +24,29 @@ export const CounterLoader = ({
     return () => clearInterval(interval)
   }, [percentage])
 
-  return <div className={styles.loaderContainer}>{counter}</div>
+  return (
+    <m.div
+      className={styles.loaderContainer}
+      key="loader"
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={{
+        initial: {
+          opacity: 1,
+        },
+        animate: {
+          opacity: 1,
+        },
+        exit: {
+          opacity: 0,
+        },
+      }}
+      transition={{
+        duration: 0.3,
+      }}
+    >
+      {counter}
+    </m.div>
+  )
 }
