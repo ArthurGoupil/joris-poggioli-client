@@ -5,26 +5,16 @@ import {
   DesignItem,
 } from '../entities/design'
 
-type FetchDesignItems = {
-  designItems: DesignItem[]
-  error?: boolean
-}
-
-export const fetchDesignItems = async (): Promise<FetchDesignItems> => {
+export const fetchDesignItems = async (): Promise<DesignItem[]> => {
   try {
     const response = await axios.get<ApiDesignItem[]>(
       'https://jorispoggioli.com/admin/wp-json/wp/v2/design?_fields=id,acf'
     )
 
-    return {
-      designItems: decodeDesignItems(response.data),
-    }
+    return decodeDesignItems(response.data)
   } catch (error) {
     console.log('Design', error)
 
-    return {
-      designItems: [],
-      error: true,
-    }
+    return []
   }
 }

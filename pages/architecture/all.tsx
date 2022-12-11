@@ -1,39 +1,34 @@
-import { GetStaticProps, NextPage } from 'next'
+import { InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
-import { useQuery } from 'react-query'
 import React from 'react'
 import { fetchArchitectureProjects } from '../../features/Architecture/domain/repository/fetchArchitectureProjects'
 import { ArchitectureProjectsListGrid } from '../../features/Architecture/presentation/ArchitectureProjectsListGrid/ArchitectureProjectsListGrid'
-import { customPrefetch } from '../../dev-tools/react-query/customPrefetch'
+import { getCustomGetStaticProps } from '../../dev-tools/static-props/getCustomGetStaticProps'
 
-const ArchitectureProjectsPage: NextPage = (): JSX.Element => {
-  const { data } = useQuery('architecture-projects', fetchArchitectureProjects)
+const ArchitectureProjectsPage: NextPage<
+  InferGetStaticPropsType<typeof getStaticProps>
+> = ({ architectureProjects }): JSX.Element => (
+  <div>
+    <Head>
+      <title>JORIS POGGIOLI - Architecture</title>
+      <meta
+        name="description"
+        content="Joris Poggioli - Architecture projects"
+      />
+      <link rel="icon" href="/favicon.png" />
+    </Head>
+    {architectureProjects && architectureProjects.length > 0 && (
+      <ArchitectureProjectsListGrid
+        architectureProjects={architectureProjects}
+      />
+    )}
+  </div>
+)
 
-  const architectureProjects = data?.architectureProjects
+export const getStaticProps = getCustomGetStaticProps(async () => {
+  const architectureProjects = await fetchArchitectureProjects()
 
-  return (
-    <div>
-      <Head>
-        <title>JORIS POGGIOLI - Architecture</title>
-        <meta
-          name="description"
-          content="Joris Poggioli - Architecture projects"
-        />
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-      {architectureProjects && architectureProjects.length > 0 && (
-        <ArchitectureProjectsListGrid
-          architectureProjects={architectureProjects}
-        />
-      )}
-    </div>
-  )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  return customPrefetch([
-    { key: 'architecture-projects', fetch: fetchArchitectureProjects },
-  ])
-}
+  return { architectureProjects }
+})
 
 export default ArchitectureProjectsPage

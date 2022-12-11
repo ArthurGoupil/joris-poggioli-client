@@ -1,8 +1,10 @@
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { getBaseGetStaticProps } from '../dev-tools/static-props/getCustomGetStaticProps'
 import { notFound, notFoundContainer } from '../styles/globals.css'
 
-const Home = (): JSX.Element => {
+const FourZeroFourPage = (): JSX.Element => {
   return (
     <>
       <Head>
@@ -19,4 +21,6 @@ const Home = (): JSX.Element => {
   )
 }
 
-export default Home
+export const getStaticProps: GetStaticProps = getBaseGetStaticProps()
+
+export default FourZeroFourPage

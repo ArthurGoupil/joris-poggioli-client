@@ -1,34 +1,19 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
 import { DesignGridItem } from '../../../features/Design/presentation/DesignGridItem/DesignGridItem'
 import { Grid } from '../../../components/layout/Grid/Grid'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
-import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { fetchNavItems } from '../../../features/Nav/domain/repository/fetchNavItems'
 import { slugify } from '../../../components/layout/shared/logic/slugify'
-import { customPrefetch } from '../../../dev-tools/react-query/customPrefetch'
+import { getCustomGetStaticProps } from '../../../dev-tools/static-props/getCustomGetStaticProps'
 
-const DesignCategoryPage: NextPage = (): JSX.Element => {
+const DesignCategoryPage: NextPage<
+  InferGetStaticPropsType<typeof getStaticProps>
+> = ({ designItems }): JSX.Element => {
   const router = useRouter()
   const categoryParam = router.query.type as string
-
-  const { data } = useQuery('design-items', fetchDesignItems)
-
-  const designItems = React.useMemo(
-    () =>
-      data?.designItems
-        .flatMap((i) => [i, i, i, i, i, i, i, i])
-        .filter(
-          (item) =>
-            categoryParam &&
-            item.designType.toLowerCase() === categoryParam.toLowerCase()
-        ),
-    // update items not too early so that it doesn't blink on page animation
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data?.designItems]
-  )
 
   const firstlastRowItemIndex = designItems
     ? designItems.length % 3 === 0
@@ -74,6 +59,7 @@ const DesignCategoryPage: NextPage = (): JSX.Element => {
                   designType={item.designType}
                   hasBorderRight={isFirstColumn || isSecondColumn}
                   hasBorderBottom={index < firstlastRowItemIndex}
+                  imageIndex={index}
                 />
               ),
             }
@@ -87,7 +73,7 @@ const DesignCategoryPage: NextPage = (): JSX.Element => {
 export const getStaticPaths: GetStaticPaths<{
   type: string
 }> = async () => {
-  const { navItems } = await fetchNavItems()
+  const navItems = await fetchNavItems()
 
   const paths = navItems[0].subItems.map((item) => ({
     params: { type: slugify(item) },
@@ -99,8 +85,14 @@ export const getStaticPaths: GetStaticPaths<{
   }
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  return customPrefetch([{ key: 'design-items', fetch: fetchDesignItems }])
-}
+export const getStaticProps = getCustomGetStaticProps(async ({ params }) => {
+  const designItems = await fetchDesignItems()
+
+  return {
+    designItems: designItems
+      .flatMap((i) => [i, i, i, i, i, i, i, i])
+      .filter((item) => item.designTypeSlug === params?.type),
+  }
+})
 
 export default DesignCategoryPage

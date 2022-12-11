@@ -1,36 +1,24 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
-import { LogoLoader } from '../../../components/feedback/LogoLoader/LogoLoader'
-import { customPrefetch } from '../../../dev-tools/react-query/customPrefetch'
+import { GetStaticPaths, InferGetStaticPropsType, NextPage } from 'next'
+import React from 'react'
+import { getCustomGetStaticProps } from '../../../dev-tools/static-props/getCustomGetStaticProps'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
 import { DesignProductGrid } from '../../../features/Design/presentation/DesignProductGrid/DesignProductGrid'
 
-const DesignArticlePage: NextPage = (): JSX.Element => {
-  const router = useRouter()
-  const slug = router.query.slug as string
-
-  const { data } = useQuery('design-items', fetchDesignItems, {
-    select: (data) => ({
-      designItem: data.designItems.find(
-        (item) => item.slug.toLowerCase() === slug.toLowerCase()
-      ),
-      error: data.error,
-    }),
-  })
-
-  if (data?.designItem) {
-    return <DesignProductGrid designItem={data.designItem} />
+const DesignArticlePage: NextPage<
+  InferGetStaticPropsType<typeof getStaticProps>
+> = ({ designItem }): JSX.Element | null => {
+  if (designItem) {
+    return <DesignProductGrid designItem={designItem} />
   }
 
-  return <LogoLoader />
+  return null
 }
 
 export const getStaticPaths: GetStaticPaths<{
   type: string
   slug: string
 }> = async () => {
-  const { designItems } = await fetchDesignItems()
+  const designItems = await fetchDesignItems()
 
   return {
     paths: designItems.map((item) => ({
@@ -40,8 +28,14 @@ export const getStaticPaths: GetStaticPaths<{
   }
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  return customPrefetch([{ key: 'design-items', fetch: fetchDesignItems }])
-}
+export const getStaticProps = getCustomGetStaticProps(async ({ params }) => {
+  const designItems = await fetchDesignItems()
+
+  return {
+    designItem: designItems.find(
+      (item) => item.slug.toLowerCase() === params?.slug
+    ),
+  }
+})
 
 export default DesignArticlePage

@@ -1,35 +1,26 @@
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import { InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
-import { useQuery } from 'react-query'
 import { fetchDesignItems } from '../features/Design/domain/repository/fetchDesignItems'
 import { Grid } from '../components/layout/Grid/Grid'
 import { DesignGridItem } from '../features/Design/presentation/DesignGridItem/DesignGridItem'
-import { customPrefetch } from '../dev-tools/react-query/customPrefetch'
+import { getCustomGetStaticProps } from '../dev-tools/static-props/getCustomGetStaticProps'
+import { useLoadedImagesCount } from '../context/loaded-images-count.context'
+import React from 'react'
 
-const Home: NextPage<
-  InferGetStaticPropsType<typeof getStaticProps>
-> = (): JSX.Element => {
-  const { data } = useQuery('design-items', fetchDesignItems, {
-    select: (data) => ({
-      ...data,
-      designItems: data.designItems
-        .filter((item) => item.displayOnHome)
-        .sort((a, b) => {
-          if (a.homePosition && b.homePosition) {
-            return a.homePosition - b.homePosition
-          }
-          return 1
-        }),
-    }),
-  })
-
-  const designItems = data?.designItems
-
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  designItems,
+}): JSX.Element => {
   const firstlastRowItemIndex = designItems
     ? designItems.length % 3 === 0
       ? designItems.length - 3
       : designItems.length - (designItems.length % 3)
     : 0
+
+  const { setImagesToLoad } = useLoadedImagesCount()
+
+  React.useEffect(() => {
+    setImagesToLoad(designItems?.length ?? 0)
+  }, [designItems?.length, setImagesToLoad])
 
   return (
     <div>
@@ -68,6 +59,7 @@ const Home: NextPage<
                   designType={item.designType}
                   hasBorderRight={isFirstColumn || isSecondColumn}
                   hasBorderBottom={index < firstlastRowItemIndex}
+                  imageIndex={index}
                 />
               ),
             }
@@ -78,8 +70,20 @@ const Home: NextPage<
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  return customPrefetch([{ key: 'design-items', fetch: fetchDesignItems }])
-}
+export const getStaticProps = getCustomGetStaticProps(async () => {
+  const designItems = await fetchDesignItems()
+
+  return {
+    designItems: designItems
+      .filter((item) => item.displayOnHome)
+      .sort((a, b) => {
+        if (a.homePosition && b.homePosition) {
+          return a.homePosition - b.homePosition
+        }
+        return 1
+      })
+      .flatMap((i) => [i, i, i, i]),
+  }
+})
 
 export default Home

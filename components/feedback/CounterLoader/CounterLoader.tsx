@@ -1,17 +1,27 @@
 import React from 'react'
 import { styles } from './counterLoader.css'
 
-export const CounterLoader = (): JSX.Element => {
+export const CounterLoader = ({
+  percentage,
+}: {
+  percentage: number
+}): JSX.Element => {
   const [counter, setCounter] = React.useState(1)
 
-  const hasStartedCounter = React.useRef(false)
-
   React.useEffect(() => {
-    if (!hasStartedCounter.current) {
-      hasStartedCounter.current = true
-      setInterval(() => setCounter((counter) => counter + 1), 20)
-    }
-  }, [])
+    const interval = setInterval(() => {
+      setCounter((counter) => {
+        if (counter < percentage) {
+          return counter + 1
+        } else {
+          clearInterval(interval)
+          return counter
+        }
+      })
+    }, 20)
+
+    return () => clearInterval(interval)
+  }, [percentage])
 
   return <div className={styles.loaderContainer}>{counter}</div>
 }

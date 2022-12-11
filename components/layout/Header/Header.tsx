@@ -14,7 +14,7 @@ type HeaderProps = {
   navItems: BaseNavItemsProps[]
 }
 
-export const Header = ({ navItems }: HeaderProps): JSX.Element => {
+export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
   const [openMenu, setOpenMenu] = React.useState<NavItemProps['name']>()
   const router = useRouter()
   const navListRef = React.useRef<HTMLUListElement>(null)
@@ -39,6 +39,10 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element => {
 
     return () => window.removeEventListener('click', handleOnClickOutside)
   }, [])
+
+  if (!navItems) {
+    return null
+  }
 
   const getNavItemStatus = (name: string): NavItemStatus => {
     const isAMenuSelected = navItems.some((item) =>
