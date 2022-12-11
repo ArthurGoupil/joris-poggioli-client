@@ -10,13 +10,12 @@ export const fetchArchitectureProjects = async (): Promise<
 > => {
   try {
     const response = await axios.get<ApiArchitectureProject[]>(
-      'https://jorispoggioli.com/admin/wp-json/wp/v2/architecture?_fields=id,acf'
+      `${process.env.WP_URL}/architecture?_fields=id,acf`
     )
 
     return decodeArchitectureProjects(response.data)
   } catch (error) {
-    console.log('Archi', error)
-
+    console.error('Archi', error)
     return []
   }
 }

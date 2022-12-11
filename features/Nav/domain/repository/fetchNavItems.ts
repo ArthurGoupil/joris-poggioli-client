@@ -8,10 +8,10 @@ import {
 export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
   try {
     const designTypesPromise = axios.get<ApiDesignTypeItem[]>(
-      'https://jorispoggioli.com/admin/wp-json/wp/v2/design-types?_fields=id,acf,title'
+      `${process.env.WP_URL}/design-types?_fields=id,acf,title`
     )
     const architectureProjectsPromise = axios.get<ApiArchitectureProjectItem[]>(
-      'https://jorispoggioli.com/admin/wp-json/wp/v2/architecture?_fields=id,acf.name'
+      `${process.env.WP_URL}/architecture?_fields=id,acf.name`
     )
 
     const results = await Promise.all([
@@ -48,8 +48,7 @@ export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
       },
     ]
   } catch (error) {
-    console.log('Navitem', error)
-
+    console.error('Navitem', error)
     return []
   }
 }
