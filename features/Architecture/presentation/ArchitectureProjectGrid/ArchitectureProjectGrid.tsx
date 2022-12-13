@@ -173,17 +173,20 @@ export const ArchitectureProjectGrid = ({
 }: ArchitectureProjectGridProps): JSX.Element => (
   <>
     <Grid
-      gridAutoRows={`calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`}
-      gridTemplateColumns="repeat(3, 1fr)"
+      gridAutoRows={{
+        mobile: null,
+        desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`,
+      }}
+      gridTemplateColumns={{ mobile: null, desktop: 'repeat(3, 1fr)' }}
       gridItems={getGridItemsFromImageLines(architectureProject)}
     />
     <Grid
-      gridAutoRows="auto"
-      gridTemplateColumns="repeat(3, 1fr)"
+      gridAutoRows={{ mobile: null, desktop: 'auto' }}
+      gridTemplateColumns={{ mobile: null, desktop: 'repeat(3, 1fr)' }}
       gridItems={[
         {
           key: 'description',
-          gridColumn: '3 / 4',
+          gridColumn: { mobile: null, desktop: '3 / 4' },
           component: (
             <div className={styles.text}>
               <h2>{architectureProject.name.toUpperCase()}</h2>

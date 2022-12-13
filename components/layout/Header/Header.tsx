@@ -70,11 +70,11 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
       <nav>
         <ul ref={navListRef} className={styles.navList}>
           <Grid
-            gridAutoRows="auto"
-            gridTemplateColumns="repeat(3, 1fr)"
+            gridAutoRows={{ mobile: 'auto', desktop: 'auto' }}
+            gridTemplateColumns={{ mobile: '1fr', desktop: 'repeat(3, 1fr)' }}
             gridItems={[
               {
-                gridColumn: '1',
+                gridColumn: { mobile: '1', desktop: '1' },
                 key: 'design',
                 component: (
                   <NavItem
@@ -90,12 +90,12 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                       router.query.type === slug
                     }
                     status={getNavItemStatus(navItems[0].name)}
-                    hasBorderRight
+                    hasBorderRight={{ mobile: false, desktop: true }}
                   />
                 ),
               },
               {
-                gridColumn: '2 / 3',
+                gridColumn: { mobile: '1', desktop: '2 / 3' },
                 key: 'architecture',
                 component: (
                   <NavItem
@@ -111,12 +111,12 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                       router.query.project === slug
                     }
                     status={getNavItemStatus(navItems[1].name)}
-                    hasBorderRight
+                    hasBorderRight={{ mobile: false, desktop: true }}
                   />
                 ),
               },
               {
-                gridColumn: '3 / 4',
+                gridColumn: { mobile: '1', desktop: '3 / 4' },
                 key: 'about',
                 component: (
                   <NavItem
@@ -132,6 +132,7 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                       router.pathname.includes(slug)
                     }
                     status={getNavItemStatus(navItems[2].name)}
+                    hasBorderBottom={{ mobile: true, desktop: false }}
                   />
                 ),
               },

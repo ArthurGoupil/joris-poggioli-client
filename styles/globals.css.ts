@@ -1,5 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css'
-import { themeVars } from './theme.css'
+import { mediaQueries, themeVars } from './theme.css'
 
 globalStyle('*', {
   boxSizing: 'border-box',
@@ -37,7 +37,7 @@ globalStyle('main', {
 globalStyle('h2', {
   fontWeight: 700,
   fontSize: '3vw',
-  lineHeight: '4vw',
+  lineHeight: '3.5vw',
   marginBottom: '2vw',
 })
 
@@ -47,7 +47,13 @@ globalStyle('a', {
 })
 
 export const scrollbarContainer = style({
-  height: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`,
+  height: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      height: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.large})`,
+    },
+  },
 })
 
 export const scrollbarView = style({

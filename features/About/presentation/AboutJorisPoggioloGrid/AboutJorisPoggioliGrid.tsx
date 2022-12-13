@@ -14,12 +14,12 @@ export const AboutJorisPoggioliGrid = ({
   image,
 }: AboutJorisPoggioliGridProps): JSX.Element => (
   <Grid
-    gridTemplateColumns="repeat(3, 1fr)"
-    gridAutoRows="auto"
+    gridTemplateColumns={{ mobile: null, desktop: 'repeat(3, 1fr)' }}
+    gridAutoRows={{ mobile: null, desktop: 'auto' }}
     gridItems={[
       {
         key: 'text',
-        gridColumn: '1 / 2',
+        gridColumn: { mobile: null, desktop: '1 / 2' },
         component: (
           <div className={styles.textContainer}>
             <h2>JORIS POGGIOLI</h2>
@@ -29,7 +29,7 @@ export const AboutJorisPoggioliGrid = ({
       },
       {
         key: 'image',
-        gridColumn: '2 / 3',
+        gridColumn: { mobile: null, desktop: '2 / 3' },
         component: (
           <div className={styles.imageContainer}>
             <Image

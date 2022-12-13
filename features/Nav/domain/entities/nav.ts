@@ -1,3 +1,5 @@
+import { Responsive } from '../../../shared/domain/entities/responsive'
+
 export type ApiArchitectureProjectItem = {
   id: number
   acf: { name: string }
@@ -19,7 +21,8 @@ export type NavItemProps = {
   onMouseEnter: () => void
   onMouseLeave: () => void
   checkSubItemIsSelected: (name: string) => boolean
-  hasBorderRight?: boolean
+  hasBorderRight?: Responsive<boolean>
+  hasBorderBottom?: Responsive<boolean>
 }
 
 export type BaseNavItemsProps = Pick<NavItemProps, 'name' | 'subItems'>

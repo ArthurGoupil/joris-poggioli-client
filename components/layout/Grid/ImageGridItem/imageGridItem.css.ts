@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const itemContainer = style({
   display: 'flex',
@@ -19,11 +19,35 @@ const itemContainer = style({
 })
 
 const containerBorderRight = style({
-  borderRight: themeVars.borders.default,
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderRight: themeVars.borders.default,
+    },
+  },
 })
 
 const containerBorderBottom = style({
-  borderBottom: themeVars.borders.default,
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderBottom: themeVars.borders.default,
+    },
+  },
+})
+
+const containerBorderRightMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: themeVars.borders.default,
+    },
+  },
+})
+
+const containerBorderBottomMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderBottom: themeVars.borders.default,
+    },
+  },
 })
 
 const image = style({
@@ -41,7 +65,7 @@ const image = style({
   },
 })
 
-const imageTitle = style({
+const imageTitleContainer = style({
   position: 'absolute',
   fontSize: '4vw',
   lineHeight: '4vw',
@@ -61,7 +85,9 @@ const imageTitle = style({
 export const styles = {
   itemContainer,
   image,
-  imageTitle,
+  imageTitleContainer,
   containerBorderRight,
   containerBorderBottom,
+  containerBorderRightMobile,
+  containerBorderBottomMobile,
 }

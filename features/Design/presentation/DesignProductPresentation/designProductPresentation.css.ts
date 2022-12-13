@@ -18,7 +18,7 @@ const titleContainer = style({
 })
 
 const paragraph = style({
-  marginBottom: '1.5vw',
+  marginBottom: themeVars.spacing.xl,
 })
 
 const buttonContainer = style({

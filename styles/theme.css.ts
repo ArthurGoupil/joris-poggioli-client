@@ -55,6 +55,11 @@ export const [themeClass, themeVars] = createTheme({
   },
   sizes: {
     headerLogoHeight: '120px',
-    navItemHeight: '40px',
+    navItemHeight: { large: '120px', small: '40px' },
   },
 })
+
+export const mediaQueries = {
+  mobile: 'screen and (max-width: 768px)',
+  desktop: 'screen and (min-width: 768px)',
+}

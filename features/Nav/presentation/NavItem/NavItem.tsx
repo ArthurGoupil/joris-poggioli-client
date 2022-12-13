@@ -14,13 +14,17 @@ export const NavItem = ({
   onMouseLeave,
   checkSubItemIsSelected,
   hasBorderRight,
+  hasBorderBottom,
 }: NavItemProps): JSX.Element => (
   <li
     className={cc([
-      styles.navItemContainer,
       styles.navItem,
+      styles.navItemContainer,
       {
-        [styles.navItemContainerBorderRight]: hasBorderRight,
+        [styles.navItemContainerBorderRight]: hasBorderRight?.desktop,
+        [styles.navItemContainerBorderRightMobile]: hasBorderRight?.mobile,
+        [styles.navItemContainerBorderBottom]: hasBorderBottom?.desktop,
+        [styles.navItemContainerBorderBottomMobile]: hasBorderBottom?.mobile,
         [styles.navItemActive]: status === 'active' || showSubItems,
         [styles.navItemInactive]: status === 'inactive',
       },
@@ -28,7 +32,7 @@ export const NavItem = ({
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
-    {name.toUpperCase()}
+    <div>{name.toUpperCase()}</div>
     <ul
       className={cc([
         styles.subMenuList,
@@ -38,8 +42,10 @@ export const NavItem = ({
       ])}
     >
       {subItems.map((subItem) => {
+        const nameSlug = slugify(name)
         const subItemSlug = slugify(subItem)
-        const href = `/${name.replace(' ', '-').toLowerCase()}/${subItemSlug}`
+
+        const href = `/${nameSlug}/${subItemSlug}`
 
         return (
           <li key={subItem}>

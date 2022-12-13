@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'
+import { Grid } from '../../../../components/layout/Grid/Grid'
 import { ArchitectureProject } from '../../domain/entities/architecture'
 import { styles } from './architectureProjectsListGrid.css'
 import cc from 'classcat'
@@ -12,13 +12,13 @@ type ArchitectureProjectsGridProps = {
 
 export const ArchitectureProjectsListGrid = ({
   architectureProjects,
-}: ArchitectureProjectsGridProps): JSX.Element => {
-  const gridItems: GridProps['gridItems'] = []
-
-  architectureProjects?.forEach((project, index) => {
-    gridItems.push({
+}: ArchitectureProjectsGridProps): JSX.Element => (
+  <Grid
+    gridTemplateColumns={{ mobile: null, desktop: '1fr 2fr' }}
+    gridAutoRows={{ mobile: null, desktop: '38vw' }}
+    gridItems={architectureProjects.map((project, index) => ({
       key: `image_${project.id}`,
-      gridColumn: '1',
+      gridColumn: { mobile: null, desktop: '1' },
       component: (
         <Link
           href={`/architecture/${slugify(project.name)}`}
@@ -43,16 +43,6 @@ export const ArchitectureProjectsListGrid = ({
           <div className={styles.name}>{project.name.toUpperCase()}</div>
         </Link>
       ),
-    })
-  })
-
-  return (
-    <Grid
-      gridTemplateColumns="1fr 2fr"
-      gridAutoRows="38vw"
-      gridItems={gridItems}
-    />
-  )
-
-  // return architectureProjects.map((project) => <Grid >)
-}
+    }))}
+  />
+)

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 import { styles as gridStyles } from '../../../../components/layout/Grid/grid.css'
 
 const navItemContainer = style({
@@ -11,10 +11,44 @@ const navItemContainer = style({
       borderRight: themeVars.borders.default,
     },
   },
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: 'none',
+    },
+  },
 })
 
 const navItemContainerBorderRight = style({
-  borderRight: themeVars.borders.default,
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderRight: themeVars.borders.default,
+    },
+  },
+})
+
+const navItemContainerBorderRightMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: themeVars.borders.default,
+    },
+  },
+})
+
+const navItemContainerBorderBottom = style({
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderBottom: themeVars.borders.default,
+    },
+  },
+})
+
+const navItemContainerBorderBottomMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderBottom: themeVars.borders.default,
+    },
+  },
 })
 
 const navItem = style({
@@ -22,7 +56,7 @@ const navItem = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: themeVars.sizes.navItemHeight,
+  height: themeVars.sizes.navItemHeight.small,
   borderTop: themeVars.borders.default,
   cursor: 'pointer',
   backgroundColor: themeVars.colors.lightBackground,
@@ -93,6 +127,12 @@ const subMenuItem = style({
       textDecoration: 'underline',
     },
   },
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      color: themeVars.colors.fontPrimary,
+    },
+  },
 })
 
 const subMenuItemSelected = style({
@@ -102,6 +142,9 @@ const subMenuItemSelected = style({
 export const styles = {
   navItemContainer,
   navItemContainerBorderRight,
+  navItemContainerBorderRightMobile,
+  navItemContainerBorderBottom,
+  navItemContainerBorderBottomMobile,
   navItem,
   navItemActive,
   navItemInactive,

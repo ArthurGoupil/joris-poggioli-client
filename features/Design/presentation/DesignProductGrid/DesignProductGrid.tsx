@@ -5,12 +5,13 @@ import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'
 import { DesignItem, PortraitColumn } from '../../domain/entities/design'
 import { DesignProductPresentation } from '../DesignProductPresentation/DesignProductPresentation'
 import { themeVars } from '../../../../styles/theme.css'
+import { Responsive } from '../../../shared/domain/entities/responsive'
 
 type GridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn
   lineNumber: number
   columnNumber: number
-  gridColumn: string
+  gridColumn: Responsive<string>
   hideBorderBottom: boolean
 }
 
@@ -93,7 +94,7 @@ const getGridItemsFromImageLine = ({
             />
           </div>
         ),
-        gridColumn: '1 / 3',
+        gridColumn: { mobile: '1 / 3', desktop: '1 / 3' },
       },
     ]
   } else {
@@ -102,14 +103,14 @@ const getGridItemsFromImageLine = ({
         portraitColumn: line.firstColumn,
         lineNumber,
         columnNumber: 1,
-        gridColumn: '1',
+        gridColumn: { mobile: '1', desktop: '1' },
         hideBorderBottom,
       }),
       gridItemFromPortraitColumn({
         portraitColumn: line.secondColumn,
         lineNumber,
         columnNumber: 2,
-        gridColumn: '2 / 3',
+        gridColumn: { mobile: '2', desktop: '2 / 3' },
         hideBorderBottom,
       }),
     ]
@@ -134,7 +135,7 @@ const getGridItemsFromImageLines = (
         {
           key: 'product-presention',
           component: <DesignProductPresentation designItem={designItem} />,
-          gridColumn: '3 / 4',
+          gridColumn: { mobile: '1 / 3', desktop: '3 / 4' },
         }
       )
     } else if (index === 1) {
@@ -147,7 +148,7 @@ const getGridItemsFromImageLines = (
         {
           key: 'technical-sheet',
           component: null,
-          gridColumn: '3 / 4',
+          gridColumn: { mobile: null, desktop: '3 / 4' },
         }
       )
     } else {
@@ -160,7 +161,7 @@ const getGridItemsFromImageLines = (
         {
           key: `blank-${index + 1}`,
           component: <div />,
-          gridColumn: '3 / 4',
+          gridColumn: { mobile: null, desktop: '3 / 4' },
         }
       )
     }
@@ -176,8 +177,14 @@ export const DesignProductGrid = ({
   designItem,
 }: DesignProductGridProps): JSX.Element => (
   <Grid
-    gridAutoRows={`calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`}
-    gridTemplateColumns="repeat(3, 1fr)"
+    gridAutoRows={{
+      mobile: '70vw',
+      desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+    }}
+    gridTemplateColumns={{
+      mobile: 'repeat(2, 1fr)',
+      desktop: 'repeat(3, 1fr)',
+    }}
     gridItems={getGridItemsFromImageLines(designItem)}
   />
 )
