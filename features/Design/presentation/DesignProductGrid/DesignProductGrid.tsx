@@ -26,6 +26,7 @@ const gridItemFromPortraitColumn = ({
     return {
       key: `blank-${lineNumber}-${columnNumber}`,
       gridColumn,
+      isHidden: { mobile: true, desktop: false },
       component: (
         <div
           className={cc([
@@ -39,6 +40,7 @@ const gridItemFromPortraitColumn = ({
     return {
       key: portraitColumn.image.title,
       gridColumn,
+      order: { mobile: `${lineNumber + columnNumber - 1}`, desktop: 'unset' },
       component: (
         <div
           className={cc([
@@ -52,8 +54,8 @@ const gridItemFromPortraitColumn = ({
             className={styles.image}
             priority
             fill
-            sizes="33vw"
-            quality={20}
+            sizes="(max-width: 768px) 50vw, 33vw"
+            quality={30}
           />
         </div>
       ),
@@ -76,6 +78,8 @@ const getGridItemsFromImageLine = ({
     return [
       {
         key: line.landscapeImage.title,
+        order: { mobile: lineNumber.toString(), desktop: 'unset' },
+        gridColumn: { mobile: '1 / 3', desktop: '1 / 3' },
         component: (
           <div
             className={cc([
@@ -89,12 +93,11 @@ const getGridItemsFromImageLine = ({
               className={styles.image}
               priority
               fill
-              sizes="66vw"
-              quality={20}
+              sizes="(max-width: 768px) 100vw, 66vw"
+              quality={30}
             />
           </div>
         ),
-        gridColumn: { mobile: '1 / 3', desktop: '1 / 3' },
       },
     ]
   } else {
@@ -134,6 +137,8 @@ const getGridItemsFromImageLines = (
         }),
         {
           key: 'product-presention',
+          // make sure this is the last item in mobile
+          order: { mobile: '100', desktop: 'unset' },
           component: <DesignProductPresentation designItem={designItem} />,
           gridColumn: { mobile: '1 / 3', desktop: '3 / 4' },
         }
@@ -148,7 +153,8 @@ const getGridItemsFromImageLines = (
         {
           key: `blank-${index + 1}`,
           component: <div />,
-          gridColumn: { mobile: null, desktop: '3 / 4' },
+          isHidden: { mobile: true, desktop: false },
+          gridColumn: { mobile: 'auto', desktop: '3 / 4' },
         }
       )
     }
@@ -165,7 +171,7 @@ export const DesignProductGrid = ({
 }: DesignProductGridProps): JSX.Element => (
   <Grid
     gridAutoRows={{
-      mobile: '70vw',
+      mobile: 'auto',
       desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
     }}
     gridTemplateColumns={{

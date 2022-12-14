@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const textContainer = style({
   padding: '2vw',
@@ -13,6 +13,13 @@ const imageContainer = style({
   height: '100%',
   position: 'relative',
   borderRight: themeVars.borders.default,
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      height: '90vh',
+      borderTop: themeVars.borders.default,
+    },
+  },
 })
 
 const image = style({

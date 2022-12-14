@@ -41,13 +41,17 @@ const containerBorderBottomMobile = style({
 
 export const gridColumnVar = createVar()
 export const gridColumnMobileVar = createVar()
+export const orderVar = createVar()
+export const orderMobileVar = createVar()
 
 const gridItem = style({
   gridColumn: gridColumnVar,
+  order: orderVar,
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
       gridColumn: gridColumnMobileVar,
+      order: orderMobileVar,
     },
   },
 })

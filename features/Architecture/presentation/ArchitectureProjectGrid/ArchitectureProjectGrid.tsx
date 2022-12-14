@@ -204,6 +204,7 @@ export const ArchitectureProjectGrid = ({
           desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
         }}
         gridTemplateColumns={{ mobile: '1fr', desktop: 'repeat(3, 1fr)' }}
+        hasBorderBottom={{ mobile: true, desktop: true }}
         gridItems={getGridItemsFromImageLines(architectureProject)}
       />
       <Grid

@@ -6,6 +6,8 @@ import {
   gridColumnVar,
   gridTemplateColumnsMobileVar,
   gridTemplateColumnsVar,
+  orderMobileVar,
+  orderVar,
   styles,
 } from './grid.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
@@ -17,6 +19,7 @@ type GridItem = {
   key: string
   gridColumn: Responsive<string>
   component: React.ReactNode
+  order?: Responsive<string>
   isHidden?: Responsive<boolean>
 }
 
@@ -56,6 +59,7 @@ export const Grid = ({
         key,
         gridColumn,
         component,
+        order,
         isHidden = { mobile: false, desktop: false },
       }) => (
         <div
@@ -70,7 +74,8 @@ export const Grid = ({
           style={assignInlineVars({
             [gridColumnVar]: gridColumn.desktop,
             [gridColumnMobileVar]: gridColumn.mobile,
-            [gridColumnMobileVar]: gridColumn.mobile,
+            [orderVar]: order?.desktop ?? 'unset',
+            [orderMobileVar]: order?.mobile ?? 'unset',
           })}
         >
           {component}

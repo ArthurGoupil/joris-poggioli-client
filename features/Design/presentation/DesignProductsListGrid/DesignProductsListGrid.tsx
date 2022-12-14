@@ -43,6 +43,7 @@ export const DesignProductsListGrid = ({
       }}
       gridAutoRows={{ mobile: '55vw', desktop: '38vw' }}
       gridBackgroundColor={themeVars.colors.background}
+      hasBorderBottom={{ mobile: true, desktop: true }}
       gridItems={designItems.map((item, index) => {
         const isFirstColumn = { desktop: index === 0 || index % 3 === 0 }
         const isSecondColumn = {

@@ -18,17 +18,18 @@ export const AboutPrivacyCookiePolicy = ({
 }: AboutPrivacyCookiePolicyType): JSX.Element => (
   <>
     <Grid
-      gridTemplateColumns={{ mobile: null, desktop: 'repeat(3, 1fr)' }}
-      gridAutoRows={{ mobile: null, desktop: 'auto' }}
+      gridTemplateColumns={{ mobile: '1fr', desktop: 'repeat(3, 1fr)' }}
+      gridAutoRows={{ mobile: 'auto', desktop: 'auto' }}
       gridItems={[
         {
           key: 'blank',
-          gridColumn: { mobile: null, desktop: '1 / 2' },
+          gridColumn: { mobile: 'auto', desktop: '1 / 2' },
+          isHidden: { mobile: true, desktop: false },
           component: <div className={styles.blankContainer} />,
         },
         {
           key: 'text',
-          gridColumn: { mobile: null, desktop: '2 / 4' },
+          gridColumn: { mobile: '1', desktop: '2 / 4' },
           component: (
             <div className={styles.middleContainer}>
               <div className={styles.titleContainer}>

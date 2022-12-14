@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const blankContainer = style({
   borderRight: themeVars.borders.default,
@@ -10,6 +10,14 @@ const titleContainer = style({
   marginLeft: '-33.33vw',
   width: '33.33vw',
   paddingRight: '4vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      marginLeft: 0,
+      width: '100%',
+      paddingRight: 0,
+    },
+  },
 })
 
 const middleContainer = style({
@@ -27,6 +35,15 @@ const sectionTitle = style({
   left: '-33.33vw',
   width: '33.33vw',
   paddingRight: '4vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      position: 'static',
+      width: '100%',
+      paddingRight: 0,
+      marginBottom: themeVars.spacing.m,
+    },
+  },
 })
 
 const text = style({

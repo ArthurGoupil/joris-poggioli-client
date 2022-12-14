@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const blankContainer = style({
   width: '100%',
@@ -14,6 +14,12 @@ const imageContainer = style({
   position: 'relative',
   borderRight: themeVars.borders.default,
   borderBottom: themeVars.borders.default,
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      height: '70vw',
+    },
+  },
 })
 
 const image = style({
