@@ -3,12 +3,14 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import {
   BaseNavItemsProps,
-  NavItemProps,
   NavItemStatus,
 } from '../../../features/Nav/domain/entities/nav'
 import { Grid } from '../Grid/Grid'
 import { styles } from './header.css'
-import { NavItem } from '../../../features/Nav/presentation/NavItem/NavItem'
+import {
+  NavItem,
+  NavItemProps,
+} from '../../../features/Nav/presentation/NavItem/NavItem'
 
 type HeaderProps = {
   navItems: BaseNavItemsProps[]
@@ -79,17 +81,18 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                 component: (
                   <NavItem
                     {...navItems[0]}
-                    showSubItems={openMenu === navItems[0].name}
-                    onMouseEnter={(): void => {
+                    shouldShowSubItems={openMenu === navItems[0].name}
+                    showSubItems={(): void => {
                       setOpenMenu(navItems[0].name)
                     }}
-                    onMouseLeave={(): void => {
+                    hideSubItems={(): void => {
                       setOpenMenu(undefined)
                     }}
                     checkSubItemIsSelected={(slug): boolean =>
                       router.query.type === slug
                     }
                     status={getNavItemStatus(navItems[0].name)}
+                    hasDoubleBorderTopInMobile={openMenu === navItems[0].name}
                     hasBorderRight={{ mobile: false, desktop: true }}
                   />
                 ),
@@ -100,17 +103,21 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                 component: (
                   <NavItem
                     {...navItems[1]}
-                    showSubItems={openMenu === navItems[1].name}
-                    onMouseEnter={(): void => {
+                    shouldShowSubItems={openMenu === navItems[1].name}
+                    showSubItems={(): void => {
                       setOpenMenu(navItems[1].name)
                     }}
-                    onMouseLeave={(): void => {
+                    hideSubItems={(): void => {
                       setOpenMenu(undefined)
                     }}
                     checkSubItemIsSelected={(slug): boolean =>
                       router.query.project === slug
                     }
                     status={getNavItemStatus(navItems[1].name)}
+                    hasDoubleBorderTopInMobile={
+                      openMenu === navItems[1].name ||
+                      openMenu === navItems[0].name
+                    }
                     hasBorderRight={{ mobile: false, desktop: true }}
                   />
                 ),
@@ -121,17 +128,24 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                 component: (
                   <NavItem
                     {...navItems[2]}
-                    showSubItems={openMenu === navItems[2].name}
-                    onMouseEnter={(): void => {
+                    shouldShowSubItems={openMenu === navItems[2].name}
+                    showSubItems={(): void => {
                       setOpenMenu(navItems[2].name)
                     }}
-                    onMouseLeave={(): void => {
+                    hideSubItems={(): void => {
                       setOpenMenu(undefined)
                     }}
                     checkSubItemIsSelected={(slug): boolean =>
                       router.pathname.includes(slug)
                     }
                     status={getNavItemStatus(navItems[2].name)}
+                    hasDoubleBorderTopInMobile={
+                      openMenu === navItems[2].name ||
+                      openMenu === navItems[1].name
+                    }
+                    hasDoubleBorderBottomInMobile={
+                      openMenu === navItems[2].name
+                    }
                     hasBorderBottom={{ mobile: true, desktop: false }}
                   />
                 ),

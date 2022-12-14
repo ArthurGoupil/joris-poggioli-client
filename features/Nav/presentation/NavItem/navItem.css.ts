@@ -19,6 +19,28 @@ const navItemContainer = style({
   },
 })
 
+const navItem = style({
+  width: '100%',
+  height: 'auto',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: themeVars.sizes.navItemHeight.small,
+  borderTop: themeVars.borders.default,
+  cursor: 'pointer',
+  backgroundColor: themeVars.colors.lightBackground,
+  backgroundClip: 'padding-box',
+  transition: 'color 300ms',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  },
+})
+
 const navItemContainerBorderRight = style({
   '@media': {
     [`${mediaQueries.desktop}`]: {
@@ -26,7 +48,6 @@ const navItemContainerBorderRight = style({
     },
   },
 })
-
 const navItemContainerBorderRightMobile = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
@@ -42,7 +63,6 @@ const navItemContainerBorderBottom = style({
     },
   },
 })
-
 const navItemContainerBorderBottomMobile = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
@@ -51,25 +71,33 @@ const navItemContainerBorderBottomMobile = style({
   },
 })
 
-const navItem = style({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: themeVars.sizes.navItemHeight.small,
-  borderTop: themeVars.borders.default,
-  cursor: 'pointer',
-  backgroundColor: themeVars.colors.lightBackground,
-  backgroundClip: 'padding-box',
-  color: themeVars.colors.fontPrimary,
-  transition: 'color 300ms',
+const navItemContainerDoubleBorderTopMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderTop: themeVars.borders.double,
+    },
+  },
+})
+const navItemContainerDoubleBorderBottomMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderBottom: themeVars.borders.double,
+    },
+  },
 })
 
-const navItemInactive = style({
+const navItemName = style({
+  minHeight: themeVars.sizes.navItemHeight.small,
+  display: 'flex',
+  alignItems: 'center',
+  color: themeVars.colors.fontPrimary,
+})
+
+const navItemNameInactive = style({
   color: themeVars.colors.fontSecondary,
 })
 
-const navItemActive = style({
+const navItemNameActive = style({
   textDecoration: 'underline',
   color: themeVars.colors.fontPrimary,
 })
@@ -79,12 +107,10 @@ const subMenuList = style({
   top: '100%',
   left: 0,
   width: '100%',
-  opacity: 0,
-  pointerEvents: 'none',
-  transition: 'opacity 300ms',
   zIndex: 1,
   backgroundColor: themeVars.colors.lightBackground,
   borderTop: themeVars.borders.default,
+  overflow: 'hidden',
 
   selectors: {
     [`${gridStyles.gridItem}:first-child &`]: {
@@ -103,11 +129,12 @@ const subMenuList = style({
       width: 'calc(100% + 1px)',
     },
   },
-})
 
-const subMenuListVisible = style({
-  opacity: 1,
-  pointerEvents: 'auto',
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      position: 'static',
+    },
+  },
 })
 
 const subMenuItem = style({
@@ -121,16 +148,18 @@ const subMenuItem = style({
   cursor: 'pointer',
   transition: 'color 300ms',
 
-  selectors: {
-    '&:hover': {
-      color: themeVars.colors.fontPrimary,
-      textDecoration: 'underline',
-    },
+  ':hover': {
+    color: themeVars.colors.fontPrimary,
+    textDecoration: 'underline',
   },
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
-      color: themeVars.colors.fontPrimary,
+      selectors: {
+        [`${subMenuList} :last-child &`]: {
+          borderBottom: 'none',
+        },
+      },
     },
   },
 })
@@ -145,11 +174,13 @@ export const styles = {
   navItemContainerBorderRightMobile,
   navItemContainerBorderBottom,
   navItemContainerBorderBottomMobile,
+  navItemContainerDoubleBorderTopMobile,
+  navItemContainerDoubleBorderBottomMobile,
   navItem,
-  navItemActive,
-  navItemInactive,
+  navItemName,
+  navItemNameActive,
+  navItemNameInactive,
   subMenuList,
   subMenuItem,
-  subMenuListVisible,
   subMenuItemSelected,
 }

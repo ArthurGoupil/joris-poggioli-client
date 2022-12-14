@@ -52,9 +52,26 @@ const gridItem = style({
   },
 })
 
+const hide = style({
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      display: 'none',
+    },
+  },
+})
+const hideMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
+})
+
 export const styles = {
   gridContainer,
   containerBorderBottom,
   containerBorderBottomMobile,
   gridItem,
+  hide,
+  hideMobile,
 }

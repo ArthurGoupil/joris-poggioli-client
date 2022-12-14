@@ -1,12 +1,12 @@
 import axios from 'axios'
 import {
   ApiArchitectureProject,
-  ArchitectureProject,
+  ArchitectureProjectAll,
   decodeArchitectureProjects,
 } from '../entities/architecture'
 
 export const fetchArchitectureProjects = async (): Promise<
-  ArchitectureProject[]
+  ArchitectureProjectAll[]
 > => {
   try {
     const response = await axios.get<ApiArchitectureProject[]>(

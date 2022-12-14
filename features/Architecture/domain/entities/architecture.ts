@@ -20,6 +20,7 @@ type ApiImageProjectLine = {
 
 type ApiArchitectureProjectAcf = {
   name: string
+  coming_soon: boolean
   image_list: ApiImage
   description: string
   image_project_line_1: ApiImageProjectLine
@@ -59,11 +60,23 @@ type ImagesProjectPage = (LandscapeLine | PortraitLine)[]
 export type ArchitectureProject = {
   id: number
   name: string
+  isComingSoon: false
   slug: string
   imageList: Image
   description: string
   imagesProjectPage: ImagesProjectPage
 }
+
+type ComingSoonArchitectureProject = {
+  id: number
+  name: string
+  slug: string
+  isComingSoon: true
+}
+
+export type ArchitectureProjectAll =
+  | ArchitectureProject
+  | ComingSoonArchitectureProject
 
 const decodeImageProductLine = (
   line: ApiImageProjectLine
@@ -71,7 +84,7 @@ const decodeImageProductLine = (
   if (line.images_type === 'landscape') {
     return {
       imageType: 'landscape',
-      landscapeImage: decodeApiImage(line.landscape_image),
+      landscapeImage: decodeApiImage(line.landscape_image, true),
     }
   } else if (line.images_type === 'portrait') {
     return {
@@ -82,7 +95,8 @@ const decodeImageProductLine = (
           : {
               type: 'image',
               image: decodeApiImage(
-                line.portrait_images.first_column_image as ApiImage
+                line.portrait_images.first_column_image as ApiImage,
+                true
               ),
             },
       secondColumn:
@@ -91,7 +105,8 @@ const decodeImageProductLine = (
           : {
               type: 'image',
               image: decodeApiImage(
-                line.portrait_images.second_column_image as ApiImage
+                line.portrait_images.second_column_image as ApiImage,
+                true
               ),
             },
       thirdColumn:
@@ -100,7 +115,8 @@ const decodeImageProductLine = (
           : {
               type: 'image',
               image: decodeApiImage(
-                line.portrait_images.third_column_image as ApiImage
+                line.portrait_images.third_column_image as ApiImage,
+                true
               ),
             },
     }
@@ -109,33 +125,43 @@ const decodeImageProductLine = (
 
 export const decodeArchitectureProjects = (
   apiArchitectureProjects: ApiArchitectureProject[]
-): ArchitectureProject[] => {
-  const architectureProjects: ArchitectureProject[] = []
+): ArchitectureProjectAll[] => {
+  const architectureProjects: ArchitectureProjectAll[] = []
 
   for (const apiProject of apiArchitectureProjects) {
-    const imagesProjectPage: ImagesProjectPage = []
+    if (apiProject.acf.coming_soon) {
+      architectureProjects.push({
+        id: apiProject.id,
+        name: apiProject.acf.name,
+        slug: slugify(apiProject.acf.name),
+        isComingSoon: true,
+      })
+    } else {
+      const imagesProjectPage: ImagesProjectPage = []
 
-    for (let i = 1; i <= 6; i++) {
-      const acfIndex =
-        `image_project_line_${i}` as keyof ApiArchitectureProjectAcf
-      if (apiProject.acf[acfIndex]) {
-        const imageProductLine = decodeImageProductLine(
-          apiProject.acf[acfIndex] as ApiImageProjectLine
-        )
-        if (imageProductLine) {
-          imagesProjectPage.push(imageProductLine)
+      for (let i = 1; i <= 6; i++) {
+        const acfIndex =
+          `image_project_line_${i}` as keyof ApiArchitectureProjectAcf
+        if (apiProject.acf[acfIndex]) {
+          const imageProductLine = decodeImageProductLine(
+            apiProject.acf[acfIndex] as ApiImageProjectLine
+          )
+          if (imageProductLine) {
+            imagesProjectPage.push(imageProductLine)
+          }
         }
       }
-    }
 
-    architectureProjects.push({
-      id: apiProject.id,
-      name: apiProject.acf.name,
-      slug: slugify(apiProject.acf.name),
-      description: apiProject.acf.description,
-      imageList: decodeApiImage(apiProject.acf.image_list),
-      imagesProjectPage,
-    })
+      architectureProjects.push({
+        id: apiProject.id,
+        name: apiProject.acf.name,
+        isComingSoon: apiProject.acf.coming_soon ?? false,
+        slug: slugify(apiProject.acf.name),
+        description: apiProject.acf.description,
+        imageList: decodeApiImage(apiProject.acf.image_list),
+        imagesProjectPage,
+      })
+    }
   }
 
   return architectureProjects

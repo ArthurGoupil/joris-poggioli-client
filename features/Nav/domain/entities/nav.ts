@@ -1,4 +1,4 @@
-import { Responsive } from '../../../shared/domain/entities/responsive'
+import { NavItemProps } from '../../presentation/NavItem/NavItem'
 
 export type ApiArchitectureProjectItem = {
   id: number
@@ -12,17 +12,5 @@ export type ApiDesignTypeItem = {
 }
 
 export type NavItemStatus = 'default' | 'active' | 'inactive'
-
-export type NavItemProps = {
-  name: 'design' | 'architecture' | 'about'
-  subItems: string[]
-  showSubItems: boolean
-  status: NavItemStatus
-  onMouseEnter: () => void
-  onMouseLeave: () => void
-  checkSubItemIsSelected: (name: string) => boolean
-  hasBorderRight?: Responsive<boolean>
-  hasBorderBottom?: Responsive<boolean>
-}
 
 export type BaseNavItemsProps = Pick<NavItemProps, 'name' | 'subItems'>

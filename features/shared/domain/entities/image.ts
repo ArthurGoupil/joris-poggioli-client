@@ -3,7 +3,12 @@ export type ApiImage = {
   title: string
   width: number
   height: number
-  sizes: { thumbnail: string }
+  sizes: {
+    thumbnail: string
+    large: string
+    'large-width': number
+    'large-height': number
+  }
   alt?: string
 }
 
@@ -16,11 +21,14 @@ export type Image = {
   alt: string | null
 }
 
-export const decodeApiImage = (apiImage: ApiImage): Image => ({
-  url: apiImage.url,
+export const decodeApiImage = (
+  apiImage: ApiImage,
+  withLargeSize = false
+): Image => ({
+  url: withLargeSize ? apiImage.sizes.large : apiImage.url,
   alt: apiImage.alt || null,
   title: apiImage.title,
   base64Thumbnail: apiImage.sizes.thumbnail,
-  width: apiImage.width,
-  height: apiImage.height,
+  width: withLargeSize ? apiImage.sizes['large-width'] : apiImage.width,
+  height: withLargeSize ? apiImage.sizes['large-height'] : apiImage.height,
 })

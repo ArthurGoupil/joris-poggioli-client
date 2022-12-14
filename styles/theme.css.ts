@@ -52,6 +52,7 @@ export const [themeClass, themeVars] = createTheme({
   },
   borders: {
     default: '1px solid black',
+    double: '2px solid black',
   },
   sizes: {
     headerLogoHeight: '120px',

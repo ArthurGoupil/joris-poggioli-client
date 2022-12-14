@@ -4,12 +4,15 @@ import { themeVars } from '../../../../styles/theme.css'
 const presentationContainer = style({
   width: '100%',
   minHeight: '100%',
-  padding: '2vw',
   borderBottom: themeVars.borders.default,
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+})
+
+const textContainer = style({
+  padding: '2vw 2vw 0 2vw',
 })
 
 const titleContainer = style({
@@ -21,13 +24,6 @@ const paragraph = style({
   marginBottom: themeVars.spacing.xl,
 })
 
-const buttonContainer = style({
-  width: '100%',
-  position: 'absolute',
-  top: 'calc(100% + 1px)',
-  left: 0,
-})
-
 const technicalSheet = style({
   width: '100%',
   border: 'none',
@@ -35,6 +31,7 @@ const technicalSheet = style({
   minHeight: '35px',
   cursor: 'pointer',
   borderBottom: themeVars.borders.default,
+  borderTop: themeVars.borders.default,
   transition: 'filter 300ms',
 
   selectors: {
@@ -70,16 +67,16 @@ const link = style({
 
 const back = style({
   textDecoration: 'underline',
-  marginTop: '1vw',
+  margin: '1vw 0 2vw 2vw',
   display: 'flex',
 })
 
 export const styles = {
   presentationContainer,
+  textContainer,
   titleContainer,
   back,
   paragraph,
-  buttonContainer,
   technicalSheet,
   priceInformation,
   link,

@@ -38,7 +38,7 @@ export const DesignProductPresentation = ({
 
   return (
     <div className={styles.presentationContainer}>
-      <div>
+      <div className={styles.textContainer}>
         <div className={styles.titleContainer}>
           <h2>{name}</h2>
         </div>
@@ -81,8 +81,12 @@ export const DesignProductPresentation = ({
           </div>
         )}
         {freeText && <div>{parse(freeText)}</div>}
-
-        <div className={styles.buttonContainer}>
+      </div>
+      <div>
+        <Link href={`/design/${router.query.type}`} className={styles.back}>
+          BACK
+        </Link>
+        <div>
           {technicalSheet && (
             <button className={styles.technicalSheet}>
               <Link
@@ -96,7 +100,7 @@ export const DesignProductPresentation = ({
           )}
           <button className={styles.priceInformation}>
             <Link
-              href={`mailto:joris@jorispoggioli.com?subject=Price information for ${name}`}
+              href={`mailto:contact@jorispoggioli.com?subject=Price information for ${name}`}
               target="_blank"
               className={styles.link}
             >
@@ -105,9 +109,6 @@ export const DesignProductPresentation = ({
           </button>
         </div>
       </div>
-      <Link href={`/design/${router.query.type}`} className={styles.back}>
-        BACK
-      </Link>
     </div>
   )
 }

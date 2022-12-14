@@ -4,19 +4,21 @@ import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'
 import { styles } from './architectureProjectGrid.css'
 import {
   ArchitectureProject,
+  ArchitectureProjectAll,
   PortraitColumn,
 } from '../../domain/entities/architecture'
 import parse from 'html-react-parser'
 import { themeVars } from '../../../../styles/theme.css'
 import Link from 'next/link'
+import { Responsive } from '../../../shared/domain/entities/responsive'
 
 type GridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn
   lineNumber: number
   columnNumber: number
-  gridColumn: string
-  hideBorderBottom: boolean
-  hideBorderRight: boolean
+  gridColumn: Responsive<string>
+  hideBorderBottom: Responsive<boolean>
+  hideBorderRight: Responsive<boolean>
 }
 
 const gridItemFromPortraitColumn = ({
@@ -31,13 +33,16 @@ const gridItemFromPortraitColumn = ({
     return {
       key: `blank-${lineNumber}-${columnNumber}`,
       gridColumn,
+      isHidden: { mobile: true, desktop: false },
       component: (
         <div
           className={cc([
             styles.blankContainer,
             {
-              [styles.hideBorderBottom]: hideBorderBottom,
-              [styles.hideBorderRight]: hideBorderRight,
+              [styles.hideBorderBottom]: hideBorderBottom.desktop,
+              [styles.hideBorderBottomMobile]: hideBorderBottom.mobile,
+              [styles.hideBorderRight]: hideBorderRight.desktop,
+              [styles.hideBorderRightMobile]: hideBorderRight.mobile,
             },
           ])}
         />
@@ -52,7 +57,8 @@ const gridItemFromPortraitColumn = ({
           className={cc([
             styles.imageContainer,
             {
-              [styles.hideBorderBottom]: hideBorderBottom,
+              [styles.hideBorderBottom]: hideBorderBottom.desktop,
+              [styles.hideBorderBottomMobile]: hideBorderBottom.mobile,
               [styles.hideBorderRight]: columnNumber === 3,
             },
           ])}
@@ -62,9 +68,9 @@ const gridItemFromPortraitColumn = ({
             alt={portraitColumn.image.alt ?? portraitColumn.image.title}
             className={styles.image}
             priority
-            fill
-            sizes="33vw"
-            quality={40}
+            width={portraitColumn.image.width}
+            height={portraitColumn.image.height}
+            quality={70}
           />
         </div>
       ),
@@ -75,13 +81,13 @@ const gridItemFromPortraitColumn = ({
 type GetGridItemsFromImageLineProps = {
   line: ArchitectureProject['imagesProjectPage'][number]
   lineNumber: number
-  hideBorderBottom: boolean
+  isLastLine: boolean
 }
 
 const getGridItemsFromImageLine = ({
   line,
   lineNumber,
-  hideBorderBottom,
+  isLastLine,
 }: GetGridItemsFromImageLineProps): GridProps['gridItems'] => {
   if (line.imageType === 'landscape') {
     return [
@@ -92,7 +98,8 @@ const getGridItemsFromImageLine = ({
             className={cc([
               styles.imageContainer,
               styles.hideBorderRight,
-              { [styles.hideBorderBottom]: hideBorderBottom },
+              { [styles.hideBorderBottom]: isLastLine },
+              { [styles.hideBorderBottomMobile]: isLastLine },
             ])}
           >
             <Image
@@ -100,13 +107,13 @@ const getGridItemsFromImageLine = ({
               alt={line.landscapeImage.alt ?? line.landscapeImage.title}
               className={styles.image}
               priority
-              fill
-              sizes="66vw"
-              quality={40}
+              width={line.landscapeImage.width}
+              height={line.landscapeImage.height}
+              quality={70}
             />
           </div>
         ),
-        gridColumn: '1 / 4',
+        gridColumn: { mobile: '1', desktop: '1 / 4' },
       },
     ]
   } else {
@@ -115,29 +122,43 @@ const getGridItemsFromImageLine = ({
         portraitColumn: line.firstColumn,
         lineNumber,
         columnNumber: 1,
-        gridColumn: '1',
-        hideBorderBottom,
-        hideBorderRight:
-          line.firstColumn.type === 'blank' &&
-          line.secondColumn.type === 'blank',
+        gridColumn: { mobile: '1', desktop: '1' },
+        hideBorderBottom: {
+          mobile:
+            line.secondColumn.type === 'blank' &&
+            line.thirdColumn.type === 'blank',
+          desktop: isLastLine,
+        },
+        hideBorderRight: {
+          mobile: true,
+          desktop:
+            line.firstColumn.type === 'blank' &&
+            line.secondColumn.type === 'blank',
+        },
       }),
       gridItemFromPortraitColumn({
         portraitColumn: line.secondColumn,
         lineNumber,
         columnNumber: 2,
-        gridColumn: '2 / 3',
-        hideBorderBottom,
-        hideBorderRight:
-          line.secondColumn.type === 'blank' &&
-          line.thirdColumn.type === 'blank',
+        gridColumn: { mobile: '1', desktop: '2 / 3' },
+        hideBorderBottom: {
+          mobile: line.thirdColumn.type === 'blank',
+          desktop: isLastLine,
+        },
+        hideBorderRight: {
+          mobile: true,
+          desktop:
+            line.secondColumn.type === 'blank' &&
+            line.thirdColumn.type === 'blank',
+        },
       }),
       gridItemFromPortraitColumn({
         portraitColumn: line.thirdColumn,
         lineNumber,
         columnNumber: 3,
-        gridColumn: '3 / 4',
-        hideBorderBottom,
-        hideBorderRight: true,
+        gridColumn: { mobile: '1', desktop: '3 / 4' },
+        hideBorderBottom: { mobile: true, desktop: isLastLine },
+        hideBorderRight: { mobile: true, desktop: true },
       }),
     ]
   }
@@ -149,14 +170,14 @@ const getGridItemsFromImageLines = (
   const gridItems: GridProps['gridItems'] = []
 
   architectureProject.imagesProjectPage.forEach((imageLine, index) => {
-    const hideBorderBottom =
+    const isLastLine =
       index === architectureProject.imagesProjectPage.length - 1
 
     gridItems.push(
       ...getGridItemsFromImageLine({
         line: imageLine,
         lineNumber: index + 1,
-        hideBorderBottom,
+        isLastLine,
       })
     )
   })
@@ -165,39 +186,45 @@ const getGridItemsFromImageLines = (
 }
 
 type ArchitectureProjectGridProps = {
-  architectureProject: ArchitectureProject
+  architectureProject: ArchitectureProjectAll
 }
 
 export const ArchitectureProjectGrid = ({
   architectureProject,
-}: ArchitectureProjectGridProps): JSX.Element => (
-  <>
-    <Grid
-      gridAutoRows={{
-        mobile: null,
-        desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`,
-      }}
-      gridTemplateColumns={{ mobile: null, desktop: 'repeat(3, 1fr)' }}
-      gridItems={getGridItemsFromImageLines(architectureProject)}
-    />
-    <Grid
-      gridAutoRows={{ mobile: null, desktop: 'auto' }}
-      gridTemplateColumns={{ mobile: null, desktop: 'repeat(3, 1fr)' }}
-      gridItems={[
-        {
-          key: 'description',
-          gridColumn: { mobile: null, desktop: '3 / 4' },
-          component: (
-            <div className={styles.text}>
-              <h2>{architectureProject.name.toUpperCase()}</h2>
-              {parse(architectureProject.description)}
-              <Link href="/architecture/all" className={styles.back}>
-                BACK
-              </Link>
-            </div>
-          ),
-        },
-      ]}
-    />
-  </>
-)
+}: ArchitectureProjectGridProps): JSX.Element => {
+  if (architectureProject.isComingSoon) {
+    return <div className={styles.comingSoon}>COMING SOON</div>
+  }
+
+  return (
+    <>
+      <Grid
+        gridAutoRows={{
+          mobile: 'auto',
+          desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+        }}
+        gridTemplateColumns={{ mobile: '1fr', desktop: 'repeat(3, 1fr)' }}
+        gridItems={getGridItemsFromImageLines(architectureProject)}
+      />
+      <Grid
+        gridAutoRows={{ mobile: 'auto', desktop: 'auto' }}
+        gridTemplateColumns={{ mobile: '1', desktop: 'repeat(3, 1fr)' }}
+        gridItems={[
+          {
+            key: 'description',
+            gridColumn: { mobile: '1', desktop: '3 / 4' },
+            component: (
+              <div className={styles.text}>
+                <h2>{architectureProject.name.toUpperCase()}</h2>
+                {parse(architectureProject.description)}
+                <Link href="/architecture/all" className={styles.back}>
+                  BACK
+                </Link>
+              </div>
+            ),
+          },
+        ]}
+      />
+    </>
+  )
+}

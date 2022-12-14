@@ -1,5 +1,17 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
+
+const comingSoon = style({
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontWeight: 700,
+  fontSize: themeVars.font.xl.size,
+  lineHeight: themeVars.font.xl.lineHeight,
+  letterSpacing: '5px',
+})
 
 const blankContainer = style({
   width: '100%',
@@ -14,6 +26,13 @@ const imageContainer = style({
   position: 'relative',
   borderRight: themeVars.borders.default,
   borderBottom: themeVars.borders.default,
+  display: 'flex',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      position: 'static',
+    },
+  },
 })
 
 const image = style({
@@ -21,14 +40,42 @@ const image = style({
   height: 'auto',
   maxHeight: '100%',
   objectFit: 'cover',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      objectFit: 'contain',
+    },
+  },
 })
 
 const hideBorderBottom = style({
-  borderBottom: 'none',
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderBottom: 'none',
+    },
+  },
+})
+const hideBorderBottomMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderBottom: 'none',
+    },
+  },
 })
 
 const hideBorderRight = style({
-  borderRight: 'none',
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderRight: 'none',
+    },
+  },
+})
+const hideBorderRightMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: 'none',
+    },
+  },
 })
 
 const text = style({
@@ -42,11 +89,14 @@ const back = style({
 })
 
 export const styles = {
+  comingSoon,
   blankContainer,
   imageContainer,
   image,
   hideBorderBottom,
+  hideBorderBottomMobile,
   hideBorderRight,
+  hideBorderRightMobile,
   text,
   back,
 }

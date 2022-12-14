@@ -47,13 +47,13 @@ globalStyle('a', {
 })
 
 export const scrollbarContainer = style({
-  height: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+  height: '100%',
+})
 
-  '@media': {
-    [`${mediaQueries.mobile}`]: {
-      height: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.large})`,
-    },
-  },
+export const mainContainer = style({
+  height: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 export const scrollbarView = style({
@@ -72,6 +72,12 @@ export const scrollbarThumb = style({
   backgroundColor: 'black',
   position: 'absolute',
   right: '5px',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
 })
 
 export const notFoundContainer = style({
@@ -84,7 +90,8 @@ export const notFoundContainer = style({
 })
 
 export const notFound = style({
-  fontSize: themeVars.font.xxl.size,
-  lineHeight: themeVars.font.xxl.lineHeight,
+  fontSize: themeVars.font.xl.size,
+  lineHeight: themeVars.font.xl.lineHeight,
   fontWeight: 700,
+  textAlign: 'center',
 })

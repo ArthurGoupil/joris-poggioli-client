@@ -17,6 +17,7 @@ type GridItem = {
   key: string
   gridColumn: Responsive<string>
   component: React.ReactNode
+  isHidden?: Responsive<boolean>
 }
 
 export type GridProps = {
@@ -50,17 +51,31 @@ export const Grid = ({
       [gridBackgroundColorVar]: gridBackgroundColor,
     })}
   >
-    {gridItems.map(({ key, gridColumn, component }) => (
-      <div
-        key={key}
-        className={styles.gridItem}
-        style={assignInlineVars({
-          [gridColumnVar]: gridColumn.desktop,
-          [gridColumnMobileVar]: gridColumn.mobile,
-        })}
-      >
-        {component}
-      </div>
-    ))}
+    {gridItems.map(
+      ({
+        key,
+        gridColumn,
+        component,
+        isHidden = { mobile: false, desktop: false },
+      }) => (
+        <div
+          key={key}
+          className={cc([
+            styles.gridItem,
+            {
+              [styles.hide]: isHidden.desktop,
+              [styles.hideMobile]: isHidden.mobile,
+            },
+          ])}
+          style={assignInlineVars({
+            [gridColumnVar]: gridColumn.desktop,
+            [gridColumnMobileVar]: gridColumn.mobile,
+            [gridColumnMobileVar]: gridColumn.mobile,
+          })}
+        >
+          {component}
+        </div>
+      )
+    )}
   </div>
 )

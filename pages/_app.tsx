@@ -5,6 +5,7 @@ import { Footer } from '../components/layout/Footer/Footer'
 import React from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import {
+  mainContainer,
   scrollbarContainer,
   scrollbarThumb,
   scrollbarView,
@@ -89,7 +90,7 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
     (imagesToLoad > 0 || isFakeLoading) && !hasAlreadyLoaded.current
 
   return (
-    <>
+    <div className={mainContainer}>
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
           {showCounterLoader && (
@@ -100,38 +101,33 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
             />
           )}
         </AnimatePresence>
-      </LazyMotion>
-      <Header navItems={pageProps.navItems} />
-      <LazyMotion features={domAnimation}>
+        <Header navItems={pageProps.navItems} />
         <AnimatePresence mode="wait" onExitComplete={removeFixStyles}>
           <m.div
             key={router.asPath}
+            className={scrollbarContainer}
             initial="initial"
             animate="animate"
             exit="exit"
             variants={fade.variants}
             transition={fade.transition}
           >
-            <div className={scrollbarContainer}>
-              <Scrollbars
-                universal
-                renderThumbVertical={(): JSX.Element => (
-                  <div className={scrollbarThumb} />
-                )}
-                renderView={(): JSX.Element => (
-                  <div className={scrollbarView} />
-                )}
-              >
-                <main>
-                  <Component {...pageProps} />
-                </main>
-                <Footer />
-              </Scrollbars>
-            </div>
+            <Scrollbars
+              universal
+              renderThumbVertical={(): JSX.Element => (
+                <div className={scrollbarThumb} />
+              )}
+              renderView={(): JSX.Element => <div className={scrollbarView} />}
+            >
+              <main>
+                <Component {...pageProps} />
+              </main>
+              <Footer />
+            </Scrollbars>
           </m.div>
         </AnimatePresence>
       </LazyMotion>
-    </>
+    </div>
   )
 }
 

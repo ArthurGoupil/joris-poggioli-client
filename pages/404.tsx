@@ -13,7 +13,10 @@ const FourZeroFourPage = (): JSX.Element => {
       </Head>
       <div className={notFoundContainer}>
         <div className={notFound}>PAGE NOT FOUND</div>
-        <Link href="/" style={{ textDecoration: 'underline' }}>
+        <Link
+          href="/"
+          style={{ textDecoration: 'underline', textAlign: 'center' }}
+        >
           GO BACK HOME
         </Link>
       </div>

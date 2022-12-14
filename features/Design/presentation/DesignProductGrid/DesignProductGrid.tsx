@@ -138,19 +138,6 @@ const getGridItemsFromImageLines = (
           gridColumn: { mobile: '1 / 3', desktop: '3 / 4' },
         }
       )
-    } else if (index === 1) {
-      gridItems.push(
-        ...getGridItemsFromImageLine({
-          line: imageLine,
-          lineNumber: index + 1,
-          hideBorderBottom,
-        }),
-        {
-          key: 'technical-sheet',
-          component: null,
-          gridColumn: { mobile: null, desktop: '3 / 4' },
-        }
-      )
     } else {
       gridItems.push(
         ...getGridItemsFromImageLine({

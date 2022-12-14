@@ -4,6 +4,7 @@ import React from 'react'
 import { fetchArchitectureProjects } from '../../features/Architecture/domain/repository/fetchArchitectureProjects'
 import { ArchitectureProjectsListGrid } from '../../features/Architecture/presentation/ArchitectureProjectsListGrid/ArchitectureProjectsListGrid'
 import { getCustomGetStaticProps } from '../../dev-tools/static-props/getCustomGetStaticProps'
+import { ArchitectureProject } from '../../features/Architecture/domain/entities/architecture'
 
 const ArchitectureProjectsPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -28,7 +29,11 @@ const ArchitectureProjectsPage: NextPage<
 export const getStaticProps = getCustomGetStaticProps(async () => {
   const architectureProjects = await fetchArchitectureProjects()
 
-  return { architectureProjects }
+  return {
+    architectureProjects: architectureProjects.filter(
+      (project) => !project.isComingSoon
+    ) as ArchitectureProject[],
+  }
 })
 
 export default ArchitectureProjectsPage
