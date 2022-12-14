@@ -116,17 +116,41 @@ const subMenuList = style({
     [`${gridStyles.gridItem}:first-child &`]: {
       borderRight: themeVars.borders.default,
       width: 'calc(100% + 1px)',
+
+      '@media': {
+        [`${mediaQueries.mobile}`]: {
+          borderRight: 'none',
+          width: '100%',
+        },
+      },
     },
     [`${gridStyles.gridItem}:not(:first-child):not(:last-child) &`]: {
       borderLeft: themeVars.borders.default,
       borderRight: themeVars.borders.default,
       width: 'calc(100% + 2px)',
       marginLeft: '-1px',
+
+      '@media': {
+        [`${mediaQueries.mobile}`]: {
+          borderLeft: 'none',
+          borderRight: 'none',
+          width: '100%',
+          marginLeft: 0,
+        },
+      },
     },
     [`${gridStyles.gridItem}:last-child &`]: {
       borderLeft: themeVars.borders.default,
       marginLeft: '-1px',
       width: 'calc(100% + 1px)',
+
+      '@media': {
+        [`${mediaQueries.mobile}`]: {
+          borderLeft: 'none',
+          width: '100%',
+          marginLeft: 0,
+        },
+      },
     },
   },
 

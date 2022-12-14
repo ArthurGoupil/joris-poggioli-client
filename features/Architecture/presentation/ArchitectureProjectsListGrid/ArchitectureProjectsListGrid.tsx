@@ -15,16 +15,17 @@ export const ArchitectureProjectsListGrid = ({
   architectureProjects,
 }: ArchitectureProjectsGridProps): JSX.Element => (
   <Grid
-    gridTemplateColumns={{ mobile: null, desktop: '1fr 2fr' }}
+    gridTemplateColumns={{ mobile: '1fr', desktop: '1fr 2fr' }}
     gridAutoRows={{
-      mobile: null,
+      mobile: '100vw',
       desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
     }}
+    hasBorderBottom={{ mobile: true, desktop: true }}
     gridItems={architectureProjects
       .filter((project) => !project.isComingSoon)
       .map((project, index) => ({
         key: `image_${project.id}`,
-        gridColumn: { mobile: null, desktop: '1' },
+        gridColumn: { mobile: '1', desktop: '1' },
         component: (
           <Link
             href={`/architecture/${slugify(project.name)}`}
@@ -43,8 +44,8 @@ export const ArchitectureProjectsListGrid = ({
               className={styles.image}
               priority
               fill
-              sizes="33vw"
-              quality={20}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              quality={30}
             />
             <div className={styles.name}>{project.name.toUpperCase()}</div>
           </Link>

@@ -9,6 +9,7 @@ const footer = style({
   justifyContent: 'center',
   fontWeight: 700,
   backgroundColor: themeVars.colors.lightBackground,
+  paddingTop: '2vw',
 })
 
 const footerLink = style({

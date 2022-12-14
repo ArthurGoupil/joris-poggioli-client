@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const imageContainer = style({
   width: '100%',
@@ -9,6 +9,12 @@ const imageContainer = style({
   cursor: 'pointer',
   borderRight: themeVars.borders.default,
   borderBottom: themeVars.borders.default,
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: 'none',
+    },
+  },
 })
 
 const image = style({
@@ -45,6 +51,12 @@ const name = style({
   selectors: {
     [`${imageContainer}:hover &`]: {
       opacity: 1,
+    },
+  },
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
     },
   },
 })

@@ -41,8 +41,8 @@ export const ImageGridItem = ({
       className={styles.image}
       priority
       fill
-      sizes="33vw"
-      quality={20}
+      sizes="(max-width: 768px) 50vw, 33vw"
+      quality={30}
     />
     <div className={styles.imageTitleContainer}>
       <div>{title.toUpperCase()}</div>
