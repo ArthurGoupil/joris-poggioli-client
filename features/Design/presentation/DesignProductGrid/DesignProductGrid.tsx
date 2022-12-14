@@ -12,7 +12,7 @@ type GridItemFromPortraitColumnProps = {
   lineNumber: number
   columnNumber: number
   gridColumn: Responsive<string>
-  hideBorderBottom: boolean
+  hideBorderBottom: Responsive<boolean>
 }
 
 const gridItemFromPortraitColumn = ({
@@ -26,12 +26,13 @@ const gridItemFromPortraitColumn = ({
     return {
       key: `blank-${lineNumber}-${columnNumber}`,
       gridColumn,
-      isHidden: { mobile: true, desktop: false },
+      order: { mobile: `${lineNumber + columnNumber - 1}`, desktop: 'unset' },
       component: (
         <div
           className={cc([
             styles.blankContainer,
-            { [styles.hideBorderBottom]: hideBorderBottom },
+            { [styles.hideBorderBottom]: hideBorderBottom.desktop },
+            { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
           ])}
         />
       ),
@@ -45,7 +46,8 @@ const gridItemFromPortraitColumn = ({
         <div
           className={cc([
             styles.imageContainer,
-            { [styles.hideBorderBottom]: hideBorderBottom },
+            { [styles.hideBorderBottom]: hideBorderBottom.desktop },
+            { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
           ])}
         >
           <Image
@@ -66,7 +68,7 @@ const gridItemFromPortraitColumn = ({
 type GetGridItemsFromImageLineProps = {
   line: DesignItem['imagesProductPage'][number]
   lineNumber: number
-  hideBorderBottom: boolean
+  hideBorderBottom: Responsive<boolean>
 }
 
 const getGridItemsFromImageLine = ({
@@ -126,7 +128,10 @@ const getGridItemsFromImageLines = (
   const gridItems: GridProps['gridItems'] = []
 
   designItem.imagesProductPage.forEach((imageLine, index) => {
-    const hideBorderBottom = index === designItem.imagesProductPage.length - 1
+    const hideBorderBottom = {
+      mobile: false,
+      desktop: index === designItem.imagesProductPage.length - 1,
+    }
 
     if (index === 0) {
       gridItems.push(

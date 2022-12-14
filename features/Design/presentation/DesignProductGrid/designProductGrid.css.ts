@@ -30,12 +30,24 @@ const image = style({
 })
 
 const hideBorderBottom = style({
-  borderBottom: 'none',
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderBottom: 'none',
+    },
+  },
+})
+const hideBorderBottomMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderBottom: 'none',
+    },
+  },
 })
 
 export const styles = {
   blankContainer,
   hideBorderBottom,
+  hideBorderBottomMobile,
   imageContainer,
   image,
 }
