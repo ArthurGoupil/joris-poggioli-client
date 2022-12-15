@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../styles/theme.css'
 
 const footer = style({
   fontSize: '8vw',
@@ -10,6 +10,13 @@ const footer = style({
   fontWeight: 700,
   backgroundColor: themeVars.colors.lightBackground,
   paddingTop: '2vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      paddingTop: themeVars.spacing.l,
+      paddingBottom: themeVars.spacing.l,
+    },
+  },
 })
 
 const footerLink = style({
