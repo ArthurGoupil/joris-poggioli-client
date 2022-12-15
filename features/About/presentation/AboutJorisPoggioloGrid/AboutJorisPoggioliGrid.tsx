@@ -39,7 +39,7 @@ export const AboutJorisPoggioliGrid = ({
               className={styles.image}
               priority
               fill
-              sizes="33vw"
+              sizes="(max-width: 768px) 100vw, 33vw"
               quality={40}
             />
           </div>
