@@ -51,9 +51,11 @@ export const scrollbarContainer = style({
 })
 
 export const mainContainer = style({
-  height: '100vh',
+  height: '100%',
+  width: '100%',
   display: 'flex',
   flexDirection: 'column',
+  position: 'fixed',
 })
 
 export const scrollbarView = style({
