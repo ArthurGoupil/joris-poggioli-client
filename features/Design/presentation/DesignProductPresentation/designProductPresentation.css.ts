@@ -79,6 +79,7 @@ const back = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
       margin: themeVars.spacing.xl,
+      marginTop: 0,
     },
   },
 })
