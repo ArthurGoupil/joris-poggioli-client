@@ -39,6 +39,14 @@ globalStyle('h2', {
   fontSize: '3vw',
   lineHeight: '3.5vw',
   marginBottom: '2vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      fontSize: themeVars.font.l.size,
+      lineHeight: themeVars.font.l.lineHeight,
+      marginBottom: themeVars.spacing.l,
+    },
+  },
 })
 
 globalStyle('a', {

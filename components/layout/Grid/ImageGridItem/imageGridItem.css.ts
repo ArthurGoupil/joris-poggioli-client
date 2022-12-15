@@ -63,6 +63,12 @@ const image = style({
       opacity: 0.4,
     },
   },
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      padding: themeVars.spacing.xl,
+    },
+  },
 })
 
 const imageTitleContainer = style({

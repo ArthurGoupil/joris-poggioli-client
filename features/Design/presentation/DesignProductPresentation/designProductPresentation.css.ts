@@ -1,5 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const presentationContainer = style({
   width: '100%',
@@ -13,6 +13,12 @@ const presentationContainer = style({
 
 const textContainer = style({
   padding: '2vw 2vw 0 2vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      padding: themeVars.spacing.xl,
+    },
+  },
 })
 
 const titleContainer = style({

@@ -6,6 +6,13 @@ const textContainer = style({
   minHeight: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`,
   textAlign: 'justify',
   borderRight: themeVars.borders.default,
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: 'none',
+      padding: themeVars.spacing.xl,
+    },
+  },
 })
 
 const imageContainer = style({

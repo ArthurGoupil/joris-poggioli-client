@@ -80,6 +80,12 @@ const hideBorderRightMobile = style({
 
 const text = style({
   padding: '2vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      padding: themeVars.spacing.xl,
+    },
+  },
 })
 
 const back = style({

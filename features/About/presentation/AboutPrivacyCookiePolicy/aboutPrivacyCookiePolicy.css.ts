@@ -22,6 +22,12 @@ const titleContainer = style({
 
 const middleContainer = style({
   padding: '2vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      padding: themeVars.spacing.xl,
+    },
+  },
 })
 
 const textContainer = style({
