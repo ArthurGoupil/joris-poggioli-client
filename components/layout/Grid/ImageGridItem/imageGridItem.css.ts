@@ -86,6 +86,12 @@ const imageTitleContainer = style({
       opacity: 1,
     },
   },
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
 })
 
 export const styles = {
