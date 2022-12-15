@@ -1,13 +1,13 @@
-import type { AppProps } from 'next/app'
+import 'simplebar-react/dist/simplebar.min.css'
 import '../styles/reset.css'
 import '../styles/globals.css'
+
+import type { AppProps } from 'next/app'
 import { Footer } from '../components/layout/Footer/Footer'
 import React from 'react'
-import Scrollbars from 'react-custom-scrollbars-2'
 import {
   mainContainer,
   scrollbarContainer,
-  scrollbarThumb,
   scrollbarView,
 } from '../styles/globals.css'
 import localFont from '@next/font/local'
@@ -26,6 +26,7 @@ import {
   useLoadedImagesCount,
 } from '../context/loaded-images-count.context'
 import { Header } from '../components/layout/Header/Header'
+import SimpleBar from 'simplebar-react'
 
 const myFont = localFont({
   src: [
@@ -112,18 +113,16 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
             variants={fade.variants}
             transition={fade.transition}
           >
-            <Scrollbars
-              universal
-              renderThumbVertical={(): JSX.Element => (
-                <div className={scrollbarThumb} />
-              )}
-              renderView={(): JSX.Element => <div className={scrollbarView} />}
+            <SimpleBar
+              autoHide={false}
+              forceVisible="y"
+              className={scrollbarView}
             >
               <main>
                 <Component {...pageProps} />
               </main>
               <Footer />
-            </Scrollbars>
+            </SimpleBar>
           </m.div>
         </AnimatePresence>
       </LazyMotion>

@@ -55,7 +55,7 @@ globalStyle('a', {
 })
 
 export const scrollbarContainer = style({
-  height: '100%',
+  overflow: 'hidden',
 })
 
 export const mainContainer = style({
@@ -67,27 +67,23 @@ export const mainContainer = style({
 })
 
 export const scrollbarView = style({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  position: 'absolute',
-  inset: '0px',
-  overflow: 'scroll',
-  marginRight: '-16px',
-  marginBottom: '-16px',
+  height: '100%',
 })
 
-export const scrollbarThumb = style({
+globalStyle('.simplebar-track.simplebar-vertical', {
+  width: '20px',
+})
+globalStyle('.simplebar-scrollbar::before', {
   width: '15px',
-  backgroundColor: 'black',
-  position: 'absolute',
-  right: '5px',
-
-  '@media': {
-    [`${mediaQueries.mobile}`]: {
-      display: 'none',
-    },
-  },
+  background: 'black',
+  borderRadius: 0,
+})
+globalStyle('.simplebar-scrollbar.simplebar-visible:before', {
+  opacity: 1,
+})
+globalStyle('.simplebar-track.simplebar-vertical .simplebar-scrollbar:before', {
+  top: 0,
+  bottom: 0,
 })
 
 export const notFoundContainer = style({
