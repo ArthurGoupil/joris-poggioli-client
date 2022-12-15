@@ -73,6 +73,13 @@ export const scrollbarView = style({
 globalStyle('.simplebar-track.simplebar-vertical', {
   width: '20px',
 })
+globalStyle('.simplebar-track.simplebar-vertical', {
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
+})
 globalStyle('.simplebar-scrollbar::before', {
   width: '15px',
   background: 'black',
