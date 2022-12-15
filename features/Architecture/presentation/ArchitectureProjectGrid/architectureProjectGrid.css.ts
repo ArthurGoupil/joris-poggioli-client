@@ -90,8 +90,14 @@ const text = style({
 
 const back = style({
   textDecoration: 'underline',
-  marginTop: '1vw',
+  marginTop: '2vw',
   display: 'flex',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      marginTop: themeVars.spacing.xl,
+    },
+  },
 })
 
 export const styles = {

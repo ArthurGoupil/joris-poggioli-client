@@ -75,6 +75,12 @@ const back = style({
   textDecoration: 'underline',
   margin: '1vw 0 2vw 2vw',
   display: 'flex',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      margin: themeVars.spacing.xl,
+    },
+  },
 })
 
 export const styles = {
