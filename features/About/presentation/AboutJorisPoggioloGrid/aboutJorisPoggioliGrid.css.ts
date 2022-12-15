@@ -25,6 +25,7 @@ const imageContainer = style({
     [`${mediaQueries.mobile}`]: {
       height: '90vh',
       borderTop: themeVars.borders.default,
+      borderRight: 'none',
     },
   },
 })

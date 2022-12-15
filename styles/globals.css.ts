@@ -75,13 +75,6 @@ export const scrollbarView = style({
   overflow: 'scroll',
   marginRight: '-16px',
   marginBottom: '-16px',
-
-  '@media': {
-    [`${mediaQueries.mobile}`]: {
-      marginRight: 0,
-      marginBottom: 0,
-    },
-  },
 })
 
 export const scrollbarThumb = style({
