@@ -11,6 +11,8 @@ import {
   NavItem,
   NavItemProps,
 } from '../../../features/Nav/presentation/NavItem/NavItem'
+import Logo from '../../../public/logo.svg'
+import Image from 'next/image'
 
 type HeaderProps = {
   navItems: BaseNavItemsProps[]
@@ -66,10 +68,11 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
 
   return (
     <header className={styles.headerContainer}>
-      <Link href="/" className={styles.logo}>
-        JORIS POGGIOLI
+      <Link href="/" className={styles.logoContainer}>
+        <Image src={Logo} alt="Logo Joris Poggioli" className={styles.logo} />
       </Link>
-      <nav>
+
+      <nav className={styles.nav}>
         <ul ref={navListRef} className={styles.navList}>
           <Grid
             gridAutoRows={{ mobile: 'auto', desktop: 'auto' }}

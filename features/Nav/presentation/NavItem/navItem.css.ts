@@ -25,7 +25,7 @@ const navItem = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  minHeight: themeVars.sizes.navItemHeight.small,
+  minHeight: themeVars.sizes.navItemHeight.desktop,
   borderTop: themeVars.borders.default,
   cursor: 'pointer',
   backgroundColor: themeVars.colors.lightBackground,
@@ -87,7 +87,7 @@ const navItemContainerDoubleBorderBottomMobile = style({
 })
 
 const navItemName = style({
-  minHeight: themeVars.sizes.navItemHeight.small,
+  minHeight: themeVars.sizes.navItemHeight.desktop,
   display: 'flex',
   alignItems: 'center',
   color: themeVars.colors.fontPrimary,

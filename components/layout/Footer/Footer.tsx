@@ -1,10 +1,12 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { styles } from './footer.css'
+import Logo from '../../../public/logo.svg'
 
 export const Footer = (): JSX.Element => (
   <footer className={styles.footer}>
     <Link href="/" className={styles.footerLink}>
-      JORIS POGGIOLI
+      <Image src={Logo} alt="Logo Joris Poggioli" className={styles.logo} />
     </Link>
   </footer>
 )

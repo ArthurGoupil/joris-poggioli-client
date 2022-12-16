@@ -55,9 +55,9 @@ export const [themeClass, themeVars] = createTheme({
     double: '2px solid black',
   },
   sizes: {
-    headerLogoHeight: '120px',
+    headerLogoHeight: { mobile: '80px', desktop: '120px' },
     footerHeight: '12vw',
-    navItemHeight: { large: '120px', small: '40px' },
+    navItemHeight: { mobile: '120px', desktop: '40px' },
   },
 })
 

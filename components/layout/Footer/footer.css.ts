@@ -21,8 +21,9 @@ const footer = style({
 })
 
 const footerLink = style({
-  textDecoration: 'none',
   color: themeVars.colors.fontPrimary,
 })
 
-export const styles = { footer, footerLink }
+const logo = style({ width: '90vw', height: 'auto' })
+
+export const styles = { footer, footerLink, logo }

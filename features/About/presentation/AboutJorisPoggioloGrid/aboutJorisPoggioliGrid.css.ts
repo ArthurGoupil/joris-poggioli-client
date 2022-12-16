@@ -3,12 +3,13 @@ import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const textContainer = style({
   padding: '2vw',
-  minHeight: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight})`,
+  minHeight: `calc(100vh - ${themeVars.sizes.headerLogoHeight.desktop} - ${themeVars.sizes.navItemHeight.desktop})`,
   textAlign: 'justify',
   borderRight: themeVars.borders.default,
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
+      minHeight: `calc(100vh - ${themeVars.sizes.headerLogoHeight.mobile} - ${themeVars.sizes.navItemHeight.mobile})`,
       borderRight: 'none',
       padding: themeVars.spacing.xl,
     },

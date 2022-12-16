@@ -201,7 +201,7 @@ export const ArchitectureProjectGrid = ({
       <Grid
         gridAutoRows={{
           mobile: 'auto',
-          desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+          desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight.desktop} - ${themeVars.sizes.navItemHeight.desktop})`,
         }}
         gridTemplateColumns={{ mobile: '1fr', desktop: 'repeat(3, 1fr)' }}
         hasBorderBottom={{ mobile: true, desktop: true }}

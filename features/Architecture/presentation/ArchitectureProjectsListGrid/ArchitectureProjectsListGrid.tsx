@@ -18,7 +18,7 @@ export const ArchitectureProjectsListGrid = ({
     gridTemplateColumns={{ mobile: '1fr', desktop: '1fr 2fr' }}
     gridAutoRows={{
       mobile: '100vw',
-      desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+      desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight.desktop} - ${themeVars.sizes.navItemHeight.desktop})`,
     }}
     hasBorderBottom={{ mobile: true, desktop: true }}
     gridItems={architectureProjects

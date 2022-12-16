@@ -177,7 +177,7 @@ export const DesignProductGrid = ({
   <Grid
     gridAutoRows={{
       mobile: 'auto',
-      desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight} - ${themeVars.sizes.navItemHeight.small})`,
+      desktop: `calc(100vh - ${themeVars.sizes.headerLogoHeight.desktop} - ${themeVars.sizes.navItemHeight.desktop})`,
     }}
     gridTemplateColumns={{
       mobile: 'repeat(2, 1fr)',
