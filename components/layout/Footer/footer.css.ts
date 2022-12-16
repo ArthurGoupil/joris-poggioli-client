@@ -10,6 +10,7 @@ const footer = style({
   fontWeight: 700,
   backgroundColor: themeVars.colors.lightBackground,
   paddingTop: '2vw',
+  height: themeVars.sizes.footerHeight,
 
   '@media': {
     [`${mediaQueries.mobile}`]: {

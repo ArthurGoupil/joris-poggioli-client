@@ -56,6 +56,7 @@ export const [themeClass, themeVars] = createTheme({
   },
   sizes: {
     headerLogoHeight: '120px',
+    footerHeight: '12vw',
     navItemHeight: { large: '120px', small: '40px' },
   },
 })

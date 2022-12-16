@@ -31,7 +31,9 @@ globalStyle('body ::-webkit-scrollbar', {
 })
 
 globalStyle('main', {
-  flexGrow: 1,
+  minHeight: `calc(100% - ${themeVars.sizes.footerHeight})`,
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 globalStyle('h2', {
@@ -55,6 +57,7 @@ globalStyle('a', {
 })
 
 export const scrollbarContainer = style({
+  flexGrow: 1,
   overflow: 'hidden',
 })
 
@@ -70,6 +73,9 @@ export const scrollbarView = style({
   height: '100%',
 })
 
+globalStyle('.simplebar-content', {
+  height: '100%',
+})
 globalStyle('.simplebar-track.simplebar-vertical', {
   width: '20px',
 })

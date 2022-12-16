@@ -2,8 +2,6 @@ import { style } from '@vanilla-extract/css'
 import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const comingSoon = style({
-  width: '100%',
-  height: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -11,6 +9,7 @@ const comingSoon = style({
   fontSize: themeVars.font.xl.size,
   lineHeight: themeVars.font.xl.lineHeight,
   letterSpacing: '5px',
+  flexGrow: 1,
 })
 
 const blankContainer = style({
