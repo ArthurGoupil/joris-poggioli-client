@@ -11,7 +11,7 @@ export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
       `${process.env.WP_URL}/design-types?_fields=id,acf,title`
     )
     const architectureProjectsPromise = axios.get<ApiArchitectureProjectItem[]>(
-      `${process.env.WP_URL}/architecture?_fields=id,acf.name`
+      `${process.env.WP_URL}/architecture?_fields=id,acf.name,acf.position`
     )
 
     const results = await Promise.all([
@@ -24,10 +24,6 @@ export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
         name: 'design',
         subItems: results[0].data
           .filter((type) => type.acf.show_in_menu)
-          .sort(
-            (a, b) =>
-              Number(a.acf.position_in_menu) - Number(b.acf.position_in_menu)
-          )
           .map((project) => project.title.rendered.toUpperCase()),
       },
       {

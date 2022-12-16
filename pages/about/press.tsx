@@ -10,7 +10,7 @@ const AboutPressPage: NextPage<
 export const getStaticProps = getCustomGetStaticProps(async () => {
   const pressItems = await fetchAboutPress()
 
-  return { pressItems: pressItems.flatMap((i) => [i, i, i, i, i]) }
+  return { pressItems }
 })
 
 export default AboutPressPage

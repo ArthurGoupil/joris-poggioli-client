@@ -48,9 +48,9 @@ export const getStaticProps = getCustomGetStaticProps(async ({ params }) => {
   const designItems = await fetchDesignItems()
 
   return {
-    designItems: designItems
-      .flatMap((i) => [i, i, i, i, i, i, i, i])
-      .filter((item) => item.designTypeSlug === params?.type),
+    designItems: designItems.filter(
+      (item) => item.designTypeSlug === params?.type
+    ),
   }
 })
 

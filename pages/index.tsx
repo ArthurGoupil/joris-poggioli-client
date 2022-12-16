@@ -22,15 +22,7 @@ export const getStaticProps = getCustomGetStaticProps(async () => {
   const designItems = await fetchDesignItems()
 
   return {
-    designItems: designItems
-      .filter((item) => item.displayOnHome)
-      .sort((a, b) => {
-        if (a.homePosition && b.homePosition) {
-          return a.homePosition - b.homePosition
-        }
-        return 1
-      })
-      .flatMap((i) => [i, i, i, i]),
+    designItems: designItems.filter((item) => item.displayOnHome),
   }
 })
 

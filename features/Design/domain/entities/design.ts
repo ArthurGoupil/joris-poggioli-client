@@ -46,7 +46,6 @@ type ApiDesignItemAcf = {
   image_product_line_6?: ApiImageProductLine
   free_text?: string
   home_display?: boolean
-  home_position?: string
 }
 
 export type ApiDesignItem = {
@@ -91,7 +90,6 @@ export type DesignItem = {
   imagesProductPage: ImagesProductPage
   freeText: string | null
   displayOnHome: boolean
-  homePosition: number | null
 }
 
 const decodeImageProductLine = async (
@@ -164,7 +162,6 @@ export const decodeDesignItems = async (
       imagesProductPage,
       freeText: apiItem.acf.free_text ?? null,
       displayOnHome: apiItem.acf.home_display ?? false,
-      homePosition: Number(apiItem.acf.home_position) ?? null,
     })
   }
 
