@@ -88,7 +88,8 @@ const getGridItemsFromImageLine = ({
           <div
             className={cc([
               styles.imageContainer,
-              { [styles.hideBorderBottom]: hideBorderBottom },
+              { [styles.hideBorderBottom]: hideBorderBottom.desktop },
+              { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
             ])}
           >
             <ImageWithPlaceholder
