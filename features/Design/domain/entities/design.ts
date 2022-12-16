@@ -94,13 +94,13 @@ export type DesignItem = {
   homePosition: number | null
 }
 
-const decodeImageProductLine = (
+const decodeImageProductLine = async (
   line: ApiImageProductLine
-): ImagesProductPage[number] | undefined => {
+): Promise<ImagesProductPage[number] | undefined> => {
   if (line.images_type === 'landscape') {
     return {
       imageType: 'landscape',
-      landscapeImage: decodeApiImage(line.landscape_image),
+      landscapeImage: await decodeApiImage(line.landscape_image),
     }
   } else if (line.images_type === 'portrait') {
     return {
@@ -110,7 +110,7 @@ const decodeImageProductLine = (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: decodeApiImage(
+              image: await decodeApiImage(
                 line.portrait_images.first_column_image as ApiImage
               ),
             },
@@ -119,7 +119,7 @@ const decodeImageProductLine = (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: decodeApiImage(
+              image: await decodeApiImage(
                 line.portrait_images.second_column_image as ApiImage
               ),
             },
@@ -127,9 +127,9 @@ const decodeImageProductLine = (
   }
 }
 
-export const decodeDesignItems = (
+export const decodeDesignItems = async (
   apiDesignItems: ApiDesignItem[]
-): DesignItem[] => {
+): Promise<DesignItem[]> => {
   const designItems: DesignItem[] = []
 
   for (const apiItem of apiDesignItems) {
@@ -138,7 +138,7 @@ export const decodeDesignItems = (
     for (let i = 1; i <= 6; i++) {
       const acfIndex = `image_product_line_${i}` as keyof ApiDesignItemAcf
       if (apiItem.acf[acfIndex]) {
-        const imageProductLine = decodeImageProductLine(
+        const imageProductLine = await decodeImageProductLine(
           apiItem.acf[acfIndex] as ApiImageProductLine
         )
         if (imageProductLine) {
@@ -160,7 +160,7 @@ export const decodeDesignItems = (
       material: apiItem.acf.material ?? null,
       dimensions: apiItem.acf.dimensions ?? null,
       technicalSheet: apiItem.acf.technical_sheet || null,
-      imageGrid: decodeApiImage(apiItem.acf.image_grid),
+      imageGrid: await decodeApiImage(apiItem.acf.image_grid),
       imagesProductPage,
       freeText: apiItem.acf.free_text ?? null,
       displayOnHome: apiItem.acf.home_display ?? false,

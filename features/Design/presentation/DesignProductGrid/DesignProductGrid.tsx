@@ -6,6 +6,7 @@ import { DesignItem, PortraitColumn } from '../../domain/entities/design'
 import { DesignProductPresentation } from '../DesignProductPresentation/DesignProductPresentation'
 import { themeVars } from '../../../../styles/theme.css'
 import { Responsive } from '../../../shared/domain/entities/responsive'
+import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
 
 type GridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn
@@ -50,7 +51,7 @@ const gridItemFromPortraitColumn = ({
             { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
           ])}
         >
-          <Image
+          <ImageWithPlaceholder
             src={portraitColumn.image.url}
             alt={portraitColumn.image.alt ?? portraitColumn.image.title}
             className={styles.image}
@@ -58,6 +59,7 @@ const gridItemFromPortraitColumn = ({
             fill
             sizes="(max-width: 768px) 50vw, 33vw"
             quality={30}
+            placeholderUrl={portraitColumn.image.base64Thumbnail}
           />
         </div>
       ),
@@ -89,7 +91,7 @@ const getGridItemsFromImageLine = ({
               { [styles.hideBorderBottom]: hideBorderBottom },
             ])}
           >
-            <Image
+            <ImageWithPlaceholder
               src={line.landscapeImage.url}
               alt={line.landscapeImage.alt ?? line.landscapeImage.title}
               className={styles.image}
@@ -97,6 +99,7 @@ const getGridItemsFromImageLine = ({
               fill
               sizes="(max-width: 768px) 100vw, 66vw"
               quality={30}
+              placeholderUrl={line.landscapeImage.base64Thumbnail}
             />
           </div>
         ),

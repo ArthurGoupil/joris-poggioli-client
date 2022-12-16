@@ -11,6 +11,7 @@ import parse from 'html-react-parser'
 import { themeVars } from '../../../../styles/theme.css'
 import Link from 'next/link'
 import { Responsive } from '../../../shared/domain/entities/responsive'
+import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
 
 type GridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn
@@ -63,7 +64,7 @@ const gridItemFromPortraitColumn = ({
             },
           ])}
         >
-          <Image
+          <ImageWithPlaceholder
             src={portraitColumn.image.url}
             alt={portraitColumn.image.alt ?? portraitColumn.image.title}
             className={styles.image}
@@ -71,6 +72,7 @@ const gridItemFromPortraitColumn = ({
             width={portraitColumn.image.width}
             height={portraitColumn.image.height}
             quality={70}
+            placeholderUrl={portraitColumn.image.base64Thumbnail}
           />
         </div>
       ),
@@ -102,7 +104,7 @@ const getGridItemsFromImageLine = ({
               { [styles.hideBorderBottomMobile]: isLastLine },
             ])}
           >
-            <Image
+            <ImageWithPlaceholder
               src={line.landscapeImage.url}
               alt={line.landscapeImage.alt ?? line.landscapeImage.title}
               className={styles.image}
@@ -110,6 +112,7 @@ const getGridItemsFromImageLine = ({
               width={line.landscapeImage.width}
               height={line.landscapeImage.height}
               quality={70}
+              placeholderUrl={line.landscapeImage.base64Thumbnail}
             />
           </div>
         ),

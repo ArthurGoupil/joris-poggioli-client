@@ -6,6 +6,7 @@ import cc from 'classcat'
 import Link from 'next/link'
 import { slugify } from '../../../../components/layout/shared/logic/slugify'
 import { themeVars } from '../../../../styles/theme.css'
+import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
 
 type ArchitectureProjectsGridProps = {
   architectureProjects: ArchitectureProject[]
@@ -38,7 +39,7 @@ export const ArchitectureProjectsListGrid = ({
             ])}
             as={`/architecture/${slugify(project.name)}`}
           >
-            <Image
+            <ImageWithPlaceholder
               src={project.imageList.url}
               alt={project.imageList.alt ?? project.imageList.title}
               className={styles.image}
@@ -46,6 +47,7 @@ export const ArchitectureProjectsListGrid = ({
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               quality={30}
+              placeholderUrl={project.imageList.base64Thumbnail}
             />
             <div className={styles.name}>{project.name.toUpperCase()}</div>
           </Link>

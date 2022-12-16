@@ -28,11 +28,11 @@ export type AboutJorisPoggioli = {
   image: Image
 }
 
-export const decodeAboutJorisPoggioli = (
+export const decodeAboutJorisPoggioli = async (
   apiAboutJorisPoggioliText: ApiAboutJorisPoggioliText,
   apiAboutJorisPoggioliImage: ApiAboutJorisPoggioliImage
-): AboutJorisPoggioli => ({
+): Promise<AboutJorisPoggioli> => ({
   id: apiAboutJorisPoggioliText.id,
   textContent: apiAboutJorisPoggioliText.acf.text_content,
-  image: decodeApiImage(apiAboutJorisPoggioliImage.acf.image),
+  image: await decodeApiImage(apiAboutJorisPoggioliImage.acf.image),
 })

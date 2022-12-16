@@ -78,6 +78,7 @@ export const DesignProductsListGrid = ({
           component: (
             <ImageGridItem
               src={item.imageGrid.url}
+              base64Thumbnail={item.imageGrid.base64Thumbnail}
               alt={item.imageGrid.alt ?? item.imageGrid.title}
               title={item.name}
               href={`/design/${item.designTypeSlug}/${item.slug}`}

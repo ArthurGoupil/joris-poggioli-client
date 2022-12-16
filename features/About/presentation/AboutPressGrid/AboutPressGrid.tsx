@@ -64,6 +64,7 @@ export const AboutPressGrid = ({
           component: (
             <ImageGridItem
               src={item.cover.url}
+              base64Thumbnail={item.cover.base64Thumbnail}
               alt={item.cover.alt ?? item.cover.title}
               title={item.name}
               subtitle={item.year}

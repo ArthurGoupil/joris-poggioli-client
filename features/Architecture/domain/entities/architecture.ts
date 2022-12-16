@@ -78,13 +78,13 @@ export type ArchitectureProjectAll =
   | ArchitectureProject
   | ComingSoonArchitectureProject
 
-const decodeImageProductLine = (
+const decodeImageProductLine = async (
   line: ApiImageProjectLine
-): ImagesProjectPage[number] | undefined => {
+): Promise<ImagesProjectPage[number] | undefined> => {
   if (line.images_type === 'landscape') {
     return {
       imageType: 'landscape',
-      landscapeImage: decodeApiImage(line.landscape_image, true),
+      landscapeImage: await decodeApiImage(line.landscape_image, true),
     }
   } else if (line.images_type === 'portrait') {
     return {
@@ -94,7 +94,7 @@ const decodeImageProductLine = (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: decodeApiImage(
+              image: await decodeApiImage(
                 line.portrait_images.first_column_image as ApiImage,
                 true
               ),
@@ -104,7 +104,7 @@ const decodeImageProductLine = (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: decodeApiImage(
+              image: await decodeApiImage(
                 line.portrait_images.second_column_image as ApiImage,
                 true
               ),
@@ -114,7 +114,7 @@ const decodeImageProductLine = (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: decodeApiImage(
+              image: await decodeApiImage(
                 line.portrait_images.third_column_image as ApiImage,
                 true
               ),
@@ -123,9 +123,9 @@ const decodeImageProductLine = (
   }
 }
 
-export const decodeArchitectureProjects = (
+export const decodeArchitectureProjects = async (
   apiArchitectureProjects: ApiArchitectureProject[]
-): ArchitectureProjectAll[] => {
+): Promise<ArchitectureProjectAll[]> => {
   const architectureProjects: ArchitectureProjectAll[] = []
 
   for (const apiProject of apiArchitectureProjects) {
@@ -143,7 +143,7 @@ export const decodeArchitectureProjects = (
         const acfIndex =
           `image_project_line_${i}` as keyof ApiArchitectureProjectAcf
         if (apiProject.acf[acfIndex]) {
-          const imageProductLine = decodeImageProductLine(
+          const imageProductLine = await decodeImageProductLine(
             apiProject.acf[acfIndex] as ApiImageProjectLine
           )
           if (imageProductLine) {
@@ -158,7 +158,7 @@ export const decodeArchitectureProjects = (
         isComingSoon: apiProject.acf.coming_soon ?? false,
         slug: slugify(apiProject.acf.name),
         description: apiProject.acf.description,
-        imageList: decodeApiImage(apiProject.acf.image_list),
+        imageList: await decodeApiImage(apiProject.acf.image_list),
         imagesProjectPage,
       })
     }

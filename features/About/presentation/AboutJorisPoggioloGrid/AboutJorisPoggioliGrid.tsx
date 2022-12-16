@@ -3,6 +3,7 @@ import { styles } from './aboutJorisPoggioliGrid.css'
 import Image from 'next/image'
 import { Image as ImageType } from '../../../shared/domain/entities/image'
 import { Grid } from '../../../../components/layout/Grid/Grid'
+import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
 
 type AboutJorisPoggioliGridProps = {
   textContent: string
@@ -33,7 +34,7 @@ export const AboutJorisPoggioliGrid = ({
         gridColumn: { mobile: '1', desktop: '2 / 3' },
         component: (
           <div className={styles.imageContainer}>
-            <Image
+            <ImageWithPlaceholder
               src={image.url}
               alt={image.alt ?? image.title}
               className={styles.image}
@@ -41,6 +42,7 @@ export const AboutJorisPoggioliGrid = ({
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               quality={40}
+              placeholderUrl={image.base64Thumbnail}
             />
           </div>
         ),

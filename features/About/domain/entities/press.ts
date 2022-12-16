@@ -24,13 +24,20 @@ export type AboutPress = {
   pdf: string
 }
 
-export const decodeAboutPress = (
+export const decodeAboutPress = async (
   apiAboutPress: ApiAboutPress[]
-): AboutPress[] =>
-  apiAboutPress.map((item) => ({
-    id: item.id,
-    name: item.acf.name,
-    year: item.acf.year,
-    cover: decodeApiImage(item.acf.cover),
-    pdf: item.acf.pdf,
-  }))
+): Promise<AboutPress[]> => {
+  const aboutPress = []
+
+  for (const item of apiAboutPress) {
+    aboutPress.push({
+      id: item.id,
+      name: item.acf.name,
+      year: item.acf.year,
+      cover: await decodeApiImage(item.acf.cover),
+      pdf: item.acf.pdf,
+    })
+  }
+
+  return aboutPress
+}

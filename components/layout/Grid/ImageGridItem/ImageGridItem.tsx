@@ -3,11 +3,13 @@ import Link from 'next/link'
 import cc from 'classcat'
 import { styles } from './imageGridItem.css'
 import { Responsive } from '../../../../features/shared/domain/entities/responsive'
+import { ImageWithPlaceholder } from '../../../data-display/ImageWithPlaceholder'
 
 type ImageGridItemProps = Omit<ImageProps, 'className'> & {
   title: string
   subtitle?: string
   href: string
+  base64Thumbnail: string
   hasBorderRight: Responsive<boolean>
   hasBorderBottom: Responsive<boolean>
   hasTargetBlank?: boolean
@@ -17,6 +19,7 @@ export const ImageGridItem = ({
   title,
   subtitle,
   href,
+  base64Thumbnail,
   hasBorderRight,
   hasBorderBottom,
   hasTargetBlank,
@@ -35,7 +38,7 @@ export const ImageGridItem = ({
       },
     ])}
   >
-    <Image
+    <ImageWithPlaceholder
       {...imageProps}
       alt={imageProps.alt}
       className={styles.image}
@@ -43,6 +46,7 @@ export const ImageGridItem = ({
       fill
       sizes="(max-width: 768px) 50vw, 33vw"
       quality={30}
+      placeholderUrl={base64Thumbnail}
     />
     <div className={styles.imageTitleContainer}>
       <div>{title.toUpperCase()}</div>
