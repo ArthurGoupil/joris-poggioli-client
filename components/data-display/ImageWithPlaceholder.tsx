@@ -2,7 +2,11 @@ import Image, { ImageProps } from 'next/image'
 import React from 'react'
 import cc from 'classcat'
 import { AnimatePresence, m } from 'framer-motion'
-import { opacityVar, styles } from './imageWithPlaceholder.css'
+import {
+  imageOpacityVar,
+  placeholderOpacityVar,
+  styles,
+} from './imageWithPlaceholder.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 type ImageWithPlaceholderProps = ImageProps & { placeholderUrl: string }
@@ -12,6 +16,7 @@ export const ImageWithPlaceholder = ({
   ...imageProps
 }: ImageWithPlaceholderProps): JSX.Element => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false)
+  const [isPlaceholderLoaded, setIsPlaceholderLoaded] = React.useState(false)
 
   return (
     <>
@@ -19,7 +24,7 @@ export const ImageWithPlaceholder = ({
         {...imageProps}
         onLoad={() => setIsImageLoaded(true)}
         style={assignInlineVars({
-          [opacityVar]: isImageLoaded ? '1' : '0',
+          [imageOpacityVar]: isImageLoaded ? '1' : '0',
         })}
       />
       <AnimatePresence>
@@ -43,11 +48,15 @@ export const ImageWithPlaceholder = ({
             transition={{
               duration: 0.3,
             }}
+            style={assignInlineVars({
+              [placeholderOpacityVar]: isPlaceholderLoaded ? '1' : '0',
+            })}
           >
             <Image
               {...imageProps}
               src={placeholderUrl}
               className={cc([imageProps.className, styles.placeholder])}
+              onLoad={() => setIsPlaceholderLoaded(true)}
             />
           </m.div>
         )}
