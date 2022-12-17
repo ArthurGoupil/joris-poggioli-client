@@ -10,8 +10,8 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }): JSX.Element => (
   <div>
     <Head>
-      <title>JORIS POGGIOLI - Design</title>
-      <meta name="description" content="Joris Poggioli - Design items" />
+      <title>JORIS POGGIOLI - Design & Architecture</title>
+      <meta name="description" content="Joris Poggioli" />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <DesignProductsListGrid designItems={designItems} />

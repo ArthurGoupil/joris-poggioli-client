@@ -1,4 +1,5 @@
 import { GetStaticPaths, InferGetStaticPropsType, NextPage } from 'next'
+import Head from 'next/head'
 import React from 'react'
 import { getCustomGetStaticProps } from '../../dev-tools/static-props/getCustomGetStaticProps'
 import { fetchArchitectureProjects } from '../../features/Architecture/domain/repository/fetchArchitectureProjects'
@@ -8,7 +9,19 @@ const ArchitectureProjectPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ architectureProject }): JSX.Element | null => {
   if (architectureProject) {
-    return <ArchitectureProjectGrid architectureProject={architectureProject} />
+    return (
+      <>
+        <Head>
+          <title>JORIS POGGIOLI - Architecture</title>
+          <meta
+            name="description"
+            content="Joris Poggioli - Architecture project"
+          />
+          <link rel="icon" href="/favicon.png" />
+        </Head>
+        <ArchitectureProjectGrid architectureProject={architectureProject} />
+      </>
+    )
   }
 
   return null

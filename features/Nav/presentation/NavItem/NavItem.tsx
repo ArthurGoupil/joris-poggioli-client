@@ -83,6 +83,8 @@ export const NavItem = ({
           },
         ])}
         onClick={toggleShowSubItems}
+        role={status === 'active' ? 'heading' : 'navigation'}
+        aria-level={1}
       >
         {name.toUpperCase()}
       </div>

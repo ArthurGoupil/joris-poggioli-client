@@ -8,7 +8,8 @@ const FourZeroFourPage = (): JSX.Element => {
   return (
     <>
       <Head>
-        <title>JORIS POGGIOLI</title>
+        <title>JORIS POGGIOLI - Page not found</title>
+        <meta name="description" content="Joris Poggioli - Page not found" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className={notFoundContainer}>

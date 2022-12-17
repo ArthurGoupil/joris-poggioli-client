@@ -1,4 +1,5 @@
 import { GetStaticPaths, InferGetStaticPropsType, NextPage } from 'next'
+import Head from 'next/head'
 import React from 'react'
 import { getCustomGetStaticProps } from '../../../dev-tools/static-props/getCustomGetStaticProps'
 import { fetchDesignItems } from '../../../features/Design/domain/repository/fetchDesignItems'
@@ -8,7 +9,16 @@ const DesignArticlePage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ designItem }): JSX.Element | null => {
   if (designItem) {
-    return <DesignProductGrid designItem={designItem} />
+    return (
+      <>
+        <Head>
+          <title>JORIS POGGIOLI - Design</title>
+          <meta name="description" content="Joris Poggioli - Design item" />
+          <link rel="icon" href="/favicon.png" />
+        </Head>
+        <DesignProductGrid designItem={designItem} />
+      </>
+    )
   }
 
   return null
