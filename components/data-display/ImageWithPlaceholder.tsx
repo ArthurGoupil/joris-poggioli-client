@@ -51,6 +51,7 @@ export const ImageWithPlaceholder = ({
             style={assignInlineVars({
               [placeholderOpacityVar]: isPlaceholderLoaded ? '1' : '0',
             })}
+            className={styles.placeholderContainer}
           >
             <Image
               {...imageProps}

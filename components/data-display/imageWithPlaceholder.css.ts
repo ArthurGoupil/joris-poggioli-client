@@ -8,13 +8,21 @@ const image = style({
   transition: 'opacity 300ms',
 })
 
+const placeholderContainer = style({
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+})
+
 const placeholder = style({
   opacity: placeholderOpacityVar,
   transition: 'opacity 300ms',
   filter: 'blur(5px)',
+  height: '100%',
 })
 
 export const styles = {
   image,
+  placeholderContainer,
   placeholder,
 }
