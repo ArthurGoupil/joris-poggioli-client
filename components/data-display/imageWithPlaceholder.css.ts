@@ -10,8 +10,8 @@ const image = style({
 
 const placeholderContainer = style({
   position: 'absolute',
-  height: '100%',
   width: '100%',
+  height: '100%',
 })
 
 const placeholder = style({

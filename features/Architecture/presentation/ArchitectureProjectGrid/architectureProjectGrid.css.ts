@@ -26,17 +26,11 @@ const imageContainer = style({
   borderRight: themeVars.borders.default,
   borderBottom: themeVars.borders.default,
   display: 'flex',
-
-  '@media': {
-    [`${mediaQueries.mobile}`]: {
-      position: 'static',
-    },
-  },
 })
 
 const image = style({
   width: '100%',
-  height: 'auto',
+  height: '100%',
   maxHeight: '100%',
   objectFit: 'cover',
 
