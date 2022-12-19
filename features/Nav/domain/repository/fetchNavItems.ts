@@ -8,10 +8,10 @@ import {
 export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
   try {
     const designTypesPromise = axios.get<ApiDesignTypeItem[]>(
-      `${process.env.WP_URL}/design-types?_fields=id,acf,title`
+      `${process.env.WP_URL}/design-types?per_page=100&_fields=id,acf,title`
     )
     const architectureProjectsPromise = axios.get<ApiArchitectureProjectItem[]>(
-      `${process.env.WP_URL}/architecture?_fields=id,acf.name,acf.position`
+      `${process.env.WP_URL}/architecture?per_page=100&_fields=id,acf.name,acf.position`
     )
 
     const results = await Promise.all([

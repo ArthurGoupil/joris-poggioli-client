@@ -8,7 +8,7 @@ import {
 export const fetchDesignItems = async (): Promise<DesignItem[]> => {
   try {
     const response = await axios.get<ApiDesignItem[]>(
-      `${process.env.WP_URL}/design?_fields=id,acf`
+      `${process.env.WP_URL}/design?per_page=100&_fields=id,acf`
     )
 
     return decodeDesignItems(response.data)

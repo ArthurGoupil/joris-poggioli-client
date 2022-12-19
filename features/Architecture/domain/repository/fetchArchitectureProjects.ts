@@ -10,7 +10,7 @@ export const fetchArchitectureProjects = async (): Promise<
 > => {
   try {
     const response = await axios.get<ApiArchitectureProject[]>(
-      `${process.env.WP_URL}/architecture?_fields=id,acf`
+      `${process.env.WP_URL}/architecture?per_page=100&_fields=id,acf`
     )
 
     return decodeArchitectureProjects(response.data)
