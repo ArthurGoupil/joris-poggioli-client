@@ -3,6 +3,7 @@ import { Grid } from '../../../../components/layout/Grid/Grid'
 import { ImageGridItem } from '../../../../components/layout/Grid/ImageGridItem/ImageGridItem'
 import { useLoadedImagesCount } from '../../../../context/loaded-images-count.context'
 import { themeVars } from '../../../../styles/theme.css'
+import { IMAGES_TO_LOAD_BEFORE_DISPLAY } from '../../../shared/constants/image-loading'
 import { DesignItem } from '../../domain/entities/design'
 
 type DesignProductsListGridProps = {
@@ -30,7 +31,9 @@ export const DesignProductsListGrid = ({
 
   React.useEffect(() => {
     setImagesToLoad(
-      designItems.length ? (designItems.length < 7 ? designItems.length : 6) : 0
+      designItems.length < IMAGES_TO_LOAD_BEFORE_DISPLAY
+        ? designItems.length
+        : IMAGES_TO_LOAD_BEFORE_DISPLAY
     )
   }, [designItems.length, setImagesToLoad])
 

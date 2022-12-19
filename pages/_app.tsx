@@ -21,10 +21,7 @@ import {
 } from 'framer-motion'
 import { useFixPageTransitionIssue } from '../styles/hooks/useFixPageTransitionIssue'
 import { CounterLoader } from '../components/feedback/CounterLoader/CounterLoader'
-import {
-  LoadedImagesCountProvider,
-  useLoadedImagesCount,
-} from '../context/loaded-images-count.context'
+import { LoadedImagesCountProvider } from '../context/loaded-images-count.context'
 import { Header } from '../components/layout/Header/Header'
 import SimpleBar from 'simplebar-react'
 
@@ -69,39 +66,10 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
   // see: https://github.com/vercel/next.js/issues/17464
   const { removeFixStyles } = useFixPageTransitionIssue()
 
-  const { imagesToLoad, loadedImagesCount } = useLoadedImagesCount()
-
-  const [isFakeLoading, setIsFakeLoading] = React.useState(true)
-  const hasAlreadyLoaded = React.useRef(false)
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsFakeLoading(false)
-      hasAlreadyLoaded.current = true
-    }, 2000)
-  }, [])
-
-  React.useEffect(() => {
-    if ((loadedImagesCount / imagesToLoad) * 100 === 100) {
-      hasAlreadyLoaded.current = true
-    }
-  }, [imagesToLoad, loadedImagesCount])
-
-  const showCounterLoader =
-    (imagesToLoad > 0 || isFakeLoading) && !hasAlreadyLoaded.current
-
   return (
     <div className={mainContainer}>
       <LazyMotion features={domAnimation}>
-        <AnimatePresence>
-          {showCounterLoader && (
-            <CounterLoader
-              percentage={
-                isFakeLoading ? 100 : (loadedImagesCount / imagesToLoad) * 100
-              }
-            />
-          )}
-        </AnimatePresence>
+        <CounterLoader />
         <Header navItems={pageProps.navItems} />
         <AnimatePresence mode="wait" onExitComplete={removeFixStyles}>
           <m.div

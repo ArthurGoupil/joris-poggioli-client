@@ -1,0 +1,1 @@
+export const IMAGES_TO_LOAD_BEFORE_DISPLAY = 6

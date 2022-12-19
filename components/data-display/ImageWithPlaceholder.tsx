@@ -22,7 +22,13 @@ export const ImageWithPlaceholder = ({
     <>
       <Image
         {...imageProps}
-        onLoad={() => setIsImageLoaded(true)}
+        alt={imageProps.alt}
+        onLoadingComplete={(img): void => {
+          if (imageProps.onLoadingComplete) {
+            imageProps.onLoadingComplete(img)
+          }
+          setIsImageLoaded(true)
+        }}
         style={assignInlineVars({
           [imageOpacityVar]: isImageLoaded ? '1' : '0',
         })}
@@ -56,8 +62,9 @@ export const ImageWithPlaceholder = ({
             <Image
               {...imageProps}
               src={placeholderUrl}
+              alt={imageProps.alt}
               className={cc([imageProps.className, styles.placeholder])}
-              onLoad={() => setIsPlaceholderLoaded(true)}
+              onLoadingComplete={(): void => setIsPlaceholderLoaded(true)}
             />
           </m.div>
         )}
