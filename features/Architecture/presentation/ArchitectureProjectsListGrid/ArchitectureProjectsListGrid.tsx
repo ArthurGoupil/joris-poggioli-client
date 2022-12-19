@@ -46,7 +46,7 @@ export const ArchitectureProjectsListGrid = ({
               priority
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              quality={30}
+              quality={40}
               placeholderUrl={project.imageList.base64Thumbnail}
             />
             <div className={styles.name}>{project.name.toUpperCase()}</div>

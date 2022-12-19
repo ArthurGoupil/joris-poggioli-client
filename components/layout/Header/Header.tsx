@@ -69,7 +69,12 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
   return (
     <header className={styles.headerContainer}>
       <Link href="/" className={styles.logoContainer}>
-        <Image src={Logo} alt="Logo Joris Poggioli" className={styles.logo} />
+        <Image
+          src={Logo}
+          alt="Logo Joris Poggioli"
+          className={styles.logo}
+          priority
+        />
       </Link>
 
       <nav className={styles.nav}>

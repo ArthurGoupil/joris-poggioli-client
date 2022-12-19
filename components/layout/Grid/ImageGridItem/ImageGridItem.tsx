@@ -1,4 +1,4 @@
-import Image, { ImageProps } from 'next/image'
+import { ImageProps } from 'next/image'
 import Link from 'next/link'
 import cc from 'classcat'
 import { styles } from './imageGridItem.css'
