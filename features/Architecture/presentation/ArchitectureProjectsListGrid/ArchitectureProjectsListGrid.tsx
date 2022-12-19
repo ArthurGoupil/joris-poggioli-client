@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Grid } from '../../../../components/layout/Grid/Grid'
 import { ArchitectureProject } from '../../domain/entities/architecture'
 import { styles } from './architectureProjectsListGrid.css'
