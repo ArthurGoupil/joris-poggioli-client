@@ -1,4 +1,5 @@
 type ApiAboutTextAcf = {
+  title: string
   text_content: string
 }
 
@@ -7,60 +8,71 @@ export type ApiAboutText = {
   acf: ApiAboutTextAcf
 }
 
-export type AboutPrivacyCookiePolicy = {
-  editorResponsiblePublicationText: string
-  publicationDirectorText: string
-  developmentText: string
-  hostingText: string
-  intellectualPropertyText: string
-  dataProtectionText: string
-  accessRightsText: string
-  linksText: string
-  contactsText: string
-  confidentialityPoliticText: string
-}
+type AboutPrivacyCookiePolicyLabels =
+  | 'editorResponsiblePublication'
+  | 'publicationDirector'
+  | 'development'
+  | 'hosting'
+  | 'intellectualProperty'
+  | 'dataProtection'
+  | 'accessRights'
+  | 'links'
+  | 'contacts'
+  | 'confidentialityPolitic'
+  | 'CGV'
+
+type AboutPrivacyCookiePolicyItem = { title: string; text: string }
+
+export type AboutPrivacyCookiePolicy = Record<
+  AboutPrivacyCookiePolicyLabels,
+  AboutPrivacyCookiePolicyItem
+>
 
 const aboutPrivacyCookiePolicyMapping: Record<
   number,
-  keyof AboutPrivacyCookiePolicy
+  AboutPrivacyCookiePolicyLabels
 > = {
-  262: 'editorResponsiblePublicationText',
-  263: 'publicationDirectorText',
-  264: 'developmentText',
-  265: 'hostingText',
-  266: 'intellectualPropertyText',
-  267: 'dataProtectionText',
-  268: 'accessRightsText',
-  269: 'linksText',
-  270: 'contactsText',
-  271: 'confidentialityPoliticText',
+  262: 'editorResponsiblePublication',
+  263: 'publicationDirector',
+  264: 'development',
+  265: 'hosting',
+  266: 'intellectualProperty',
+  267: 'dataProtection',
+  268: 'accessRights',
+  269: 'links',
+  270: 'contacts',
+  271: 'confidentialityPolitic',
+  296: 'CGV',
 }
 
 export const decodeAboutPrivacyCookiePolicy = (
   apiAboutPrivacyCookiePolicy: ApiAboutText[]
 ): AboutPrivacyCookiePolicy => {
-  const aboutPrivacyCookiePolicyTexts: AboutPrivacyCookiePolicy = {
-    editorResponsiblePublicationText: '',
-    publicationDirectorText: '',
-    developmentText: '',
-    hostingText: '',
-    intellectualPropertyText: '',
-    dataProtectionText: '',
-    accessRightsText: '',
-    linksText: '',
-    contactsText: '',
-    confidentialityPoliticText: '',
+  const aboutPrivacyCookiePolicyItems: AboutPrivacyCookiePolicy = {
+    editorResponsiblePublication: { title: '', text: '' },
+    publicationDirector: { title: '', text: '' },
+    development: { title: '', text: '' },
+    hosting: { title: '', text: '' },
+    intellectualProperty: { title: '', text: '' },
+    dataProtection: { title: '', text: '' },
+    accessRights: { title: '', text: '' },
+    links: { title: '', text: '' },
+    contacts: { title: '', text: '' },
+    confidentialityPolitic: { title: '', text: '' },
+    CGV: { title: '', text: '' },
   }
 
-  apiAboutPrivacyCookiePolicy.forEach((text) => {
+  apiAboutPrivacyCookiePolicy.forEach((item) => {
     const aboutPrivacyCookiePolicyName =
-      aboutPrivacyCookiePolicyMapping[text.id]
+      aboutPrivacyCookiePolicyMapping[item.id]
 
     if (aboutPrivacyCookiePolicyName) {
-      aboutPrivacyCookiePolicyTexts[aboutPrivacyCookiePolicyName] =
-        text.acf.text_content
+      aboutPrivacyCookiePolicyItems[aboutPrivacyCookiePolicyName] = {
+        title: item.acf.title,
+        text: item.acf.text_content,
+      }
     }
   })
 
-  return aboutPrivacyCookiePolicyTexts
+  return aboutPrivacyCookiePolicyItems
 }
