@@ -1,5 +1,3 @@
-import { getPlaiceholder } from 'plaiceholder'
-
 export type ApiImage = {
   url: string
   title: string
@@ -26,18 +24,11 @@ export type Image = {
 export const decodeApiImage = async (
   apiImage: ApiImage,
   withLargeSize = false
-): Promise<Image> => {
-  const { base64 } = await getPlaiceholder(apiImage.sizes.thumbnail, {
-    size: 64,
-    removeAlpha: false,
-  })
-
-  return {
-    url: withLargeSize ? apiImage.sizes.large : apiImage.url,
-    alt: apiImage.alt || null,
-    title: apiImage.title,
-    base64Thumbnail: base64,
-    width: withLargeSize ? apiImage.sizes['large-width'] : apiImage.width,
-    height: withLargeSize ? apiImage.sizes['large-height'] : apiImage.height,
-  }
-}
+): Promise<Image> => ({
+  url: withLargeSize ? apiImage.sizes.large : apiImage.url,
+  alt: apiImage.alt || null,
+  title: apiImage.title,
+  base64Thumbnail: apiImage.sizes.thumbnail,
+  width: withLargeSize ? apiImage.sizes['large-width'] : apiImage.width,
+  height: withLargeSize ? apiImage.sizes['large-height'] : apiImage.height,
+})

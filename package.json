@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@next/font": "^13.0.5",
-    "@plaiceholder/next": "^2.5.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
@@ -26,7 +25,6 @@
     "framer-motion": "^7.6.17",
     "html-react-parser": "^3.0.4",
     "next": "^13.0.5",
-    "plaiceholder": "^2.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "^0.31.2",
