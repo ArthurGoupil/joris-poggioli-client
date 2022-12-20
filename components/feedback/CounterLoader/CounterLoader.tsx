@@ -10,30 +10,39 @@ export const CounterLoader = (): JSX.Element => {
   const router = useRouter()
   const { imagesToLoad, loadedImagesCount } = useLoadedImagesCount()
 
-  const [counter, setCounter] = React.useState(1)
   const [showCounter, setShowCounter] = React.useState(true)
 
+  const counterRef = React.useRef<HTMLDivElement>(null)
   const shouldFakeLoading = !pagesWithImagesToLoad.includes(router.pathname)
 
+  const hasAlreadyShownLoader = React.useRef(false)
+
   React.useEffect(() => {
-    setShowCounter((imagesToLoad > 0 || shouldFakeLoading) && counter !== 100)
-  }, [counter, imagesToLoad, shouldFakeLoading])
+    setShowCounter(imagesToLoad > 0 || shouldFakeLoading)
+  }, [imagesToLoad, shouldFakeLoading])
 
   React.useEffect(() => {
     const percentage = shouldFakeLoading
       ? 100
       : Math.round((loadedImagesCount / imagesToLoad) * 100)
 
-    if (showCounter) {
+    if (showCounter && !hasAlreadyShownLoader.current) {
       const interval = setInterval(() => {
-        setCounter((counter) => {
-          if (counter < percentage) {
-            return counter + 1
-          } else {
-            clearInterval(interval)
-            return counter
-          }
-        })
+        if (Number(counterRef.current?.textContent) === 100) {
+          setShowCounter(false)
+          hasAlreadyShownLoader.current = true
+        }
+
+        if (
+          Number(counterRef.current?.textContent) < percentage &&
+          counterRef.current
+        ) {
+          counterRef.current.textContent = (
+            Number(counterRef.current.textContent) + 1
+          ).toString()
+        } else {
+          clearInterval(interval)
+        }
       }, 20)
 
       return () => clearInterval(interval)
@@ -44,6 +53,7 @@ export const CounterLoader = (): JSX.Element => {
     <AnimatePresence>
       {showCounter && (
         <m.div
+          ref={counterRef}
           className={styles.loaderContainer}
           key="loader"
           initial="initial"
@@ -63,9 +73,7 @@ export const CounterLoader = (): JSX.Element => {
           transition={{
             duration: 0.3,
           }}
-        >
-          {counter}
-        </m.div>
+        />
       )}
     </AnimatePresence>
   )
