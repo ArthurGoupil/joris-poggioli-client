@@ -14,7 +14,7 @@ type DesignProductsListGridProps = {
 export const DesignProductsListGrid = ({
   designItems,
   gridKey,
-}: DesignProductsListGridProps): JSX.Element => {
+}: DesignProductsListGridProps): JSX.Element | null => {
   const firstlastRowItemIndex = {
     mobile:
       designItems.length % 2 === 0
@@ -36,6 +36,10 @@ export const DesignProductsListGrid = ({
         : IMAGES_TO_LOAD_BEFORE_DISPLAY
     )
   }, [designItems.length, setImagesToLoad])
+
+  if (!imagesToLoad) {
+    return null
+  }
 
   return (
     <Grid

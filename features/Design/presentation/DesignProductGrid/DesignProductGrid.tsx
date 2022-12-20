@@ -57,7 +57,7 @@ const gridItemFromPortraitColumn = ({
             priority
             fill
             sizes="(max-width: 768px) 50vw, 33vw"
-            quality={50}
+            quality={90}
             placeholderUrl={portraitColumn.image.base64Thumbnail}
           />
         </div>
@@ -98,7 +98,7 @@ const getGridItemsFromImageLine = ({
               priority
               fill
               sizes="(max-width: 768px) 100vw, 66vw"
-              quality={50}
+              quality={90}
               placeholderUrl={line.landscapeImage.base64Thumbnail}
             />
           </div>
