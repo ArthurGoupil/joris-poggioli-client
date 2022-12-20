@@ -10,12 +10,14 @@ export const CounterLoader = (): JSX.Element => {
   const router = useRouter()
   const { imagesToLoad, loadedImagesCount } = useLoadedImagesCount()
 
-  const [showCounter, setShowCounter] = React.useState(true)
+  const hasAlreadyShownLoader = React.useRef(false)
+
+  const [showCounter, setShowCounter] = React.useState(
+    true && !hasAlreadyShownLoader.current
+  )
 
   const counterRef = React.useRef<HTMLDivElement>(null)
   const shouldFakeLoading = !pagesWithImagesToLoad.includes(router.pathname)
-
-  const hasAlreadyShownLoader = React.useRef(false)
 
   React.useEffect(() => {
     setShowCounter(imagesToLoad > 0 || shouldFakeLoading)
