@@ -9,6 +9,7 @@ type Dimensions = {
   width?: string
   height?: string
   diameter?: string
+  depth?: string
 }
 
 type ApiImageProductLine = {

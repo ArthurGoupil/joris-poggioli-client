@@ -77,6 +77,12 @@ export const DesignProductPresentation = ({
                   inches ({formatStringNumber(dimensions.diameter)} cm)
                 </div>
               )}
+              {dimensions.depth && (
+                <div>
+                  depth: {formatStringNumberToInches(dimensions.depth)} inches (
+                  {formatStringNumber(dimensions.depth)} cm)
+                </div>
+              )}
             </div>
           </div>
         )}
