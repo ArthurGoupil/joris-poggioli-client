@@ -45,7 +45,7 @@ export const ImageGridItem = ({
       priority
       fill
       sizes="(max-width: 768px) 50vw, 33vw"
-      quality={30}
+      quality={50}
       placeholderUrl={base64Thumbnail}
     />
     <div className={styles.imageTitleContainer}>

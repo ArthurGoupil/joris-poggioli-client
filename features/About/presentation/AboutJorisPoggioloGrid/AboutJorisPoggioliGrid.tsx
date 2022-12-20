@@ -41,7 +41,7 @@ export const AboutJorisPoggioliGrid = ({
               priority
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              quality={40}
+              quality={50}
               placeholderUrl={image.base64Thumbnail}
             />
           </div>
