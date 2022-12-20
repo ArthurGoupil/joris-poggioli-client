@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { styles } from './designProductGrid.css'
 import cc from 'classcat'
 import { Grid, GridProps } from '../../../../components/layout/Grid/Grid'

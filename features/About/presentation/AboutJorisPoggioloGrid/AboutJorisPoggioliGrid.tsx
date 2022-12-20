@@ -1,6 +1,5 @@
 import parse from 'html-react-parser'
 import { styles } from './aboutJorisPoggioliGrid.css'
-import Image from 'next/image'
 import { Image as ImageType } from '../../../shared/domain/entities/image'
 import { Grid } from '../../../../components/layout/Grid/Grid'
 import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
