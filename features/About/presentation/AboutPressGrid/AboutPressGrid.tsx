@@ -68,7 +68,7 @@ export const AboutPressGrid = ({
               alt={item.cover.alt ?? item.cover.title}
               title={item.name}
               subtitle={item.year}
-              href={item.pdf}
+              href={item.pdf ?? item.link ?? '#'}
               hasBorderRight={{
                 mobile: index === 0 || index % 2 === 0,
                 desktop: isFirstColumn.desktop || isSecondColumn.desktop,

@@ -9,6 +9,7 @@ type ApiAboutPressAcf = {
   year: string
   cover: ApiImage
   pdf: string
+  link: string
 }
 
 export type ApiAboutPress = {
@@ -21,7 +22,8 @@ export type AboutPress = {
   name: string
   year: string
   cover: Image
-  pdf: string
+  pdf: string | null
+  link: string | null
 }
 
 export const decodeAboutPress = async (
@@ -35,7 +37,8 @@ export const decodeAboutPress = async (
       name: item.acf.name,
       year: item.acf.year,
       cover: await decodeApiImage(item.acf.cover),
-      pdf: item.acf.pdf,
+      pdf: item.acf.pdf || null,
+      link: item.acf.link || null,
     })
   }
 
