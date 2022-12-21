@@ -19,10 +19,10 @@ export const useFixPageTransitionIssue =
         savePageStyles()
       }
 
-      router.events.on('routeChangeComplete', handleRouteChangeComplete)
+      router.events.on('beforeHistoryChange', handleRouteChangeComplete)
 
       return () => {
-        router.events.off('routeChangeComplete', handleRouteChangeComplete)
+        router.events.off('beforeHistoryChange', handleRouteChangeComplete)
       }
     }, [router])
 
