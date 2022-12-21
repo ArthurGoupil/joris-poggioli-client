@@ -68,11 +68,13 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
   // see: https://github.com/vercel/next.js/issues/17464
   const { removeFixStyles } = useFixPageTransitionIssue()
 
-  console.log(pageProps)
-
   const maintenanceMode = pageProps.maintenanceMode as MaintenanceMode
 
-  if (maintenanceMode.isOnMaintenance && maintenanceMode.background) {
+  if (
+    maintenanceMode &&
+    maintenanceMode.isOnMaintenance &&
+    maintenanceMode.background
+  ) {
     return <MaintenanceModeScreen {...maintenanceMode.background} />
   }
 
