@@ -25,6 +25,12 @@ const imageContainer = style({
   borderRight: themeVars.borders.default,
   borderBottom: themeVars.borders.default,
   display: 'flex',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderWidth: '1.5px',
+    },
+  },
 })
 
 const image = style({

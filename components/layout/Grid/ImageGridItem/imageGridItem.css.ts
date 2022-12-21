@@ -38,6 +38,7 @@ const containerBorderRightMobile = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
       borderRight: themeVars.borders.default,
+      borderWidth: '1.5px',
     },
   },
 })
@@ -46,6 +47,7 @@ const containerBorderBottomMobile = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
       borderBottom: themeVars.borders.default,
+      borderWidth: '1.5px',
     },
   },
 })

@@ -18,6 +18,7 @@ const imageContainer = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
       height: '70vw',
+      borderWidth: '1.5px',
     },
   },
 })
