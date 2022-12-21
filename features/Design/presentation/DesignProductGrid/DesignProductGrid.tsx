@@ -33,6 +33,7 @@ const gridItemFromPortraitColumn = ({
             styles.blankContainer,
             { [styles.hideBorderBottom]: hideBorderBottom.desktop },
             { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
+            { [styles.hideBorderRightMobile]: columnNumber === 2 },
           ])}
         />
       ),
@@ -48,6 +49,7 @@ const gridItemFromPortraitColumn = ({
             styles.imageContainer,
             { [styles.hideBorderBottom]: hideBorderBottom.desktop },
             { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
+            { [styles.hideBorderRightMobile]: columnNumber === 2 },
           ])}
         >
           <ImageWithPlaceholder
@@ -87,6 +89,7 @@ const getGridItemsFromImageLine = ({
           <div
             className={cc([
               styles.imageContainer,
+              styles.hideBorderRightMobile,
               { [styles.hideBorderBottom]: hideBorderBottom.desktop },
               { [styles.hideBorderBottomMobile]: hideBorderBottom.mobile },
             ])}

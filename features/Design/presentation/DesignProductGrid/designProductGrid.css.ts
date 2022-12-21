@@ -44,10 +44,19 @@ const hideBorderBottomMobile = style({
   },
 })
 
+const hideBorderRightMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: 'none',
+    },
+  },
+})
+
 export const styles = {
   blankContainer,
   hideBorderBottom,
   hideBorderBottomMobile,
+  hideBorderRightMobile,
   imageContainer,
   image,
 }
