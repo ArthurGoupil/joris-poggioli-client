@@ -16,10 +16,10 @@ export const MaintenanceModeScreen = ({
       src={url}
       alt={alt ?? title}
       className={styles.background}
-      priority
       fill
       quality={80}
       placeholderUrl={base64Thumbnail}
+      priority
     />
     <Image
       src={Logo}

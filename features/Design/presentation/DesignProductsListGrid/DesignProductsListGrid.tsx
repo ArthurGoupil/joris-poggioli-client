@@ -103,6 +103,7 @@ export const DesignProductsListGrid = ({
                   setLoadedImagesCount((count) => count + 1)
                 }
               }}
+              priority={index < 6}
             />
           ),
         }

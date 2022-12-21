@@ -37,11 +37,11 @@ export const AboutJorisPoggioliGrid = ({
               src={image.url}
               alt={image.alt ?? image.title}
               className={styles.image}
-              priority
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               quality={50}
               placeholderUrl={image.base64Thumbnail}
+              priority
             />
           </div>
         ),

@@ -54,11 +54,11 @@ const gridItemFromPortraitColumn = ({
             src={portraitColumn.image.url}
             alt={portraitColumn.image.alt ?? portraitColumn.image.title}
             className={styles.image}
-            priority
             fill
             sizes="(max-width: 768px) 50vw, 33vw"
             quality={90}
             placeholderUrl={portraitColumn.image.base64Thumbnail}
+            priority={lineNumber === 1}
           />
         </div>
       ),
@@ -95,11 +95,11 @@ const getGridItemsFromImageLine = ({
               src={line.landscapeImage.url}
               alt={line.landscapeImage.alt ?? line.landscapeImage.title}
               className={styles.image}
-              priority
               fill
               sizes="(max-width: 768px) 100vw, 66vw"
               quality={90}
               placeholderUrl={line.landscapeImage.base64Thumbnail}
+              priority={lineNumber === 1}
             />
           </div>
         ),

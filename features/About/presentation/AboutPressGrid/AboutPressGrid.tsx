@@ -78,6 +78,7 @@ export const AboutPressGrid = ({
                 desktop: index < firstlastRowItemIndex.desktop,
               }}
               hasTargetBlank
+              priority={index < 6}
             />
           ),
         }

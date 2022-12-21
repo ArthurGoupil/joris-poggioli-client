@@ -42,7 +42,6 @@ export const ImageGridItem = ({
       {...imageProps}
       alt={imageProps.alt}
       className={styles.image}
-      priority
       fill
       sizes="(max-width: 768px) 50vw, 33vw"
       quality={50}
