@@ -30,6 +30,7 @@ const logo = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  pointerEvents: 'none',
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
