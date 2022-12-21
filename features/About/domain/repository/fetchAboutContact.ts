@@ -8,7 +8,7 @@ import {
 export const fetchAboutContact = async (): Promise<AboutContact> => {
   try {
     const response = await axios.get<ApiAboutContact>(
-      `${process.env.WP_URL}/about-texts/251?per_page=100&_fields=id,acf`
+      `${process.env.WP_URL}/about-texts/251?_fields=id,acf`
     )
 
     return decodeAboutContact(response.data)

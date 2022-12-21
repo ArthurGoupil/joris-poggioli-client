@@ -10,7 +10,6 @@ export const gridBackgroundColorVar = createVar()
 const gridContainer = style({
   width: '100%',
   display: 'grid',
-  justifyContent: 'center',
   backgroundColor: gridBackgroundColorVar,
   gridTemplateColumns: gridTemplateColumnsVar,
   gridAutoRows: gridAutoRowsVar,

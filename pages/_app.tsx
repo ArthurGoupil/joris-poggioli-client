@@ -24,6 +24,8 @@ import { CounterLoader } from '../components/feedback/CounterLoader/CounterLoade
 import { LoadedImagesCountProvider } from '../context/loaded-images-count.context'
 import { Header } from '../components/layout/Header/Header'
 import SimpleBar from 'simplebar-react'
+import { MaintenanceMode } from '../features/MaintenanceMode/domain/entities/maintenanceMode'
+import { MaintenanceModeScreen } from '../features/MaintenanceMode/presentation/MaintenanceModeScreen/MaintenanceModeScreen'
 
 const myFont = localFont({
   src: [
@@ -65,6 +67,14 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
   // Next removes css modules too early on page transitions.
   // see: https://github.com/vercel/next.js/issues/17464
   const { removeFixStyles } = useFixPageTransitionIssue()
+
+  console.log(pageProps)
+
+  const maintenanceMode = pageProps.maintenanceMode as MaintenanceMode
+
+  if (maintenanceMode.isOnMaintenance && maintenanceMode.background) {
+    return <MaintenanceModeScreen {...maintenanceMode.background} />
+  }
 
   return (
     <div className={mainContainer}>

@@ -8,7 +8,6 @@ const comingSoon = style({
   fontWeight: 700,
   fontSize: themeVars.font.xl.size,
   lineHeight: themeVars.font.xl.lineHeight,
-  letterSpacing: '5px',
   flexGrow: 1,
 })
 

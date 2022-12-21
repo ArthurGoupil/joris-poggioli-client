@@ -37,6 +37,7 @@ type ApiDesignItemAcf = {
   numbered_and_signed_pieces: boolean
   material?: string
   dimensions?: Dimensions
+  images_by?: string
   technical_sheet?: string | false
   image_grid: ApiImage
   image_product_line_1: ApiImageProductLine
@@ -86,6 +87,7 @@ export type DesignItem = {
   hasNumberedSignedPieces: boolean
   material: string | null
   dimensions: Dimensions | null
+  imagesBy: string | null
   technicalSheet: string | null
   imageGrid: Image
   imagesProductPage: ImagesProductPage
@@ -93,13 +95,13 @@ export type DesignItem = {
   displayOnHome: boolean
 }
 
-const decodeImageProductLine = async (
+const decodeImageProductLine = (
   line: ApiImageProductLine
-): Promise<ImagesProductPage[number] | undefined> => {
+): ImagesProductPage[number] | undefined => {
   if (line.images_type === 'landscape') {
     return {
       imageType: 'landscape',
-      landscapeImage: await decodeApiImage(line.landscape_image),
+      landscapeImage: decodeApiImage(line.landscape_image),
     }
   } else if (line.images_type === 'portrait') {
     return {
@@ -109,7 +111,7 @@ const decodeImageProductLine = async (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: await decodeApiImage(
+              image: decodeApiImage(
                 line.portrait_images.first_column_image as ApiImage
               ),
             },
@@ -118,7 +120,7 @@ const decodeImageProductLine = async (
           ? { type: 'blank' }
           : {
               type: 'image',
-              image: await decodeApiImage(
+              image: decodeApiImage(
                 line.portrait_images.second_column_image as ApiImage
               ),
             },
@@ -134,10 +136,10 @@ export const decodeDesignItems = async (
   for (const apiItem of apiDesignItems) {
     const imagesProductPage: ImagesProductPage = []
 
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 10; i++) {
       const acfIndex = `image_product_line_${i}` as keyof ApiDesignItemAcf
       if (apiItem.acf[acfIndex]) {
-        const imageProductLine = await decodeImageProductLine(
+        const imageProductLine = decodeImageProductLine(
           apiItem.acf[acfIndex] as ApiImageProductLine
         )
         if (imageProductLine) {
@@ -158,8 +160,9 @@ export const decodeDesignItems = async (
       hasNumberedSignedPieces: apiItem.acf.numbered_and_signed_pieces,
       material: apiItem.acf.material ?? null,
       dimensions: apiItem.acf.dimensions ?? null,
+      imagesBy: apiItem.acf.images_by ?? null,
       technicalSheet: apiItem.acf.technical_sheet || null,
-      imageGrid: await decodeApiImage(apiItem.acf.image_grid),
+      imageGrid: decodeApiImage(apiItem.acf.image_grid),
       imagesProductPage,
       freeText: apiItem.acf.free_text ?? null,
       displayOnHome: apiItem.acf.home_display ?? false,

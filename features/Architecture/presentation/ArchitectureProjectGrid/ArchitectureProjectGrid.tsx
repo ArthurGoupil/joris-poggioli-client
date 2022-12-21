@@ -59,7 +59,8 @@ const gridItemFromPortraitColumn = ({
             {
               [styles.hideBorderBottom]: hideBorderBottom.desktop,
               [styles.hideBorderBottomMobile]: hideBorderBottom.mobile,
-              [styles.hideBorderRight]: columnNumber === 3,
+              [styles.hideBorderRight]: hideBorderRight.desktop,
+              [styles.hideBorderRightMobile]: hideBorderRight.mobile,
             },
           ])}
         >
@@ -99,6 +100,7 @@ const getGridItemsFromImageLine = ({
             className={cc([
               styles.imageContainer,
               styles.hideBorderRight,
+              styles.hideBorderRightMobile,
               { [styles.hideBorderBottom]: isLastLine },
               { [styles.hideBorderBottomMobile]: isLastLine },
             ])}
@@ -127,6 +129,7 @@ const getGridItemsFromImageLine = ({
         gridColumn: { mobile: '1', desktop: '1' },
         hideBorderBottom: {
           mobile:
+            isLastLine &&
             line.secondColumn.type === 'blank' &&
             line.thirdColumn.type === 'blank',
           desktop: isLastLine,
@@ -144,7 +147,7 @@ const getGridItemsFromImageLine = ({
         columnNumber: 2,
         gridColumn: { mobile: '1', desktop: '2 / 3' },
         hideBorderBottom: {
-          mobile: line.thirdColumn.type === 'blank',
+          mobile: isLastLine && line.thirdColumn.type === 'blank',
           desktop: isLastLine,
         },
         hideBorderRight: {
@@ -212,6 +215,7 @@ export const ArchitectureProjectGrid = ({
       <Grid
         gridAutoRows={{ mobile: 'auto', desktop: 'auto' }}
         gridTemplateColumns={{ mobile: '1', desktop: 'repeat(3, 1fr)' }}
+        hasBorderBottom={{ mobile: false, desktop: false }}
         gridItems={[
           {
             key: 'description',

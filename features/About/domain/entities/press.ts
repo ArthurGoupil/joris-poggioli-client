@@ -26,9 +26,9 @@ export type AboutPress = {
   link: string | null
 }
 
-export const decodeAboutPress = async (
+export const decodeAboutPress = (
   apiAboutPress: ApiAboutPress[]
-): Promise<AboutPress[]> => {
+): AboutPress[] => {
   const aboutPress = []
 
   for (const item of apiAboutPress) {
@@ -36,7 +36,7 @@ export const decodeAboutPress = async (
       id: item.id,
       name: item.acf.name,
       year: item.acf.year,
-      cover: await decodeApiImage(item.acf.cover),
+      cover: decodeApiImage(item.acf.cover),
       pdf: item.acf.pdf || null,
       link: item.acf.link || null,
     })

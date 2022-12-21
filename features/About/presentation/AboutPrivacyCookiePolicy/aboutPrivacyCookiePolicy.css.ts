@@ -7,8 +7,6 @@ const blankContainer = style({
 })
 
 const titleContainer = style({
-  marginLeft: '-33.33vw',
-  width: '33.33vw',
   paddingRight: '4vw',
 
   '@media': {

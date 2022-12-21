@@ -48,7 +48,7 @@ export const DesignProductsListGrid = ({
         mobile: 'repeat(2, 1fr)',
         desktop: 'repeat(3, 1fr)',
       }}
-      gridAutoRows={{ mobile: '55vw', desktop: '38vw' }}
+      gridAutoRows={{ mobile: '55vw', desktop: '40vw' }}
       gridBackgroundColor={themeVars.colors.background}
       hasBorderBottom={{ mobile: true, desktop: true }}
       gridItems={designItems.map((item, index) => {

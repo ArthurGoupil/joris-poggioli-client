@@ -12,26 +12,19 @@ const formatStringNumber = (number: string): string =>
 const formatStringNumberToInches = (number: string): string =>
   (Number(number) / 2.54).toFixed(2).replace(/\.?0+$/, '')
 
-type DesignProductPresentationProps = {
-  designItem: DesignItem
-}
-
 export const DesignProductPresentation = ({
-  designItem,
-}: DesignProductPresentationProps): JSX.Element => {
+  name,
+  year,
+  designBy,
+  madeIn,
+  hasNumberedSignedPieces,
+  material,
+  dimensions,
+  freeText,
+  technicalSheet,
+  imagesBy,
+}: DesignItem): JSX.Element => {
   const router = useRouter()
-
-  const {
-    name,
-    year,
-    designBy,
-    madeIn,
-    hasNumberedSignedPieces,
-    material,
-    dimensions,
-    freeText,
-    technicalSheet,
-  } = designItem
 
   const showFirstParagraph =
     year ?? designBy ?? madeIn ?? hasNumberedSignedPieces
@@ -84,6 +77,11 @@ export const DesignProductPresentation = ({
                 </div>
               )}
             </div>
+          </div>
+        )}
+        {imagesBy && (
+          <div className={styles.paragraph}>
+            IMAGES<div>{imagesBy}</div>
           </div>
         )}
         {freeText && <div>{parse(freeText)}</div>}

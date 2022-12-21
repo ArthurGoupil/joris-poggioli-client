@@ -147,7 +147,7 @@ const getGridItemsFromImageLines = (
           key: 'product-presention',
           // make sure this is the last item in mobile
           order: { mobile: '100', desktop: 'unset' },
-          component: <DesignProductPresentation designItem={designItem} />,
+          component: <DesignProductPresentation {...designItem} />,
           gridColumn: { mobile: '1 / 3', desktop: '3 / 4' },
         }
       )

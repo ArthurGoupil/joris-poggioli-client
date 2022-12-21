@@ -21,10 +21,10 @@ export type Image = {
   alt: string | null
 }
 
-export const decodeApiImage = async (
+export const decodeApiImage = (
   apiImage: ApiImage,
   withLargeSize = false
-): Promise<Image> => ({
+): Image => ({
   url: withLargeSize ? apiImage.sizes.large : apiImage.url,
   alt: apiImage.alt || null,
   title: apiImage.title,

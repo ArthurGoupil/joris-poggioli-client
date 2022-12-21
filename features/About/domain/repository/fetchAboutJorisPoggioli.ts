@@ -10,10 +10,10 @@ export const fetchAboutJorisPoggioli =
   async (): Promise<AboutJorisPoggioli> => {
     try {
       const textPromise = axios.get<ApiAboutJorisPoggioliText>(
-        `${process.env.WP_URL}/about-texts/246?per_page=100&_fields=id,acf`
+        `${process.env.WP_URL}/about-texts/246?_fields=id,acf`
       )
       const imagePromise = axios.get<ApiAboutJorisPoggioliImage>(
-        `${process.env.WP_URL}/about-images/249?per_page=100&_fields=id,acf`
+        `${process.env.WP_URL}/about-images/249?_fields=id,acf`
       )
 
       const responses = await Promise.all([textPromise, imagePromise])
