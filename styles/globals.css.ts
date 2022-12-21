@@ -31,9 +31,15 @@ globalStyle('body ::-webkit-scrollbar', {
 })
 
 globalStyle('main', {
-  minHeight: `calc(100% - ${themeVars.sizes.footerHeight})`,
+  minHeight: `calc(100% - ${themeVars.sizes.footerHeight.desktop})`,
   display: 'flex',
   flexDirection: 'column',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      minHeight: `calc(100% - ${themeVars.sizes.footerHeight.mobile})`,
+    },
+  },
 })
 
 globalStyle('h2', {

@@ -33,7 +33,7 @@ const paragraph = style({
 const technicalSheet = style({
   width: '100%',
   border: 'none',
-  backgroundColor: themeVars.colors.greyAccent,
+  backgroundColor: themeVars.colors.background,
   minHeight: '35px',
   cursor: 'pointer',
   borderBottom: themeVars.borders.default,

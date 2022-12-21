@@ -45,7 +45,7 @@ export const DesignProductPresentation = ({
         )}
         {material && (
           <div className={styles.paragraph}>
-            MATERIAL<div>{material}</div>
+            MATERIALS<div>{material}</div>
           </div>
         )}
         {dimensions && (

@@ -7,13 +7,15 @@ const footer = style({
   letterSpacing: '2vw',
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
   fontWeight: 700,
   backgroundColor: themeVars.colors.lightBackground,
   paddingTop: '2vw',
-  height: themeVars.sizes.footerHeight,
+  height: themeVars.sizes.footerHeight.desktop,
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
+      height: themeVars.sizes.footerHeight.mobile,
       paddingTop: themeVars.spacing.l,
       paddingBottom: themeVars.spacing.l,
     },
