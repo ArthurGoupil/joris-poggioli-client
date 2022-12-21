@@ -65,6 +65,7 @@ export const ImageWithPlaceholder = ({
               alt={imageProps.alt}
               className={cc([imageProps.className, styles.placeholder])}
               onLoadingComplete={(): void => setIsPlaceholderLoaded(true)}
+              priority
             />
           </m.div>
         )}
