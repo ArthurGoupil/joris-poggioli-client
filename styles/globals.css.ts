@@ -10,6 +10,10 @@ globalStyle('html, body', {
   margin: 0,
 })
 
+globalStyle('html, body', {
+  overflow: 'hidden',
+})
+
 globalStyle('body', {
   color: themeVars.colors.fontPrimary,
   backgroundColor: themeVars.colors.lightBackground,
