@@ -61,6 +61,20 @@ const priceInformation = style({
       backgroundColor: '#212121',
     },
   },
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      '::after': {
+        content: '',
+        height: '1px',
+        width: '100%',
+        backgroundColor: 'black',
+        position: 'absolute',
+        top: '100%',
+        zIndex: 1,
+      },
+    },
+  },
 })
 
 globalStyle(`${priceInformation} a`, {

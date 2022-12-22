@@ -54,26 +54,26 @@ export const DesignProductPresentation = ({
             <div>
               {dimensions.width && (
                 <div>
-                  width: {formatStringNumberToInches(dimensions.width)} inches (
-                  {formatStringNumber(dimensions.width)} cm)
+                  width: {formatStringNumber(dimensions.width)} cm (
+                  {formatStringNumberToInches(dimensions.width)} inches)
                 </div>
               )}
               {dimensions.height && (
                 <div>
-                  height: {formatStringNumberToInches(dimensions.height)} inches
-                  ({formatStringNumber(dimensions.height)} cm)
+                  height: {formatStringNumber(dimensions.height)} cm (
+                  {formatStringNumberToInches(dimensions.height)} inches)
                 </div>
               )}
               {dimensions.diameter && (
                 <div>
-                  diameter: {formatStringNumberToInches(dimensions.diameter)}{' '}
-                  inches ({formatStringNumber(dimensions.diameter)} cm)
+                  diameter: {formatStringNumber(dimensions.diameter)} cm inches
+                  ({formatStringNumberToInches(dimensions.diameter)} inches)
                 </div>
               )}
               {dimensions.depth && (
                 <div>
-                  depth: {formatStringNumberToInches(dimensions.depth)} inches (
-                  {formatStringNumber(dimensions.depth)} cm)
+                  depth: {formatStringNumber(dimensions.depth)} cm (
+                  {formatStringNumberToInches(dimensions.depth)} inches)
                 </div>
               )}
             </div>
