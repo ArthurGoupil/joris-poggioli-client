@@ -82,7 +82,6 @@ export const mainContainer = style({
 
 export const scrollbarView = style({
   flex: 1,
-  overflow: 'hidden',
 })
 
 globalStyle('.simplebar-content', {
