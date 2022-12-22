@@ -67,7 +67,8 @@ globalStyle('a', {
 })
 
 export const scrollbarContainer = style({
-  flexGrow: 1,
+  display: 'flex',
+  flex: 1,
   overflow: 'hidden',
 })
 
@@ -80,7 +81,7 @@ export const mainContainer = style({
 })
 
 export const scrollbarView = style({
-  height: '100%',
+  flex: 1,
   overflow: 'hidden',
 })
 
