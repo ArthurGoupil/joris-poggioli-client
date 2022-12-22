@@ -84,6 +84,12 @@ export const scrollbarView = style({
   flex: 1,
 })
 
+globalStyle('.simplebar-offset', {
+  display: 'flex',
+})
+globalStyle('.simplebar-content-wrapper', {
+  flex: 1,
+})
 globalStyle('.simplebar-content', {
   height: '100%',
 })

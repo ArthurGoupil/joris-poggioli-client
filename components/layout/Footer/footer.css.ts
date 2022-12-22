@@ -10,7 +10,7 @@ const footer = style({
   alignItems: 'center',
   fontWeight: 700,
   backgroundColor: themeVars.colors.lightBackground,
-  paddingTop: '2vw',
+  paddingTop: '5vw',
   height: themeVars.sizes.footerHeight.desktop,
 
   '@media': {
