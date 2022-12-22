@@ -13,6 +13,7 @@ const gridContainer = style({
   backgroundColor: gridBackgroundColorVar,
   gridTemplateColumns: gridTemplateColumnsVar,
   gridAutoRows: gridAutoRowsVar,
+  position: 'relative',
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
@@ -33,7 +34,15 @@ const containerBorderBottom = style({
 const containerBorderBottomMobile = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
-      borderBottom: themeVars.borders.default,
+      '::after': {
+        content: '',
+        height: '1px',
+        width: '100%',
+        backgroundColor: 'black',
+        position: 'absolute',
+        top: '100%',
+        zIndex: 1,
+      },
     },
   },
 })

@@ -28,7 +28,15 @@ const imageContainer = style({
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
-      borderWidth: '1.5px',
+      '::after': {
+        content: '',
+        height: '1px',
+        width: '100%',
+        backgroundColor: 'black',
+        position: 'absolute',
+        top: '100%',
+        zIndex: 1,
+      },
     },
   },
 })

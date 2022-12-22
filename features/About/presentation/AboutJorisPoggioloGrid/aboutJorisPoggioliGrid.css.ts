@@ -11,7 +11,6 @@ const textContainer = style({
       minHeight: `calc(100vh - ${themeVars.sizes.headerLogoHeight.mobile} - ${themeVars.sizes.navItemHeight.mobile})`,
       borderRight: 'none',
       padding: themeVars.spacing.xl,
-      borderWidth: '1.5px',
     },
   },
 })
@@ -27,7 +26,6 @@ const imageContainer = style({
       height: '90vh',
       borderTop: themeVars.borders.default,
       borderRight: 'none',
-      borderWidth: '1.5px',
     },
   },
 })

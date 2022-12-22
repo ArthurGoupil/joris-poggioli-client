@@ -13,6 +13,15 @@ const imageContainer = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
       borderRight: 'none',
+      '::after': {
+        content: '',
+        height: '1px',
+        width: '100%',
+        backgroundColor: 'black',
+        position: 'absolute',
+        top: '100%',
+        zIndex: 1,
+      },
     },
   },
 })
