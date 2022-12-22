@@ -36,7 +36,7 @@ export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
       {
         name: 'about',
         subItems: [
-          'joris poggioli',
+          'informations',
           'contact',
           'press',
           'privacy & cookie policy',
