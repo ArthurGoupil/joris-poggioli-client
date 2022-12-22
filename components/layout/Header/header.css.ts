@@ -8,6 +8,7 @@ const headerContainer = style({
   alignItems: 'center',
   backgroundColor: themeVars.colors.lightBackground,
   zIndex: 1,
+  flexShrink: 0,
 })
 
 const logoContainer = style({
