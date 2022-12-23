@@ -6,7 +6,8 @@ import {
 
 type ApiMaintenanceModeAcf = {
   is_on_maintenance: boolean
-  background: ApiImage
+  background_desktop: ApiImage
+  background_mobile: ApiImage
 }
 
 export type ApiMaintenanceMode = {
@@ -17,7 +18,8 @@ export type ApiMaintenanceMode = {
 export type MaintenanceMode = {
   id: number
   isOnMaintenance: boolean
-  background: Image | null
+  backgroundDesktop: Image | null
+  backgroundMobile: Image | null
 }
 
 export const decodeMaintenanceMode = (
@@ -25,5 +27,6 @@ export const decodeMaintenanceMode = (
 ): MaintenanceMode => ({
   id: apiMaintenance.id,
   isOnMaintenance: apiMaintenance.acf.is_on_maintenance,
-  background: decodeApiImage(apiMaintenance.acf.background),
+  backgroundDesktop: decodeApiImage(apiMaintenance.acf.background_desktop),
+  backgroundMobile: decodeApiImage(apiMaintenance.acf.background_mobile),
 })

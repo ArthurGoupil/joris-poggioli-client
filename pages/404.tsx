@@ -1,4 +1,3 @@
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { getBaseGetStaticProps } from '../dev-tools/static-props/getCustomGetStaticProps'
@@ -25,6 +24,6 @@ const FourZeroFourPage = (): JSX.Element => {
   )
 }
 
-export const getStaticProps: GetStaticProps = getBaseGetStaticProps()
+export const getStaticProps = getBaseGetStaticProps()
 
 export default FourZeroFourPage

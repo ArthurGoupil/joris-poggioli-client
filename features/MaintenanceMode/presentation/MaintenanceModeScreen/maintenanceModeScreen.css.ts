@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from '../../../../styles/theme.css'
+import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 
 const container = style({
   display: 'flex',
@@ -13,6 +13,21 @@ const container = style({
 const background = style({
   objectFit: 'cover',
   position: 'absolute',
+})
+
+const hideMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
+})
+const hideDesktop = style({
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      display: 'none',
+    },
+  },
 })
 
 const logo = style({
@@ -43,6 +58,8 @@ const link = style({
 export const styles = {
   container,
   background,
+  hideMobile,
+  hideDesktop,
   logo,
   text,
   link,

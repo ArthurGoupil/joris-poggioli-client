@@ -17,7 +17,8 @@ export const fetchMaintenanceMode = async (): Promise<MaintenanceMode> => {
     return {
       id: 0,
       isOnMaintenance: false,
-      background: null,
+      backgroundDesktop: null,
+      backgroundMobile: null,
     }
   }
 }
