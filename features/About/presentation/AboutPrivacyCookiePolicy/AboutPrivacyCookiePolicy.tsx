@@ -8,6 +8,7 @@ export const AboutPrivacyCookiePolicy = ({
   editorResponsiblePublication,
   publicationDirector,
   development,
+  graphicDesign,
   hosting,
   intellectualProperty,
   dataProtection,
@@ -60,6 +61,12 @@ export const AboutPrivacyCookiePolicy = ({
                 <div className={styles.textContainer}>
                   <div className={styles.sectionTitle}>{development.title}</div>
                   <div className={styles.text}>{parse(development.text)}</div>
+                </div>
+                <div className={styles.textContainer}>
+                  <div className={styles.sectionTitle}>
+                    {graphicDesign.title}
+                  </div>
+                  <div className={styles.text}>{parse(graphicDesign.text)}</div>
                 </div>
                 <div className={styles.textContainer}>
                   <div className={styles.sectionTitle}>{hosting.title}</div>

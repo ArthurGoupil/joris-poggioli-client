@@ -20,6 +20,7 @@ type AboutPrivacyCookiePolicyLabels =
   | 'contacts'
   | 'confidentialityPolitic'
   | 'CGV'
+  | 'graphicDesign'
 
 type AboutPrivacyCookiePolicyItem = { title: string; text: string }
 
@@ -43,6 +44,7 @@ const aboutPrivacyCookiePolicyMapping: Record<
   270: 'contacts',
   271: 'confidentialityPolitic',
   296: 'CGV',
+  454: 'graphicDesign',
 }
 
 export const decodeAboutPrivacyCookiePolicy = (
@@ -60,6 +62,7 @@ export const decodeAboutPrivacyCookiePolicy = (
     contacts: { title: '', text: '' },
     confidentialityPolitic: { title: '', text: '' },
     CGV: { title: '', text: '' },
+    graphicDesign: { title: '', text: '' },
   }
 
   apiAboutPrivacyCookiePolicy.forEach((item) => {
