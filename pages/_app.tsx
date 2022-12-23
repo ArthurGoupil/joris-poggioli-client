@@ -74,7 +74,8 @@ const AppWithProviders = ({ Component, pageProps }: AppProps): JSX.Element => {
     maintenanceMode &&
     maintenanceMode.isOnMaintenance &&
     maintenanceMode.backgroundDesktop &&
-    maintenanceMode.backgroundMobile
+    maintenanceMode.backgroundMobile &&
+    process.env.allowMaintenanceMode === 'true'
   ) {
     return (
       <MaintenanceModeScreen
