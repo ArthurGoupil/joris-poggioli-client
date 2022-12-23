@@ -27,6 +27,7 @@ export const fetchAboutPrivacyCookiePolicy =
         contacts: { title: '', text: '' },
         confidentialityPolitic: { title: '', text: '' },
         CGV: { title: '', text: '' },
+        graphicDesign: { title: '', text: '' },
       }
     }
   }
