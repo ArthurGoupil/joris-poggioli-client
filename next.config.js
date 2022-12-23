@@ -12,7 +12,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'jorispoggioli.com',
+        hostname: 'admin.jorispoggioli.com',
       },
     ],
   }
