@@ -55,6 +55,7 @@ const priceInformation = style({
   cursor: 'pointer',
   borderBottom: themeVars.borders.default,
   transition: 'background-color 300ms',
+  position: 'relative',
 
   selectors: {
     '&:hover': {
@@ -71,6 +72,7 @@ const priceInformation = style({
         backgroundColor: 'black',
         position: 'absolute',
         top: '100%',
+        left: 0,
         zIndex: 1,
       },
     },

@@ -35,6 +35,7 @@ const imageContainer = style({
         backgroundColor: 'black',
         position: 'absolute',
         top: '100%',
+        left: 0,
         zIndex: 1,
       },
     },
@@ -65,6 +66,9 @@ const hideBorderBottomMobile = style({
   '@media': {
     [`${mediaQueries.mobile}`]: {
       borderBottom: 'none',
+      '::after': {
+        display: 'none',
+      },
     },
   },
 })

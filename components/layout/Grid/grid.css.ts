@@ -41,6 +41,7 @@ const containerBorderBottomMobile = style({
         backgroundColor: 'black',
         position: 'absolute',
         top: '100%',
+        left: 0,
         zIndex: 1,
       },
     },
