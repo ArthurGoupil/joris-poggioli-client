@@ -61,7 +61,9 @@ export const [themeClass, themeVars] = createTheme({
   },
 })
 
+export const breakpoint = 768
+
 export const mediaQueries = {
-  mobile: 'screen and (max-width: 768px)',
-  desktop: 'screen and (min-width: 768px)',
+  mobile: `screen and (max-width: ${breakpoint}px)`,
+  desktop: `screen and (min-width: ${breakpoint}px)`,
 }

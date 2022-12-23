@@ -56,7 +56,6 @@ const text = style({
 
 const cgv = style({
   fontWeight: 700,
-  marginLeft: '-33.33vw',
 
   ':hover': {
     textDecoration: 'underline',

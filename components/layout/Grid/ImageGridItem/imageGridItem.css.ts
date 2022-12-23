@@ -80,6 +80,7 @@ const imageTitleContainer = style({
   opacity: 0,
   transition: 'opacity 0.3s',
   color: themeVars.colors.fontPrimary,
+  padding: '3vw',
 
   selectors: {
     [`${itemContainer}:hover &`]: {

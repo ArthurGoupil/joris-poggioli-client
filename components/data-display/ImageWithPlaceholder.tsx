@@ -32,6 +32,7 @@ export const ImageWithPlaceholder = ({
         style={assignInlineVars({
           [imageOpacityVar]: isImageLoaded ? '1' : '0',
         })}
+        loading="eager"
       />
       <AnimatePresence>
         {!isImageLoaded && (

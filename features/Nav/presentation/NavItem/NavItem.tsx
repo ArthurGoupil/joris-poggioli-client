@@ -1,11 +1,12 @@
 import { styles } from './navItem.css'
 import cc from 'classcat'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { slugify } from '../../../../components/layout/shared/logic/slugify'
 import { NavItemStatus } from '../../domain/entities/nav'
 import { AnimatePresence, m } from 'framer-motion'
 import { Responsive } from '../../../shared/domain/entities/responsive'
+import { breakpoint } from '../../../../styles/theme.css'
 
 const animationVariants = {
   initial: {
@@ -46,6 +47,14 @@ export const NavItem = ({
   hasBorderRight,
   hasBorderBottom,
 }: NavItemProps): JSX.Element => {
+  const [isMobile, setIsMobile] = React.useState(false)
+
+  useEffect(() => {
+    if (window.innerWidth <= breakpoint) {
+      setIsMobile(true)
+    }
+  }, [])
+
   const toggleShowSubItems = (): void => {
     if (shouldShowSubItems) {
       hideSubItems()
@@ -82,7 +91,7 @@ export const NavItem = ({
             [styles.navItemNameInactive]: status === 'inactive',
           },
         ])}
-        onClick={toggleShowSubItems}
+        onClick={isMobile ? toggleShowSubItems : undefined}
         role={status === 'active' ? 'heading' : 'navigation'}
         aria-level={1}
       >

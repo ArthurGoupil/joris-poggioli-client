@@ -4,6 +4,7 @@ import parse from 'html-react-parser'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import cc from 'classcat'
 
 const formatStringNumber = (number: string): string =>
   Number(number)
@@ -79,14 +80,14 @@ export const DesignProductPresentation = ({
             </div>
           </div>
         )}
-        {imagesBy && (
-          <div className={styles.paragraph}>
-            IMAGES<div>{imagesBy}</div>
-          </div>
-        )}
         {freeText && <div>{parse(freeText)}</div>}
       </div>
       <div>
+        {imagesBy && (
+          <div className={cc([styles.paragraph, styles.images])}>
+            IMAGES<div>{imagesBy}</div>
+          </div>
+        )}
         <Link href={`/design/${router.query.type}`} className={styles.back}>
           BACK
         </Link>

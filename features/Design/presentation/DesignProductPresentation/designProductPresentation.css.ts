@@ -87,6 +87,16 @@ const link = style({
   textDecoration: 'none',
 })
 
+const images = style({
+  margin: '0 2vw',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      margin: `0 ${themeVars.spacing.xl} ${themeVars.spacing.xl}`,
+    },
+  },
+})
+
 const back = style({
   textDecoration: 'underline',
   margin: '1vw 0 2vw 2vw',
@@ -108,5 +118,6 @@ export const styles = {
   paragraph,
   technicalSheet,
   priceInformation,
+  images,
   link,
 }
