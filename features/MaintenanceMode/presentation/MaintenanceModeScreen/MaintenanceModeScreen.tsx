@@ -5,6 +5,7 @@ import { styles } from './maintenanceModeScreen.css'
 import Logo from '../../../../public/logo.svg'
 import Link from 'next/link'
 import cc from 'classcat'
+import Head from 'next/head'
 
 type MaintenanceModeScreenProps = {
   backgroundDesktop: ImageProps
@@ -17,6 +18,11 @@ export const MaintenanceModeScreen = ({
 }: MaintenanceModeScreenProps): JSX.Element => {
   return (
     <div className={styles.container}>
+      <Head>
+        <title>JORIS POGGIOLI - Design & Architecture</title>
+        <meta name="description" content="Joris Poggioli" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       <ImageWithPlaceholder
         src={backgroundDesktop.url}
         alt={backgroundDesktop.alt ?? backgroundDesktop.title}

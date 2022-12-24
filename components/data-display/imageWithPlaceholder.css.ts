@@ -17,7 +17,7 @@ const placeholderContainer = style({
 const placeholder = style({
   opacity: placeholderOpacityVar,
   transition: 'opacity 300ms',
-  filter: 'blur(5px)',
+  filter: 'blur(10px)',
   height: '100%',
 })
 
