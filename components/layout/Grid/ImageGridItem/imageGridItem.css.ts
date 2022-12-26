@@ -72,6 +72,12 @@ const image = style({
 })
 
 const imageTitleContainer = style({
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  wordBreak: 'break-word',
   position: 'absolute',
   fontSize: '4vw',
   lineHeight: '4vw',

@@ -48,8 +48,8 @@ export const ImageGridItem = ({
       placeholderUrl={base64Thumbnail}
     />
     <div className={styles.imageTitleContainer}>
-      <div>{title.toUpperCase()}</div>
-      {subtitle && <div>{subtitle.toUpperCase()}</div>}
+      <p>{title.toUpperCase()}</p>
+      {subtitle && <p>{subtitle.toUpperCase()}</p>}
     </div>
   </Link>
 )
