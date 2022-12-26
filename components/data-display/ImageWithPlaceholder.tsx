@@ -30,7 +30,7 @@ export const ImageWithPlaceholder = ({
           setIsImageLoaded(true)
         }}
         style={assignInlineVars({
-          [imageOpacityVar]: isImageLoaded ? '1' : '0',
+          [imageOpacityVar]: isImageLoaded && isPlaceholderLoaded ? '1' : '0',
         })}
         loading="eager"
       />
