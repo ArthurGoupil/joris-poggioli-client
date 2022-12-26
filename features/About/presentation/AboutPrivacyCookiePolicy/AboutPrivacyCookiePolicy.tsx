@@ -30,7 +30,7 @@ export const AboutPrivacyCookiePolicy = ({
         gridItems={[
           {
             key: 'blank',
-            gridColumn: { mobile: 'auto', desktop: '1 / 2' },
+            gridColumn: { mobile: 'auto', desktop: '1' },
             isHidden: { mobile: true, desktop: false },
             component: <div className={styles.blankContainer} />,
           },

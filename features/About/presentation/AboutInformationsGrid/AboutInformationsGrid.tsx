@@ -20,7 +20,7 @@ export const AboutInformationsGrid = ({
     gridItems={[
       {
         key: 'text',
-        gridColumn: { mobile: '1', desktop: '1 / 2' },
+        gridColumn: { mobile: '1', desktop: '1' },
         component: (
           <div className={styles.textContainer}>
             <h2>INFORMATIONS</h2>
@@ -30,7 +30,7 @@ export const AboutInformationsGrid = ({
       },
       {
         key: 'image',
-        gridColumn: { mobile: '1', desktop: '2 / 3' },
+        gridColumn: { mobile: '1', desktop: '2' },
         component: (
           <div className={styles.imageContainer}>
             <ImageWithPlaceholder

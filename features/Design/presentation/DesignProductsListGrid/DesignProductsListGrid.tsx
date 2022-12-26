@@ -63,9 +63,9 @@ export const DesignProductsListGrid = ({
             return '1'
           }
           if (isSecondColumn.desktop) {
-            return '2 / 3'
+            return '2'
           }
-          return '3 / 4'
+          return '3'
         }
 
         const getMobileGridColumn = (): string => {

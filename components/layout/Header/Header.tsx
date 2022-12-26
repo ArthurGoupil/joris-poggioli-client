@@ -106,7 +106,7 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                 ),
               },
               {
-                gridColumn: { mobile: '1', desktop: '2 / 3' },
+                gridColumn: { mobile: '1', desktop: '2' },
                 key: 'architecture',
                 component: (
                   <NavItem
@@ -131,7 +131,7 @@ export const Header = ({ navItems }: HeaderProps): JSX.Element | null => {
                 ),
               },
               {
-                gridColumn: { mobile: '1', desktop: '3 / 4' },
+                gridColumn: { mobile: '1', desktop: '3' },
                 key: 'about',
                 component: (
                   <NavItem

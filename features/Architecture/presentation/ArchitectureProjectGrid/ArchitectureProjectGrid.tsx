@@ -145,7 +145,7 @@ const getGridItemsFromImageLine = ({
         portraitColumn: line.secondColumn,
         lineNumber,
         columnNumber: 2,
-        gridColumn: { mobile: '1', desktop: '2 / 3' },
+        gridColumn: { mobile: '1', desktop: '2' },
         hideBorderBottom: {
           mobile: isLastLine && line.thirdColumn.type === 'blank',
           desktop: isLastLine,
@@ -161,7 +161,7 @@ const getGridItemsFromImageLine = ({
         portraitColumn: line.thirdColumn,
         lineNumber,
         columnNumber: 3,
-        gridColumn: { mobile: '1', desktop: '3 / 4' },
+        gridColumn: { mobile: '1', desktop: '3' },
         hideBorderBottom: { mobile: true, desktop: isLastLine },
         hideBorderRight: { mobile: true, desktop: true },
       }),
@@ -219,7 +219,7 @@ export const ArchitectureProjectGrid = ({
         gridItems={[
           {
             key: 'description',
-            gridColumn: { mobile: '1', desktop: '3 / 4' },
+            gridColumn: { mobile: '1', desktop: '3' },
             component: (
               <div className={styles.text}>
                 <h2>{architectureProject.name.toUpperCase()}</h2>
