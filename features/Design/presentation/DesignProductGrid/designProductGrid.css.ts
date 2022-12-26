@@ -4,21 +4,45 @@ import { mediaQueries, themeVars } from '../../../../styles/theme.css'
 const blankContainer = style({
   width: '100%',
   height: '100%',
-  borderRight: themeVars.borders.default,
-  borderBottom: themeVars.borders.default,
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
 })
 
 const imageContainer = style({
   width: '100%',
   height: '100%',
   position: 'relative',
-  borderRight: themeVars.borders.default,
-  borderBottom: themeVars.borders.default,
+  display: 'flex',
+})
+
+const image = style({
+  width: '100%',
+  height: 'auto',
+  maxHeight: '100%',
+  objectFit: 'cover',
 
   '@media': {
     [`${mediaQueries.mobile}`]: {
-      height: '70vw',
+      objectFit: 'contain',
+    },
+  },
+})
 
+const hasBorderBottom = style({
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderBottom: themeVars.borders.default,
+    },
+  },
+})
+const hasBorderBottomMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderBottom: themeVars.borders.default,
       '::after': {
         content: '',
         height: '1px',
@@ -29,6 +53,21 @@ const imageContainer = style({
         left: 0,
         zIndex: 1,
       },
+    },
+  },
+})
+
+const hasBorderRight = style({
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderRight: themeVars.borders.default,
+    },
+  },
+})
+const hasBorderRightMobile = style({
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      borderRight: themeVars.borders.default,
       '::before': {
         content: '',
         height: '100%',
@@ -42,47 +81,12 @@ const imageContainer = style({
   },
 })
 
-const image = style({
-  width: '100%',
-  height: 'auto',
-  maxHeight: '100%',
-  objectFit: 'cover',
-})
-
-const hideBorderBottom = style({
-  '@media': {
-    [`${mediaQueries.desktop}`]: {
-      borderBottom: 'none',
-    },
-  },
-})
-const hideBorderBottomMobile = style({
-  '@media': {
-    [`${mediaQueries.mobile}`]: {
-      borderBottom: 'none',
-      '::after': {
-        display: 'none',
-      },
-    },
-  },
-})
-
-const hideBorderRightMobile = style({
-  '@media': {
-    [`${mediaQueries.mobile}`]: {
-      borderRight: 'none',
-      '::before': {
-        display: 'none',
-      },
-    },
-  },
-})
-
 export const styles = {
   blankContainer,
-  hideBorderBottom,
-  hideBorderBottomMobile,
-  hideBorderRightMobile,
+  hasBorderBottom,
+  hasBorderBottomMobile,
+  hasBorderRight,
+  hasBorderRightMobile,
   imageContainer,
   image,
 }
