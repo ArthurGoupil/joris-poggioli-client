@@ -29,6 +29,10 @@ type ApiArchitectureProjectAcf = {
   image_project_line_4: ApiImageProjectLine
   image_project_line_5: ApiImageProjectLine
   image_project_line_6: ApiImageProjectLine
+  image_project_line_7: ApiImageProjectLine
+  image_project_line_8: ApiImageProjectLine
+  image_project_line_9: ApiImageProjectLine
+  image_project_line_10: ApiImageProjectLine
 }
 
 export type ApiArchitectureProject = {

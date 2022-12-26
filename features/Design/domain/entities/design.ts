@@ -20,6 +20,8 @@ type ApiImageProductLine = {
     first_column_image: ApiImage | false
     second_column_type: 'image' | 'blank'
     second_column_image: ApiImage | false
+    third_column_type: 'image' | 'blank'
+    third_column_image: ApiImage | false
   }
 }
 
@@ -46,6 +48,10 @@ type ApiDesignItemAcf = {
   image_product_line_4?: ApiImageProductLine
   image_product_line_5?: ApiImageProductLine
   image_product_line_6?: ApiImageProductLine
+  image_product_line_7?: ApiImageProductLine
+  image_product_line_8?: ApiImageProductLine
+  image_product_line_9?: ApiImageProductLine
+  image_product_line_10?: ApiImageProductLine
   free_text?: string
   home_display?: boolean
 }
@@ -71,6 +77,7 @@ export type PortraitLine = {
   imageType: 'portrait'
   firstColumn: PortraitColumn
   secondColumn: PortraitColumn
+  thirdColumn: PortraitColumn | null
 }
 
 type ImagesProductPage = (LandscapeLine | PortraitLine)[]
@@ -101,7 +108,7 @@ const decodeImageProductLine = (
   if (line.images_type === 'landscape') {
     return {
       imageType: 'landscape',
-      landscapeImage: decodeApiImage(line.landscape_image),
+      landscapeImage: decodeApiImage(line.landscape_image, true),
     }
   } else if (line.images_type === 'portrait') {
     return {
@@ -112,7 +119,8 @@ const decodeImageProductLine = (
           : {
               type: 'image',
               image: decodeApiImage(
-                line.portrait_images.first_column_image as ApiImage
+                line.portrait_images.first_column_image as ApiImage,
+                true
               ),
             },
       secondColumn:
@@ -121,9 +129,21 @@ const decodeImageProductLine = (
           : {
               type: 'image',
               image: decodeApiImage(
-                line.portrait_images.second_column_image as ApiImage
+                line.portrait_images.second_column_image as ApiImage,
+                true
               ),
             },
+      thirdColumn: line.portrait_images.third_column_type
+        ? line.portrait_images.third_column_type === 'blank'
+          ? { type: 'blank' }
+          : {
+              type: 'image',
+              image: decodeApiImage(
+                line.portrait_images.third_column_image as ApiImage,
+                true
+              ),
+            }
+        : null,
     }
   }
 }
