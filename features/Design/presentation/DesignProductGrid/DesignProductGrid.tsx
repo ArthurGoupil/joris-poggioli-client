@@ -8,7 +8,7 @@ import { Responsive } from '../../../shared/domain/entities/responsive'
 import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
 
 type GridItemFromPortraitColumnProps = {
-  portraitColumn: PortraitColumn
+  portraitColumn: PortraitColumn | null
   lineNumber: number
   columnNumber: number
   gridColumn: Responsive<string>
@@ -31,14 +31,20 @@ const gridItemFromPortraitColumn = ({
     { [styles.hasBorderRightMobile]: hasBorderRight.mobile },
   ]
 
+  const blankItem = {
+    key: `blank-${lineNumber}-${columnNumber}`,
+    gridColumn,
+    component: (
+      <div className={cc([styles.blankContainer, ...borderClassNames])} />
+    ),
+  }
+
+  if (portraitColumn === null) {
+    return blankItem
+  }
+
   if (portraitColumn.type === 'blank') {
-    return {
-      key: `blank-${lineNumber}-${columnNumber}`,
-      gridColumn,
-      component: (
-        <div className={cc([styles.blankContainer, ...borderClassNames])} />
-      ),
-    }
+    return blankItem
   } else {
     return {
       key: portraitColumn.image.title,
@@ -114,9 +120,7 @@ const getGridItemsFromImageLine = ({
       },
     ]
   } else {
-    const portraitGridItems = []
-
-    portraitGridItems.push(
+    return [
       gridItemFromPortraitColumn({
         portraitColumn: line.firstColumn,
         lineNumber,
@@ -142,23 +146,16 @@ const getGridItemsFromImageLine = ({
             line.secondColumn.type === 'image' ||
             line.thirdColumn?.type === 'image',
         },
-      })
-    )
-
-    if (line.thirdColumn) {
-      portraitGridItems.push(
-        gridItemFromPortraitColumn({
-          portraitColumn: line.thirdColumn,
-          lineNumber,
-          columnNumber: 3,
-          gridColumn: { mobile: '1', desktop: '3' },
-          hasBorderBottom,
-          hasBorderRight: { mobile: false, desktop: false },
-        })
-      )
-    }
-
-    return portraitGridItems
+      }),
+      gridItemFromPortraitColumn({
+        portraitColumn: line.thirdColumn,
+        lineNumber,
+        columnNumber: 3,
+        gridColumn: { mobile: '1', desktop: '3' },
+        hasBorderBottom,
+        hasBorderRight: { mobile: false, desktop: false },
+      }),
+    ]
   }
 }
 
