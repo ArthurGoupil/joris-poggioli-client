@@ -7,7 +7,41 @@ import { themeVars } from '../../../../styles/theme.css'
 import { Responsive } from '../../../shared/domain/entities/responsive'
 import { ImageWithPlaceholder } from '../../../../components/data-display/ImageWithPlaceholder'
 
-type GridItemFromPortraitColumnProps = {
+type GetBorderClassNames = {
+  hasBorderBottom: Responsive<boolean>
+  hasBorderRight: Responsive<boolean>
+}
+
+const getBorderClassNames = ({
+  hasBorderBottom,
+  hasBorderRight,
+}: GetBorderClassNames): Record<string, boolean>[] => [
+  { [styles.hasBorderBottom]: hasBorderBottom.desktop },
+  { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
+  { [styles.hasBorderRight]: hasBorderRight.desktop },
+  { [styles.hasBorderRightMobile]: hasBorderRight.mobile },
+]
+
+type GetBlankItemProps = {
+  gridColumn: Responsive<string>
+  lineNumber: number
+  columnNumber: number
+  borderClassNames: Record<string, boolean>[]
+}
+
+const getBlankItem = ({
+  gridColumn,
+  lineNumber,
+  columnNumber,
+  borderClassNames,
+}: GetBlankItemProps): GridProps['gridItems'][number] => ({
+  key: `blank-${lineNumber}-${columnNumber}`,
+  gridColumn,
+  component: <div className={cc([styles.blankContainer, borderClassNames])} />,
+  isHidden: { mobile: true, desktop: false },
+})
+
+type GetGridItemFromPortraitColumnProps = {
   portraitColumn: PortraitColumn | null
   lineNumber: number
   columnNumber: number
@@ -16,28 +50,25 @@ type GridItemFromPortraitColumnProps = {
   hasBorderRight: Responsive<boolean>
 }
 
-const gridItemFromPortraitColumn = ({
+const getGridItemFromPortraitColumn = ({
   portraitColumn,
   lineNumber,
   columnNumber,
   gridColumn,
   hasBorderBottom,
   hasBorderRight,
-}: GridItemFromPortraitColumnProps): GridProps['gridItems'][number] => {
-  const borderClassNames = [
-    { [styles.hasBorderBottom]: hasBorderBottom.desktop },
-    { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
-    { [styles.hasBorderRight]: hasBorderRight.desktop },
-    { [styles.hasBorderRightMobile]: hasBorderRight.mobile },
-  ]
+}: GetGridItemFromPortraitColumnProps): GridProps['gridItems'][number] => {
+  const borderClassNames = getBorderClassNames({
+    hasBorderBottom,
+    hasBorderRight,
+  })
 
-  const blankItem = {
-    key: `blank-${lineNumber}-${columnNumber}`,
+  const blankItem = getBlankItem({
     gridColumn,
-    component: (
-      <div className={cc([styles.blankContainer, ...borderClassNames])} />
-    ),
-  }
+    lineNumber,
+    columnNumber,
+    borderClassNames,
+  })
 
   if (portraitColumn === null) {
     return blankItem
@@ -68,12 +99,14 @@ const gridItemFromPortraitColumn = ({
 }
 
 type GetGridItemsFromImageLineProps = {
+  designItem: DesignItem
   line: DesignItem['imagesProductPage'][number]
   lineNumber: number
   isLastLine: boolean
 }
 
 const getGridItemsFromImageLine = ({
+  designItem,
   line,
   lineNumber,
   isLastLine,
@@ -87,41 +120,67 @@ const getGridItemsFromImageLine = ({
     desktop: lineNumber > 2 ? false : true,
   }
 
+  const gridItems = []
+
+  const presentationItem = {
+    key: 'product-presention',
+    // make sure this is the last item in mobile
+    order: { mobile: '100', desktop: 'unset' },
+    component: <DesignProductPresentation {...designItem} />,
+    gridColumn: { mobile: '1 / 3', desktop: '3' },
+  }
+
   if (line.imageType === 'landscape') {
-    return [
-      {
-        key: line.landscapeImage.title,
-        gridColumn: {
-          mobile: '1 / 3',
-          desktop: lineNumber > 2 ? '1 / 4' : '1 / 3',
-        },
-        component: (
-          <div
-            className={cc([
-              styles.imageContainer,
-              { [styles.hasBorderBottom]: hasBorderBottom.desktop },
-              { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
-              { [styles.hasBorderRight]: hasBorderRightLandscape.desktop },
-              { [styles.hasBorderRightMobile]: hasBorderRightLandscape.mobile },
-            ])}
-          >
-            <ImageWithPlaceholder
-              src={line.landscapeImage.url}
-              alt={line.landscapeImage.alt ?? line.landscapeImage.title}
-              className={styles.image}
-              width={line.landscapeImage.width}
-              height={line.landscapeImage.height}
-              quality={90}
-              placeholderUrl={line.landscapeImage.base64Thumbnail}
-              priority={lineNumber === 1}
-            />
-          </div>
-        ),
+    gridItems.push({
+      key: line.landscapeImage.title,
+      gridColumn: {
+        mobile: '1 / 3',
+        desktop: lineNumber > 2 ? '1 / 4' : '1 / 3',
       },
-    ]
+      component: (
+        <div
+          className={cc([
+            styles.imageContainer,
+            { [styles.hasBorderBottom]: hasBorderBottom.desktop },
+            { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
+            { [styles.hasBorderRight]: hasBorderRightLandscape.desktop },
+            { [styles.hasBorderRightMobile]: hasBorderRightLandscape.mobile },
+          ])}
+        >
+          <ImageWithPlaceholder
+            src={line.landscapeImage.url}
+            alt={line.landscapeImage.alt ?? line.landscapeImage.title}
+            className={styles.image}
+            width={line.landscapeImage.width}
+            height={line.landscapeImage.height}
+            quality={90}
+            placeholderUrl={line.landscapeImage.base64Thumbnail}
+            priority={lineNumber === 1}
+          />
+        </div>
+      ),
+    })
+
+    if (lineNumber === 1) {
+      gridItems.push(presentationItem)
+    }
+
+    if (lineNumber === 2) {
+      gridItems.push(
+        getBlankItem({
+          gridColumn: { mobile: 'auto', desktop: '3' },
+          lineNumber,
+          columnNumber: 3,
+          borderClassNames: getBorderClassNames({
+            hasBorderBottom,
+            hasBorderRight: { mobile: false, desktop: false },
+          }),
+        })
+      )
+    }
   } else {
-    return [
-      gridItemFromPortraitColumn({
+    gridItems.push(
+      getGridItemFromPortraitColumn({
         portraitColumn: line.firstColumn,
         lineNumber,
         columnNumber: 1,
@@ -134,7 +193,7 @@ const getGridItemsFromImageLine = ({
             line.secondColumn.type === 'image',
         },
       }),
-      gridItemFromPortraitColumn({
+      getGridItemFromPortraitColumn({
         portraitColumn: line.secondColumn,
         lineNumber,
         columnNumber: 2,
@@ -146,72 +205,48 @@ const getGridItemsFromImageLine = ({
             line.secondColumn.type === 'image' ||
             line.thirdColumn?.type === 'image',
         },
-      }),
-      gridItemFromPortraitColumn({
-        portraitColumn: line.thirdColumn,
-        lineNumber,
-        columnNumber: 3,
-        gridColumn: { mobile: '1', desktop: '3' },
-        hasBorderBottom,
-        hasBorderRight: { mobile: false, desktop: false },
-      }),
-    ]
+      })
+    )
+
+    if (lineNumber === 1) {
+      gridItems.push(presentationItem)
+    } else {
+      gridItems.push(
+        getGridItemFromPortraitColumn({
+          portraitColumn: line.thirdColumn,
+          lineNumber,
+          columnNumber: 3,
+          gridColumn: { mobile: '1', desktop: '3' },
+          hasBorderBottom,
+          hasBorderRight: { mobile: false, desktop: false },
+        })
+      )
+    }
   }
+
+  return gridItems
 }
 
 const getGridItemsFromImageLines = (
   designItem: DesignItem
-): GridProps['gridItems'] => {
-  const gridItems: GridProps['gridItems'] = []
+): GridProps['gridItems'] =>
+  designItem.imagesProductPage.reduce<GridProps['gridItems']>(
+    (gridItems, imageLine, index) => {
+      const isLastLine = index === designItem.imagesProductPage.length - 1
 
-  designItem.imagesProductPage.forEach((imageLine, index) => {
-    const isLastLine = index === designItem.imagesProductPage.length - 1
-
-    if (index === 0) {
       gridItems.push(
         ...getGridItemsFromImageLine({
-          line: imageLine,
-          lineNumber: index + 1,
-          isLastLine,
-        }),
-        {
-          key: 'product-presention',
-          // make sure this is the last item in mobile
-          order: { mobile: '100', desktop: 'unset' },
-          component: <DesignProductPresentation {...designItem} />,
-          gridColumn: { mobile: '1 / 3', desktop: '3' },
-        }
-      )
-    } else if (index === 1) {
-      gridItems.push(
-        ...getGridItemsFromImageLine({
-          line: imageLine,
-          lineNumber: index + 1,
-          isLastLine,
-        }),
-        {
-          key: `blank-${index + 1}`,
-          component: (
-            <div
-              className={cc([styles.blankContainer, styles.hasBorderBottom])}
-            />
-          ),
-          isHidden: { mobile: true, desktop: false },
-          gridColumn: { mobile: 'auto', desktop: '3' },
-        }
-      )
-    } else {
-      gridItems.push(
-        ...getGridItemsFromImageLine({
+          designItem,
           line: imageLine,
           lineNumber: index + 1,
           isLastLine,
         })
       )
-    }
-  })
-  return gridItems
-}
+
+      return gridItems
+    },
+    []
+  )
 
 type DesignProductGridProps = {
   designItem: DesignItem
