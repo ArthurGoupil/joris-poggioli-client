@@ -25,7 +25,7 @@ export const ImageGridItem = ({
   hasTargetBlank,
   ...imageProps
 }: ImageGridItemProps): JSX.Element => {
-  const isLongTitle = title.split(' ')[0].length > 9
+  const isLongTitle = title.split(' ').some((word) => word.length > 9)
 
   return (
     <Link
