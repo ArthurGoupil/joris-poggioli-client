@@ -21,7 +21,7 @@ const imageContainer = style({
 
 const image = style({
   width: '100%',
-  height: 'auto',
+  height: '100%',
   maxHeight: '100%',
   objectFit: 'cover',
 

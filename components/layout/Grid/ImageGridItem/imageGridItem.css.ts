@@ -102,10 +102,16 @@ const imageTitleContainer = style({
   },
 })
 
+const smallTitle = style({
+  fontSize: '3.5vw',
+  lineHeight: '3.5vw',
+})
+
 export const styles = {
   itemContainer,
   image,
   imageTitleContainer,
+  smallTitle,
   containerBorderRight,
   containerBorderBottom,
   containerBorderRightMobile,
