@@ -47,7 +47,7 @@ export const ImageGridItem = ({
         className={styles.image}
         fill
         sizes="(max-width: 768px) 50vw, 33vw"
-        quality={50}
+        quality={70}
         placeholderUrl={base64Thumbnail}
       />
       <div

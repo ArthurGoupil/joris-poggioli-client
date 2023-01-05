@@ -8,6 +8,9 @@ export type ApiImage = {
     large: string
     'large-width': number
     'large-height': number
+    '1536x1536': string
+    '1536x1536-width': number
+    '1536x1536-height': number
   }
   alt?: string
 }
@@ -25,10 +28,10 @@ export const decodeApiImage = (
   apiImage: ApiImage,
   withLargeSize = false
 ): Image => ({
-  url: withLargeSize ? apiImage.sizes.large : apiImage.url,
+  url: withLargeSize ? apiImage.sizes['1536x1536'] : apiImage.url,
   alt: apiImage.alt || null,
   title: apiImage.title,
   base64Thumbnail: apiImage.sizes.thumbnail,
-  width: withLargeSize ? apiImage.sizes['large-width'] : apiImage.width,
-  height: withLargeSize ? apiImage.sizes['large-height'] : apiImage.height,
+  width: withLargeSize ? apiImage.sizes['1536x1536-width'] : apiImage.width,
+  height: withLargeSize ? apiImage.sizes['1536x1536-height'] : apiImage.height,
 })

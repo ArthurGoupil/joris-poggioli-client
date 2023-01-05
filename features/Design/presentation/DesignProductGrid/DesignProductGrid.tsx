@@ -88,7 +88,7 @@ const getGridItemFromPortraitColumn = ({
             className={styles.image}
             width={portraitColumn.image.width}
             height={portraitColumn.image.height}
-            quality={90}
+            quality={100}
             placeholderUrl={portraitColumn.image.base64Thumbnail}
             priority={lineNumber === 1}
           />
@@ -153,7 +153,7 @@ const getGridItemsFromImageLine = ({
             className={styles.image}
             width={line.landscapeImage.width}
             height={line.landscapeImage.height}
-            quality={90}
+            quality={100}
             placeholderUrl={line.landscapeImage.base64Thumbnail}
             priority={lineNumber === 1}
           />

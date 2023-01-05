@@ -34,5 +34,5 @@ export const decodeAboutInformations = (
 ): AboutInformations => ({
   id: apiAboutInformationsText.id,
   textContent: apiAboutInformationsText.acf.text_content,
-  image: decodeApiImage(apiAboutInformationsImage.acf.image),
+  image: decodeApiImage(apiAboutInformationsImage.acf.image, true),
 })

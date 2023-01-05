@@ -39,7 +39,7 @@ export const AboutInformationsGrid = ({
               className={styles.image}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              quality={50}
+              quality={100}
               placeholderUrl={image.base64Thumbnail}
               priority
             />

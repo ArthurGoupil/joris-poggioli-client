@@ -44,7 +44,7 @@ export const ArchitectureProjectsListGrid = ({
               className={styles.image}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              quality={50}
+              quality={70}
               placeholderUrl={project.imageList.base64Thumbnail}
               priority={index < 2}
             />

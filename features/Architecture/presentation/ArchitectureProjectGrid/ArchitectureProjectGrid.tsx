@@ -70,7 +70,7 @@ const gridItemFromPortraitColumn = ({
             className={styles.image}
             width={portraitColumn.image.width}
             height={portraitColumn.image.height}
-            quality={70}
+            quality={100}
             placeholderUrl={portraitColumn.image.base64Thumbnail}
             priority={lineNumber === 1}
           />
@@ -92,6 +92,8 @@ const getGridItemsFromImageLine = ({
   isLastLine,
 }: GetGridItemsFromImageLineProps): GridProps['gridItems'] => {
   if (line.imageType === 'landscape') {
+    console.log(line)
+
     return [
       {
         key: line.landscapeImage.title,
@@ -111,7 +113,7 @@ const getGridItemsFromImageLine = ({
               className={styles.image}
               width={line.landscapeImage.width}
               height={line.landscapeImage.height}
-              quality={70}
+              quality={100}
               placeholderUrl={line.landscapeImage.base64Thumbnail}
               priority={lineNumber === 1}
             />
