@@ -114,35 +114,38 @@ const decodeImageProductLine = (
     return {
       imageType: line.images_type,
       firstColumn:
-        line.portrait_images.first_column_type === 'blank'
-          ? { type: 'blank' }
-          : {
+        line.portrait_images.first_column_type === 'image' &&
+        line.portrait_images.first_column_image
+          ? {
               type: 'image',
               image: decodeApiImage(
                 line.portrait_images.first_column_image as ApiImage,
                 true
               ),
-            },
+            }
+          : { type: 'blank' },
       secondColumn:
-        line.portrait_images.second_column_type === 'blank'
-          ? { type: 'blank' }
-          : {
+        line.portrait_images.second_column_type === 'image' &&
+        line.portrait_images.second_column_image
+          ? {
               type: 'image',
               image: decodeApiImage(
                 line.portrait_images.second_column_image as ApiImage,
                 true
               ),
-            },
+            }
+          : { type: 'blank' },
       thirdColumn: line.portrait_images.third_column_type
-        ? line.portrait_images.third_column_type === 'blank'
-          ? { type: 'blank' }
-          : {
+        ? line.portrait_images.third_column_type === 'image' &&
+          line.portrait_images.third_column_image
+          ? {
               type: 'image',
               image: decodeApiImage(
                 line.portrait_images.third_column_image as ApiImage,
                 true
               ),
             }
+          : { type: 'blank' }
         : null,
     }
   }
