@@ -24,6 +24,7 @@ const DesignCategoryPage: NextPage<
       <DesignProductsListGrid
         gridKey={categoryParam}
         designItems={designItems}
+        disablePadding={categoryParam === 'collaborations'}
       />
     </div>
   )

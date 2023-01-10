@@ -9,11 +9,13 @@ import { DesignItem } from '../../domain/entities/design'
 type DesignProductsListGridProps = {
   designItems: DesignItem[]
   gridKey?: string
+  disablePadding?: boolean
 }
 
 export const DesignProductsListGrid = ({
   designItems,
   gridKey,
+  disablePadding = false,
 }: DesignProductsListGridProps): JSX.Element | null => {
   const firstlastRowItemIndex = {
     mobile:
@@ -104,6 +106,7 @@ export const DesignProductsListGrid = ({
                 }
               }}
               priority={index < 6}
+              disablePadding={disablePadding}
             />
           ),
         }

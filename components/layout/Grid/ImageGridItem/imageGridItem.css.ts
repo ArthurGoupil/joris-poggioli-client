@@ -71,6 +71,18 @@ const image = style({
   },
 })
 
+const disableImagePadding = style({
+  padding: 0,
+  objectFit: 'cover',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      padding: 0,
+      objectFit: 'cover',
+    },
+  },
+})
+
 const imageTitleContainer = style({
   width: '100%',
   height: '100%',
@@ -110,6 +122,7 @@ const smallTitle = style({
 export const styles = {
   itemContainer,
   image,
+  disableImagePadding,
   imageTitleContainer,
   smallTitle,
   containerBorderRight,

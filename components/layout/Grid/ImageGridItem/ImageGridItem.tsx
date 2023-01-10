@@ -13,6 +13,7 @@ type ImageGridItemProps = Omit<ImageProps, 'className'> & {
   hasBorderRight: Responsive<boolean>
   hasBorderBottom: Responsive<boolean>
   hasTargetBlank?: boolean
+  disablePadding?: boolean
 }
 
 export const ImageGridItem = ({
@@ -23,6 +24,7 @@ export const ImageGridItem = ({
   hasBorderRight,
   hasBorderBottom,
   hasTargetBlank,
+  disablePadding = false,
   ...imageProps
 }: ImageGridItemProps): JSX.Element => {
   const isLongTitle = title.split(' ').some((word) => word.length > 9)
@@ -44,7 +46,10 @@ export const ImageGridItem = ({
       <ImageWithPlaceholder
         {...imageProps}
         alt={imageProps.alt}
-        className={styles.image}
+        className={cc([
+          styles.image,
+          { [styles.disableImagePadding]: disablePadding },
+        ])}
         fill
         sizes="(max-width: 768px) 50vw, 33vw"
         quality={70}
