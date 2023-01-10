@@ -1,23 +1,23 @@
 import axios from 'axios'
 import {
-  AboutInformations,
-  ApiAboutInformationsImage,
-  ApiAboutInformationsText,
-  decodeAboutInformations,
-} from '../entities/informations'
+  AboutInformation,
+  ApiAboutInformationImage,
+  ApiAboutInformationText,
+  decodeAboutInformation,
+} from '../entities/information'
 
-export const fetchAboutInformations = async (): Promise<AboutInformations> => {
+export const fetchAboutInformation = async (): Promise<AboutInformation> => {
   try {
-    const textPromise = axios.get<ApiAboutInformationsText>(
+    const textPromise = axios.get<ApiAboutInformationText>(
       `${process.env.WP_URL}/about-texts/246?_fields=id,acf`
     )
-    const imagePromise = axios.get<ApiAboutInformationsImage>(
+    const imagePromise = axios.get<ApiAboutInformationImage>(
       `${process.env.WP_URL}/about-images/249?_fields=id,acf`
     )
 
     const responses = await Promise.all([textPromise, imagePromise])
 
-    return decodeAboutInformations(responses[0].data, responses[1].data)
+    return decodeAboutInformation(responses[0].data, responses[1].data)
   } catch (error) {
     console.error('About Joris Poggioli', error)
     return {

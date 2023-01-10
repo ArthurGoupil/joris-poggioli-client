@@ -92,8 +92,6 @@ const getGridItemsFromImageLine = ({
   isLastLine,
 }: GetGridItemsFromImageLineProps): GridProps['gridItems'] => {
   if (line.imageType === 'landscape') {
-    console.log(line)
-
     return [
       {
         key: line.landscapeImage.title,
