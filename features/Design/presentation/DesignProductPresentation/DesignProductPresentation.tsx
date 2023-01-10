@@ -19,6 +19,7 @@ export const DesignProductPresentation = ({
   designBy,
   madeIn,
   hasNumberedSignedPieces,
+  limitedEdtionOf,
   material,
   dimensions,
   leadTime,
@@ -43,6 +44,7 @@ export const DesignProductPresentation = ({
             {designBy && <div>design by {designBy}</div>}
             {madeIn && <div>made in {madeIn}</div>}
             {hasNumberedSignedPieces && <div>numbered and signed pieces</div>}
+            {limitedEdtionOf && <div>limited edition of {limitedEdtionOf}</div>}
           </div>
         )}
         {material && (

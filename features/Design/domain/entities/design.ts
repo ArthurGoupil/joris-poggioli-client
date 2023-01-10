@@ -37,6 +37,7 @@ type ApiDesignItemAcf = {
   design_by?: string
   made_in?: string
   numbered_and_signed_pieces: boolean
+  limited_edition_of?: string
   material?: string
   dimensions?: Dimensions
   lead_time?: string
@@ -93,6 +94,7 @@ export type DesignItem = {
   designBy: string | null
   madeIn: string | null
   hasNumberedSignedPieces: boolean
+  limitedEdtionOf: string | null
   material: string | null
   dimensions: Dimensions | null
   leadTime: string | null
@@ -183,6 +185,7 @@ export const decodeDesignItems = async (
       designBy: apiItem.acf.design_by ?? null,
       madeIn: apiItem.acf.made_in ?? null,
       hasNumberedSignedPieces: apiItem.acf.numbered_and_signed_pieces,
+      limitedEdtionOf: apiItem.acf.limited_edition_of ?? null,
       material: apiItem.acf.material ?? null,
       dimensions:
         apiItem.acf.dimensions &&
