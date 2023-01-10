@@ -39,6 +39,7 @@ type ApiDesignItemAcf = {
   numbered_and_signed_pieces: boolean
   material?: string
   dimensions?: Dimensions
+  lead_time?: string
   images_by?: string
   technical_sheet?: string | false
   image_grid: ApiImage
@@ -94,6 +95,7 @@ export type DesignItem = {
   hasNumberedSignedPieces: boolean
   material: string | null
   dimensions: Dimensions | null
+  leadTime: string | null
   imagesBy: string | null
   technicalSheet: string | null
   imageGrid: Image
@@ -183,6 +185,7 @@ export const decodeDesignItems = async (
       hasNumberedSignedPieces: apiItem.acf.numbered_and_signed_pieces,
       material: apiItem.acf.material ?? null,
       dimensions: apiItem.acf.dimensions ?? null,
+      leadTime: apiItem.acf.lead_time ?? null,
       imagesBy: apiItem.acf.images_by ?? null,
       technicalSheet: apiItem.acf.technical_sheet || null,
       imageGrid: decodeApiImage(apiItem.acf.image_grid),

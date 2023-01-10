@@ -21,6 +21,7 @@ export const DesignProductPresentation = ({
   hasNumberedSignedPieces,
   material,
   dimensions,
+  leadTime,
   freeText,
   technicalSheet,
   imagesBy,
@@ -78,6 +79,11 @@ export const DesignProductPresentation = ({
                 </div>
               )}
             </div>
+          </div>
+        )}
+        {leadTime && (
+          <div className={styles.paragraph}>
+            LEAD TIME<div>{leadTime}</div>
           </div>
         )}
         {freeText && <div>{parse(freeText)}</div>}
