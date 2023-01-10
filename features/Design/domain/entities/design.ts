@@ -184,7 +184,14 @@ export const decodeDesignItems = async (
       madeIn: apiItem.acf.made_in ?? null,
       hasNumberedSignedPieces: apiItem.acf.numbered_and_signed_pieces,
       material: apiItem.acf.material ?? null,
-      dimensions: apiItem.acf.dimensions ?? null,
+      dimensions:
+        apiItem.acf.dimensions &&
+        (apiItem.acf.dimensions.depth ||
+          apiItem.acf.dimensions.diameter ||
+          apiItem.acf.dimensions.height ||
+          apiItem.acf.dimensions.width)
+          ? apiItem.acf.dimensions
+          : null,
       leadTime: apiItem.acf.lead_time ?? null,
       imagesBy: apiItem.acf.images_by ?? null,
       technicalSheet: apiItem.acf.technical_sheet || null,
