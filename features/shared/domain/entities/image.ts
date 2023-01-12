@@ -26,7 +26,7 @@ export type Image = {
 
 export const decodeApiImage = (
   apiImage: ApiImage,
-  withLargeSize = false
+  withLargeSize = true
 ): Image => ({
   url: withLargeSize ? apiImage.sizes['1536x1536'] : apiImage.url,
   alt: apiImage.alt || null,
