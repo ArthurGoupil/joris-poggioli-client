@@ -8,6 +8,8 @@ import { slugify } from '../../../components/layout/shared/logic/slugify'
 import { getCustomGetStaticProps } from '../../../dev-tools/static-props/getCustomGetStaticProps'
 import { DesignProductsListGrid } from '../../../features/Design/presentation/DesignProductsListGrid/DesignProductsListGrid'
 
+const categoryWithoutPadding = ['collaborations', 'collections']
+
 const DesignCategoryPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ designItems }): JSX.Element => {
@@ -24,7 +26,7 @@ const DesignCategoryPage: NextPage<
       <DesignProductsListGrid
         gridKey={categoryParam}
         designItems={designItems}
-        disablePadding={categoryParam === 'collaborations'}
+        disablePadding={categoryWithoutPadding.includes(categoryParam)}
       />
     </div>
   )
