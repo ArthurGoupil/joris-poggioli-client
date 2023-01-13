@@ -24,13 +24,18 @@ export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
         name: 'design',
         subItems: results[0].data
           .filter((type) => type.acf.show_in_menu)
-          .map((project) => project.title.rendered.toUpperCase()),
+          .map((article) => ({
+            name: article.title.rendered.toUpperCase(),
+            hasPaddingInGrid: article.acf.padding_grid ?? false,
+          })),
       },
       {
         name: 'architecture',
         subItems: [
-          'ALL',
-          ...results[1].data.map((project) => project.acf.name.toUpperCase()),
+          { name: 'ALL' },
+          ...results[1].data.map((project) => ({
+            name: project.acf.name.toUpperCase(),
+          })),
         ],
       },
       {
@@ -40,7 +45,7 @@ export const fetchNavItems = async (): Promise<BaseNavItemsProps[]> => {
           'contact',
           'press',
           'privacy & cookie policy',
-        ],
+        ].map((item) => ({ name: item })),
       },
     ]
   } catch (error) {

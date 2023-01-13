@@ -8,7 +8,7 @@ export type ApiArchitectureProjectItem = {
 export type ApiDesignTypeItem = {
   id: number
   title: { rendered: string }
-  acf: { show_in_menu: boolean }
+  acf: { show_in_menu: boolean; padding_grid: boolean }
 }
 
 export type NavItemStatus = 'default' | 'active' | 'inactive'

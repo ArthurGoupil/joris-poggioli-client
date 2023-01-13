@@ -22,7 +22,7 @@ const animationVariants = {
 
 export type NavItemProps = {
   name: 'design' | 'architecture' | 'about'
-  subItems: string[]
+  subItems: { name: string; hasPaddingInGrid?: boolean }[]
   shouldShowSubItems: boolean
   status: NavItemStatus
   showSubItems: () => void
@@ -112,12 +112,12 @@ export const NavItem = ({
           >
             {subItems.map((subItem) => {
               const nameSlug = slugify(name)
-              const subItemSlug = slugify(subItem)
+              const subItemSlug = slugify(subItem.name)
 
               const href = `/${nameSlug}/${subItemSlug}`
 
               return (
-                <li key={subItem}>
+                <li key={subItem.name}>
                   <Link
                     href={href}
                     className={cc([
@@ -128,7 +128,7 @@ export const NavItem = ({
                       },
                     ])}
                   >
-                    {subItem.toUpperCase()}
+                    {subItem.name.toUpperCase()}
                   </Link>
                 </li>
               )

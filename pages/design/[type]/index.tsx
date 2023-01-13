@@ -8,11 +8,9 @@ import { slugify } from '../../../components/layout/shared/logic/slugify'
 import { getCustomGetStaticProps } from '../../../dev-tools/static-props/getCustomGetStaticProps'
 import { DesignProductsListGrid } from '../../../features/Design/presentation/DesignProductsListGrid/DesignProductsListGrid'
 
-const categoryWithoutPadding = ['collaborations', 'collections']
-
 const DesignCategoryPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
-> = ({ designItems }): JSX.Element => {
+> = ({ designItems, navItems }): JSX.Element => {
   const router = useRouter()
   const categoryParam = router.query.type as string
 
@@ -26,7 +24,11 @@ const DesignCategoryPage: NextPage<
       <DesignProductsListGrid
         gridKey={categoryParam}
         designItems={designItems}
-        disablePadding={categoryWithoutPadding.includes(categoryParam)}
+        disablePadding={
+          !navItems[0].subItems.find(
+            (subItem) => slugify(subItem.name) === slugify(categoryParam)
+          )?.hasPaddingInGrid
+        }
       />
     </div>
   )
@@ -38,7 +40,7 @@ export const getStaticPaths: GetStaticPaths<{
   const navItems = await fetchNavItems()
 
   const paths = navItems[0].subItems.map((item) => ({
-    params: { type: slugify(item) },
+    params: { type: slugify(item.name) },
   }))
 
   return {
