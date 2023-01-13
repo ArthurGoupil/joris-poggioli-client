@@ -102,7 +102,7 @@ const decodeImageProductLine = (
             ? {
                 type: 'image',
                 image: decodeApiImage(
-                  line.portrait_images.first_column_image as ApiImage,
+                  line.portrait_images.first_column_image,
                   true
                 ),
               }
@@ -113,7 +113,7 @@ const decodeImageProductLine = (
             ? {
                 type: 'image',
                 image: decodeApiImage(
-                  line.portrait_images.second_column_image as ApiImage,
+                  line.portrait_images.second_column_image,
                   true
                 ),
               }
@@ -124,7 +124,7 @@ const decodeImageProductLine = (
             ? {
                 type: 'image',
                 image: decodeApiImage(
-                  line.portrait_images.third_column_image as ApiImage,
+                  line.portrait_images.third_column_image,
                   true
                 ),
               }
