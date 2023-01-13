@@ -207,7 +207,9 @@ const getGridItemsFromImageLine = ({
             mobile: false,
             desktop:
               line.secondColumn.type === 'image' ||
-              line.thirdColumn?.type === 'image',
+              line.thirdColumn?.type === 'image' ||
+              lineNumber === 1 ||
+              lineNumber === 2,
           },
         })
       )
@@ -274,6 +276,8 @@ const getGridItemsFromImageLine = ({
           ),
         }
       )
+
+      break
     }
     case 'landscape-portrait': {
       gridItems.push(
@@ -289,7 +293,7 @@ const getGridItemsFromImageLine = ({
                 styles.imageContainer,
                 { [styles.hasBorderBottom]: hasBorderBottom.desktop },
                 { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
-                { [styles.hasBorderRight]: false },
+                { [styles.hasBorderRight]: true },
                 {
                   [styles.hasBorderRightMobile]: false,
                 },
@@ -320,6 +324,8 @@ const getGridItemsFromImageLine = ({
           },
         })
       )
+
+      break
     }
   }
 

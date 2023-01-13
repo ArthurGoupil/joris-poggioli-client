@@ -30,12 +30,12 @@ type ApiImageProductLine = {
     third_column_type: PortraitType
     third_column_image: ApiImage | false
   }
-  portrait_landscape_image: {
+  portrait_landscape_images: {
     portrait_image_type: PortraitType
     portrait_image: ApiImage | false
     landscape_image: ApiImage
   }
-  landscape_portrait_image: {
+  landscape_portrait_images: {
     landscape_image: ApiImage
     portrait_image_type: PortraitType
     portrait_image: ApiImage | false
@@ -191,18 +191,18 @@ const decodeImageProductLine = (
       return {
         imageType: 'portrait-landscape',
         portraitColumn:
-          line.portrait_landscape_image.portrait_image_type === 'image' &&
-          line.portrait_landscape_image.portrait_image
+          line.portrait_landscape_images.portrait_image_type === 'image' &&
+          line.portrait_landscape_images.portrait_image
             ? {
                 type: 'image',
                 image: decodeApiImage(
-                  line.portrait_landscape_image.portrait_image,
+                  line.portrait_landscape_images.portrait_image,
                   true
                 ),
               }
             : { type: 'blank' },
         landscapeImage: decodeApiImage(
-          line.portrait_landscape_image.landscape_image,
+          line.portrait_landscape_images.landscape_image,
           true
         ),
       }
@@ -210,18 +210,18 @@ const decodeImageProductLine = (
       return {
         imageType: 'landscape-portrait',
         portraitColumn:
-          line.landscape_portrait_image.portrait_image_type === 'image' &&
-          line.landscape_portrait_image.portrait_image
+          line.landscape_portrait_images.portrait_image_type === 'image' &&
+          line.landscape_portrait_images.portrait_image
             ? {
                 type: 'image',
                 image: decodeApiImage(
-                  line.landscape_portrait_image.portrait_image,
+                  line.landscape_portrait_images.portrait_image,
                   true
                 ),
               }
             : { type: 'blank' },
         landscapeImage: decodeApiImage(
-          line.landscape_portrait_image.landscape_image,
+          line.landscape_portrait_images.landscape_image,
           true
         ),
       }

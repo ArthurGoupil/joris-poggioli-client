@@ -27,11 +27,15 @@ export type Image = {
 export const decodeApiImage = (
   apiImage: ApiImage,
   withLargeSize = true
-): Image => ({
-  url: withLargeSize ? apiImage.sizes['1536x1536'] : apiImage.url,
-  alt: apiImage.alt || null,
-  title: apiImage.title,
-  base64Thumbnail: apiImage.sizes.thumbnail,
-  width: withLargeSize ? apiImage.sizes['1536x1536-width'] : apiImage.width,
-  height: withLargeSize ? apiImage.sizes['1536x1536-height'] : apiImage.height,
-})
+): Image => {
+  return {
+    url: withLargeSize ? apiImage.sizes['1536x1536'] : apiImage.url,
+    alt: apiImage.alt || null,
+    title: apiImage.title,
+    base64Thumbnail: apiImage.sizes.thumbnail,
+    width: withLargeSize ? apiImage.sizes['1536x1536-width'] : apiImage.width,
+    height: withLargeSize
+      ? apiImage.sizes['1536x1536-height']
+      : apiImage.height,
+  }
+}
