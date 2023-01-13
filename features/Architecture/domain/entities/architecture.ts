@@ -5,15 +5,17 @@ import {
   Image,
 } from '../../../shared/domain/entities/image'
 
+type PortraitType = 'image' | 'blank'
+
 type ApiImageProjectLine = {
   images_type: 'landscape' | 'portrait' | 'none'
   landscape_image: ApiImage
   portrait_images: {
-    first_column_type: 'image' | 'blank'
+    first_column_type: PortraitType
     first_column_image: ApiImage | false
-    second_column_type: 'image' | 'blank'
+    second_column_type: PortraitType
     second_column_image: ApiImage | false
-    third_column_type: 'image' | 'blank'
+    third_column_type: PortraitType
     third_column_image: ApiImage | false
   }
 }
@@ -52,7 +54,7 @@ type BlankColumn = {
 
 export type PortraitColumn = ImageColumn | BlankColumn
 
-export type PortraitLine = {
+type PortraitLine = {
   imageType: 'portrait'
   firstColumn: PortraitColumn
   secondColumn: PortraitColumn
@@ -85,48 +87,49 @@ export type ArchitectureProjectAll =
 const decodeImageProductLine = (
   line: ApiImageProjectLine
 ): ImagesProjectPage[number] | undefined => {
-  if (line.images_type === 'landscape') {
-    return {
-      imageType: 'landscape',
-      landscapeImage: decodeApiImage(line.landscape_image, true),
-    }
-  } else if (line.images_type === 'portrait') {
-    return {
-      imageType: line.images_type,
-      firstColumn:
-        line.portrait_images.first_column_type === 'image' &&
-        line.portrait_images.first_column_image
-          ? {
-              type: 'image',
-              image: decodeApiImage(
-                line.portrait_images.first_column_image as ApiImage,
-                true
-              ),
-            }
-          : { type: 'blank' },
-      secondColumn:
-        line.portrait_images.second_column_type === 'image' &&
-        line.portrait_images.second_column_image
-          ? {
-              type: 'image',
-              image: decodeApiImage(
-                line.portrait_images.second_column_image as ApiImage,
-                true
-              ),
-            }
-          : { type: 'blank' },
-      thirdColumn:
-        line.portrait_images.third_column_type === 'image' &&
-        line.portrait_images.third_column_image
-          ? {
-              type: 'image',
-              image: decodeApiImage(
-                line.portrait_images.third_column_image as ApiImage,
-                true
-              ),
-            }
-          : { type: 'blank' },
-    }
+  switch (line.images_type) {
+    case 'landscape':
+      return {
+        imageType: 'landscape',
+        landscapeImage: decodeApiImage(line.landscape_image, true),
+      }
+    case 'portrait':
+      return {
+        imageType: 'portrait',
+        firstColumn:
+          line.portrait_images.first_column_type === 'image' &&
+          line.portrait_images.first_column_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_images.first_column_image as ApiImage,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+        secondColumn:
+          line.portrait_images.second_column_type === 'image' &&
+          line.portrait_images.second_column_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_images.second_column_image as ApiImage,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+        thirdColumn:
+          line.portrait_images.third_column_type === 'image' &&
+          line.portrait_images.third_column_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_images.third_column_image as ApiImage,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+      }
   }
 }
 
