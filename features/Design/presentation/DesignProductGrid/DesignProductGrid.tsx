@@ -130,95 +130,194 @@ const getGridItemsFromImageLine = ({
     gridColumn: { mobile: '1 / 3', desktop: '3' },
   }
 
-  if (line.imageType === 'landscape') {
-    gridItems.push({
-      key: line.landscapeImage.title,
-      gridColumn: {
-        mobile: '1 / 3',
-        desktop: lineNumber > 2 ? '1 / 4' : '1 / 3',
-      },
-      component: (
-        <div
-          className={cc([
-            styles.imageContainer,
-            { [styles.hasBorderBottom]: hasBorderBottom.desktop },
-            { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
-            { [styles.hasBorderRight]: hasBorderRightLandscape.desktop },
-            { [styles.hasBorderRightMobile]: hasBorderRightLandscape.mobile },
-          ])}
-        >
-          <ImageWithPlaceholder
-            src={line.landscapeImage.url}
-            alt={line.landscapeImage.alt ?? line.landscapeImage.title}
-            className={styles.image}
-            width={line.landscapeImage.width}
-            height={line.landscapeImage.height}
-            quality={100}
-            placeholderUrl={line.landscapeImage.base64Thumbnail}
-            priority={lineNumber === 1}
-          />
-        </div>
-      ),
-    })
-
-    if (lineNumber === 1) {
-      gridItems.push(presentationItem)
-    }
-
-    if (lineNumber === 2) {
-      gridItems.push(
-        getBlankItem({
-          gridColumn: { mobile: 'auto', desktop: '3' },
-          lineNumber,
-          columnNumber: 3,
-          borderClassNames: getBorderClassNames({
-            hasBorderBottom,
-            hasBorderRight: { mobile: false, desktop: false },
-          }),
-        })
-      )
-    }
-  } else {
-    gridItems.push(
-      getGridItemFromPortraitColumn({
-        portraitColumn: line.firstColumn,
-        lineNumber,
-        columnNumber: 1,
-        gridColumn: { mobile: '1', desktop: '1' },
-        hasBorderBottom,
-        hasBorderRight: {
-          mobile: false,
-          desktop:
-            line.firstColumn.type === 'image' ||
-            line.secondColumn.type === 'image',
+  switch (line.imageType) {
+    case 'landscape': {
+      gridItems.push({
+        key: line.landscapeImage.title,
+        gridColumn: {
+          mobile: '1',
+          desktop: lineNumber > 2 ? '1 / 4' : '1 / 3',
         },
-      }),
-      getGridItemFromPortraitColumn({
-        portraitColumn: line.secondColumn,
-        lineNumber,
-        columnNumber: 2,
-        gridColumn: { mobile: '1', desktop: '2' },
-        hasBorderBottom,
-        hasBorderRight: {
-          mobile: false,
-          desktop:
-            line.secondColumn.type === 'image' ||
-            line.thirdColumn?.type === 'image',
-        },
+        component: (
+          <div
+            className={cc([
+              styles.imageContainer,
+              { [styles.hasBorderBottom]: hasBorderBottom.desktop },
+              { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
+              { [styles.hasBorderRight]: hasBorderRightLandscape.desktop },
+              { [styles.hasBorderRightMobile]: hasBorderRightLandscape.mobile },
+            ])}
+          >
+            <ImageWithPlaceholder
+              src={line.landscapeImage.url}
+              alt={line.landscapeImage.alt ?? line.landscapeImage.title}
+              className={styles.image}
+              width={line.landscapeImage.width}
+              height={line.landscapeImage.height}
+              quality={100}
+              placeholderUrl={line.landscapeImage.base64Thumbnail}
+              priority={lineNumber === 1}
+            />
+          </div>
+        ),
       })
-    )
 
-    if (lineNumber === 1) {
-      gridItems.push(presentationItem)
-    } else {
+      if (lineNumber === 1) {
+        gridItems.push(presentationItem)
+      }
+
+      if (lineNumber === 2) {
+        gridItems.push(
+          getBlankItem({
+            gridColumn: { mobile: 'auto', desktop: '3' },
+            lineNumber,
+            columnNumber: 3,
+            borderClassNames: getBorderClassNames({
+              hasBorderBottom,
+              hasBorderRight: { mobile: false, desktop: false },
+            }),
+          })
+        )
+      }
+
+      break
+    }
+    case 'portrait': {
       gridItems.push(
         getGridItemFromPortraitColumn({
-          portraitColumn: line.thirdColumn,
+          portraitColumn: line.firstColumn,
           lineNumber,
-          columnNumber: 3,
-          gridColumn: { mobile: '1', desktop: '3' },
+          columnNumber: 1,
+          gridColumn: { mobile: '1', desktop: '1' },
           hasBorderBottom,
-          hasBorderRight: { mobile: false, desktop: false },
+          hasBorderRight: {
+            mobile: false,
+            desktop:
+              line.firstColumn.type === 'image' ||
+              line.secondColumn.type === 'image',
+          },
+        }),
+        getGridItemFromPortraitColumn({
+          portraitColumn: line.secondColumn,
+          lineNumber,
+          columnNumber: 2,
+          gridColumn: { mobile: '1', desktop: '2' },
+          hasBorderBottom,
+          hasBorderRight: {
+            mobile: false,
+            desktop:
+              line.secondColumn.type === 'image' ||
+              line.thirdColumn?.type === 'image',
+          },
+        })
+      )
+
+      if (lineNumber === 1) {
+        gridItems.push(presentationItem)
+      } else {
+        gridItems.push(
+          getGridItemFromPortraitColumn({
+            portraitColumn: line.thirdColumn,
+            lineNumber,
+            columnNumber: 3,
+            gridColumn: { mobile: '1', desktop: '3' },
+            hasBorderBottom,
+            hasBorderRight: { mobile: false, desktop: false },
+          })
+        )
+      }
+
+      break
+    }
+    case 'portrait-landscape': {
+      gridItems.push(
+        getGridItemFromPortraitColumn({
+          portraitColumn: line.portraitColumn,
+          lineNumber,
+          columnNumber: 1,
+          gridColumn: { mobile: '1', desktop: '1' },
+          hasBorderBottom,
+          hasBorderRight: {
+            mobile: false,
+            desktop: true,
+          },
+        }),
+        {
+          key: line.landscapeImage.title,
+          gridColumn: {
+            mobile: '1',
+            desktop: '2 / 4',
+          },
+          component: (
+            <div
+              className={cc([
+                styles.imageContainer,
+                { [styles.hasBorderBottom]: hasBorderBottom.desktop },
+                { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
+                { [styles.hasBorderRight]: false },
+                {
+                  [styles.hasBorderRightMobile]: false,
+                },
+              ])}
+            >
+              <ImageWithPlaceholder
+                src={line.landscapeImage.url}
+                alt={line.landscapeImage.alt ?? line.landscapeImage.title}
+                className={styles.image}
+                width={line.landscapeImage.width}
+                height={line.landscapeImage.height}
+                quality={100}
+                placeholderUrl={line.landscapeImage.base64Thumbnail}
+                priority={lineNumber === 1}
+              />
+            </div>
+          ),
+        }
+      )
+    }
+    case 'landscape-portrait': {
+      gridItems.push(
+        {
+          key: line.landscapeImage.title,
+          gridColumn: {
+            mobile: '1',
+            desktop: '1 / 3',
+          },
+          component: (
+            <div
+              className={cc([
+                styles.imageContainer,
+                { [styles.hasBorderBottom]: hasBorderBottom.desktop },
+                { [styles.hasBorderBottomMobile]: hasBorderBottom.mobile },
+                { [styles.hasBorderRight]: false },
+                {
+                  [styles.hasBorderRightMobile]: false,
+                },
+              ])}
+            >
+              <ImageWithPlaceholder
+                src={line.landscapeImage.url}
+                alt={line.landscapeImage.alt ?? line.landscapeImage.title}
+                className={styles.image}
+                width={line.landscapeImage.width}
+                height={line.landscapeImage.height}
+                quality={100}
+                placeholderUrl={line.landscapeImage.base64Thumbnail}
+                priority={lineNumber === 1}
+              />
+            </div>
+          ),
+        },
+        getGridItemFromPortraitColumn({
+          portraitColumn: line.portraitColumn,
+          lineNumber,
+          columnNumber: 1,
+          gridColumn: { mobile: '1', desktop: '3 / 4' },
+          hasBorderBottom,
+          hasBorderRight: {
+            mobile: false,
+            desktop: true,
+          },
         })
       )
     }

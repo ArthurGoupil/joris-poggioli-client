@@ -12,16 +12,33 @@ type Dimensions = {
   depth?: string
 }
 
+type PortraitType = 'image' | 'blank'
+
 type ApiImageProductLine = {
-  images_type: 'landscape' | 'portrait' | 'none'
+  images_type:
+    | 'landscape'
+    | 'portrait'
+    | 'portrait-landscape'
+    | 'landscape-portrait'
+    | 'none'
   landscape_image: ApiImage
   portrait_images: {
-    first_column_type: 'image' | 'blank'
+    first_column_type: PortraitType
     first_column_image: ApiImage | false
-    second_column_type: 'image' | 'blank'
+    second_column_type: PortraitType
     second_column_image: ApiImage | false
-    third_column_type: 'image' | 'blank'
+    third_column_type: PortraitType
     third_column_image: ApiImage | false
+  }
+  portrait_landscape_image: {
+    portrait_image_type: PortraitType
+    portrait_image: ApiImage | false
+    landscape_image: ApiImage
+  }
+  landscape_portrait_image: {
+    landscape_image: ApiImage
+    portrait_image_type: PortraitType
+    portrait_image: ApiImage | false
   }
 }
 
@@ -75,14 +92,31 @@ type BlankColumn = {
 
 export type PortraitColumn = ImageColumn | BlankColumn
 
-export type PortraitLine = {
+type PortraitLine = {
   imageType: 'portrait'
   firstColumn: PortraitColumn
   secondColumn: PortraitColumn
   thirdColumn: PortraitColumn | null
 }
 
-type ImagesProductPage = (LandscapeLine | PortraitLine)[]
+type PortraitLandscapeLine = {
+  imageType: 'portrait-landscape'
+  portraitColumn: PortraitColumn
+  landscapeImage: Image
+}
+
+type LandscapePortraitLine = {
+  imageType: 'landscape-portrait'
+  landscapeImage: Image
+  portraitColumn: PortraitColumn
+}
+
+type ImagesProductPage = (
+  | LandscapeLine
+  | PortraitLine
+  | PortraitLandscapeLine
+  | LandscapePortraitLine
+)[]
 
 export type DesignItem = {
   id: string
@@ -109,49 +143,88 @@ export type DesignItem = {
 const decodeImageProductLine = (
   line: ApiImageProductLine
 ): ImagesProductPage[number] | undefined => {
-  if (line.images_type === 'landscape') {
-    return {
-      imageType: 'landscape',
-      landscapeImage: decodeApiImage(line.landscape_image, true),
-    }
-  } else if (line.images_type === 'portrait') {
-    return {
-      imageType: line.images_type,
-      firstColumn:
-        line.portrait_images.first_column_type === 'image' &&
-        line.portrait_images.first_column_image
-          ? {
-              type: 'image',
-              image: decodeApiImage(
-                line.portrait_images.first_column_image as ApiImage,
-                true
-              ),
-            }
-          : { type: 'blank' },
-      secondColumn:
-        line.portrait_images.second_column_type === 'image' &&
-        line.portrait_images.second_column_image
-          ? {
-              type: 'image',
-              image: decodeApiImage(
-                line.portrait_images.second_column_image as ApiImage,
-                true
-              ),
-            }
-          : { type: 'blank' },
-      thirdColumn: line.portrait_images.third_column_type
-        ? line.portrait_images.third_column_type === 'image' &&
-          line.portrait_images.third_column_image
-          ? {
-              type: 'image',
-              image: decodeApiImage(
-                line.portrait_images.third_column_image as ApiImage,
-                true
-              ),
-            }
-          : { type: 'blank' }
-        : null,
-    }
+  switch (line.images_type) {
+    case 'landscape':
+      return {
+        imageType: 'landscape',
+        landscapeImage: decodeApiImage(line.landscape_image, true),
+      }
+    case 'portrait':
+      return {
+        imageType: 'portrait',
+        firstColumn:
+          line.portrait_images.first_column_type === 'image' &&
+          line.portrait_images.first_column_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_images.first_column_image,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+        secondColumn:
+          line.portrait_images.second_column_type === 'image' &&
+          line.portrait_images.second_column_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_images.second_column_image,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+        thirdColumn: line.portrait_images.third_column_type
+          ? line.portrait_images.third_column_type === 'image' &&
+            line.portrait_images.third_column_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_images.third_column_image,
+                  true
+                ),
+              }
+            : { type: 'blank' }
+          : null,
+      }
+    case 'portrait-landscape':
+      return {
+        imageType: 'portrait-landscape',
+        portraitColumn:
+          line.portrait_landscape_image.portrait_image_type === 'image' &&
+          line.portrait_landscape_image.portrait_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.portrait_landscape_image.portrait_image,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+        landscapeImage: decodeApiImage(
+          line.portrait_landscape_image.landscape_image,
+          true
+        ),
+      }
+    case 'landscape-portrait':
+      return {
+        imageType: 'landscape-portrait',
+        portraitColumn:
+          line.landscape_portrait_image.portrait_image_type === 'image' &&
+          line.landscape_portrait_image.portrait_image
+            ? {
+                type: 'image',
+                image: decodeApiImage(
+                  line.landscape_portrait_image.portrait_image,
+                  true
+                ),
+              }
+            : { type: 'blank' },
+        landscapeImage: decodeApiImage(
+          line.landscape_portrait_image.landscape_image,
+          true
+        ),
+      }
   }
 }
 
