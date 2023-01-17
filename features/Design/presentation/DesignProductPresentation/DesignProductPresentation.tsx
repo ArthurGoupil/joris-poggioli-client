@@ -70,8 +70,8 @@ export const DesignProductPresentation = ({
               )}
               {dimensions.diameter && (
                 <div>
-                  diameter: {formatStringNumber(dimensions.diameter)} cm inches
-                  ({formatStringNumberToInches(dimensions.diameter)} inches)
+                  diameter: {formatStringNumber(dimensions.diameter)} cm (
+                  {formatStringNumberToInches(dimensions.diameter)} inches)
                 </div>
               )}
               {dimensions.depth && (
