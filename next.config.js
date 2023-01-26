@@ -7,7 +7,6 @@ const withVanillaExtract = createVanillaExtractPlugin()
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-
   images: {
     unoptimized: true,
     remotePatterns: [
