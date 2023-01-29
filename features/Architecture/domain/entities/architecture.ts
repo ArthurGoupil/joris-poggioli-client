@@ -1,67 +1,36 @@
 import { slugify } from '../../../../components/layout/shared/logic/slugify'
 import {
+  ApiLine,
+  decodeLine,
+  Lines,
+} from '../../../shared/domain/entities/lines'
+import {
   ApiImage,
   decodeApiImage,
   Image,
 } from '../../../shared/domain/entities/image'
-
-type PortraitType = 'image' | 'blank'
-
-type ApiImageProjectLine = {
-  images_type: 'landscape' | 'portrait' | 'none'
-  landscape_image: ApiImage
-  portrait_images: {
-    first_column_type: PortraitType
-    first_column_image: ApiImage | false
-    second_column_type: PortraitType
-    second_column_image: ApiImage | false
-    third_column_type: PortraitType
-    third_column_image: ApiImage | false
-  }
-}
 
 type ApiArchitectureProjectAcf = {
   name: string
   coming_soon: boolean
   image_list: ApiImage
   description: string
-  image_project_line_1: ApiImageProjectLine
-  image_project_line_2: ApiImageProjectLine
-  image_project_line_3: ApiImageProjectLine
-  image_project_line_4: ApiImageProjectLine
-  image_project_line_5: ApiImageProjectLine
-  image_project_line_6: ApiImageProjectLine
-  image_project_line_7: ApiImageProjectLine
-  image_project_line_8: ApiImageProjectLine
-  image_project_line_9: ApiImageProjectLine
-  image_project_line_10: ApiImageProjectLine
+  image_project_line_1: ApiLine
+  image_project_line_2: ApiLine
+  image_project_line_3: ApiLine
+  image_project_line_4: ApiLine
+  image_project_line_5: ApiLine
+  image_project_line_6: ApiLine
+  image_project_line_7: ApiLine
+  image_project_line_8: ApiLine
+  image_project_line_9: ApiLine
+  image_project_line_10: ApiLine
 }
 
 export type ApiArchitectureProject = {
   id: number
   acf: ApiArchitectureProjectAcf
 }
-
-type LandscapeLine = {
-  imageType: 'landscape'
-  landscapeImage: Image
-}
-
-type ImageColumn = { type: 'image'; image: Image }
-type BlankColumn = {
-  type: 'blank'
-}
-
-export type PortraitColumn = ImageColumn | BlankColumn
-
-type PortraitLine = {
-  imageType: 'portrait'
-  firstColumn: PortraitColumn
-  secondColumn: PortraitColumn
-  thirdColumn: PortraitColumn
-}
-
-type ImagesProjectPage = (LandscapeLine | PortraitLine)[]
 
 export type ArchitectureProject = {
   id: number
@@ -70,7 +39,7 @@ export type ArchitectureProject = {
   slug: string
   imageList: Image
   description: string
-  imagesProjectPage: ImagesProjectPage
+  imagesProjectPage: Lines
 }
 
 type ComingSoonArchitectureProject = {
@@ -83,55 +52,6 @@ type ComingSoonArchitectureProject = {
 export type ArchitectureProjectAll =
   | ArchitectureProject
   | ComingSoonArchitectureProject
-
-const decodeImageProductLine = (
-  line: ApiImageProjectLine
-): ImagesProjectPage[number] | undefined => {
-  switch (line.images_type) {
-    case 'landscape':
-      return {
-        imageType: 'landscape',
-        landscapeImage: decodeApiImage(line.landscape_image, true),
-      }
-    case 'portrait':
-      return {
-        imageType: 'portrait',
-        firstColumn:
-          line.portrait_images.first_column_type === 'image' &&
-          line.portrait_images.first_column_image
-            ? {
-                type: 'image',
-                image: decodeApiImage(
-                  line.portrait_images.first_column_image,
-                  true
-                ),
-              }
-            : { type: 'blank' },
-        secondColumn:
-          line.portrait_images.second_column_type === 'image' &&
-          line.portrait_images.second_column_image
-            ? {
-                type: 'image',
-                image: decodeApiImage(
-                  line.portrait_images.second_column_image,
-                  true
-                ),
-              }
-            : { type: 'blank' },
-        thirdColumn:
-          line.portrait_images.third_column_type === 'image' &&
-          line.portrait_images.third_column_image
-            ? {
-                type: 'image',
-                image: decodeApiImage(
-                  line.portrait_images.third_column_image,
-                  true
-                ),
-              }
-            : { type: 'blank' },
-      }
-  }
-}
 
 export const decodeArchitectureProjects = (
   apiArchitectureProjects: ApiArchitectureProject[]
@@ -147,14 +67,14 @@ export const decodeArchitectureProjects = (
         isComingSoon: true,
       })
     } else {
-      const imagesProjectPage: ImagesProjectPage = []
+      const imagesProjectPage: Lines = []
 
       for (let i = 1; i <= 10; i++) {
         const acfIndex =
           `image_project_line_${i}` as keyof ApiArchitectureProjectAcf
         if (apiProject.acf[acfIndex]) {
-          const imageProductLine = decodeImageProductLine(
-            apiProject.acf[acfIndex] as ApiImageProjectLine
+          const imageProductLine = decodeLine(
+            apiProject.acf[acfIndex] as ApiLine
           )
           if (imageProductLine) {
             imagesProjectPage.push(imageProductLine)
