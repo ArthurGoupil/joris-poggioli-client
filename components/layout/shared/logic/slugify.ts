@@ -1,7 +1,7 @@
 export const slugify = (string: string): string =>
   string
-    .replaceAll(' ', '-')
+    .replace(/ /g, '-')
     .normalize('NFD')
-    .replaceAll(/[\u0300-\u036f]/g, '')
-    .replaceAll('&-', '')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/&-/g, '')
     .toLowerCase()
