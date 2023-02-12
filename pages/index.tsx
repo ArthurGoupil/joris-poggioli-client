@@ -10,12 +10,22 @@ import {
   imageHomeContainer,
   imageHomeDesktop,
   imageHomeMobile,
+  mobileHeightVar,
 } from '../styles/globals.css'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   designItems,
   homeImage,
 }): JSX.Element => {
+  const [clientHeight, setClientHeight] = React.useState<string>()
+
+  React.useEffect(() => {
+    if (window.innerHeight) {
+      setClientHeight(`${window.innerHeight}px`)
+    }
+  }, [])
+
   return (
     <div>
       <Head>
@@ -24,7 +34,12 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <link rel="icon" href="/favicon.png" />
       </Head>
       <>
-        <div className={imageHomeContainer}>
+        <div
+          className={imageHomeContainer}
+          style={assignInlineVars({
+            [mobileHeightVar]: clientHeight ?? '100vh',
+          })}
+        >
           <Image
             className={imageHomeDesktop}
             src={homeImage.desktopImage.url}

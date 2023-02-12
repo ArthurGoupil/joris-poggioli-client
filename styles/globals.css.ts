@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css'
+import { createVar, globalStyle, style } from '@vanilla-extract/css'
 import { mediaQueries, themeVars } from './theme.css'
 
 globalStyle('*', {
@@ -132,8 +132,11 @@ export const notFound = style({
   textAlign: 'center',
 })
 
+export const mobileHeightVar = createVar()
+
 export const imageHomeContainer = style({
   width: '100%',
+  position: 'relative',
 
   '@media': {
     [`${mediaQueries.desktop}`]: {
@@ -141,6 +144,7 @@ export const imageHomeContainer = style({
       height: `calc(100vh - ${themeVars.sizes.headerLogoHeight.desktop} - ${themeVars.sizes.navItemHeight.desktop})`,
     },
     [`${mediaQueries.mobile}`]: {
+      height: `calc(${mobileHeightVar} - ${themeVars.sizes.headerLogoHeight.mobile} - ${themeVars.sizes.navItemHeight.mobile})`,
       '::after': {
         content: '',
         height: '1px',
@@ -151,7 +155,6 @@ export const imageHomeContainer = style({
         left: 0,
         zIndex: 1,
       },
-      height: `calc(100vh - ${themeVars.sizes.headerLogoHeight.mobile} - ${themeVars.sizes.navItemHeight.mobile})`,
     },
   },
 })
