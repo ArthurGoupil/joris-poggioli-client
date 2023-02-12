@@ -23,6 +23,10 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   React.useEffect(() => {
     const updateHeight = (): void => setClientHeight(`${window.innerHeight}px`)
 
+    if (window.innerHeight) {
+      updateHeight()
+    }
+
     window.addEventListener('resize', updateHeight)
     window.addEventListener('orientationchange', updateHeight)
 
