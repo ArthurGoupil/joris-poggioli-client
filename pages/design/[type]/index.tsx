@@ -10,9 +10,22 @@ import { DesignProductsListGrid } from '../../../features/Design/presentation/De
 
 const DesignCategoryPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
-> = ({ designItems, navItems }): JSX.Element => {
+> = ({ designItems, navItems }): JSX.Element | null => {
   const router = useRouter()
-  const categoryParam = router.query.type as string
+
+  const previousCategoryParamRef = React.useRef<string>()
+  const categoryParam =
+    router.query.type?.toString() ?? previousCategoryParamRef.current
+
+  React.useEffect(() => {
+    if (router.query.type) {
+      previousCategoryParamRef.current = router.query.type.toString()
+    }
+  }, [router.query.type])
+
+  if (!categoryParam) {
+    return null
+  }
 
   return (
     <div>
