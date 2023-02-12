@@ -4,25 +4,55 @@ import { fetchDesignItems } from '../features/Design/domain/repository/fetchDesi
 import { getCustomGetStaticProps } from '../dev-tools/static-props/getCustomGetStaticProps'
 import React from 'react'
 import { DesignProductsListGrid } from '../features/Design/presentation/DesignProductsListGrid/DesignProductsListGrid'
+import { fetchHomeImage } from '../features/Design/domain/repository/fetchHomeImage'
+import Image from 'next/image'
+import {
+  imageHomeContainer,
+  imageHomeDesktop,
+  imageHomeMobile,
+} from '../styles/globals.css'
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   designItems,
-}): JSX.Element => (
-  <div>
-    <Head>
-      <title>JORIS POGGIOLI</title>
-      <meta name="description" content="Design & Architecture" />
-      <link rel="icon" href="/favicon.png" />
-    </Head>
-    <DesignProductsListGrid designItems={designItems} />
-  </div>
-)
+  homeImage,
+}): JSX.Element => {
+  return (
+    <div>
+      <Head>
+        <title>JORIS POGGIOLI</title>
+        <meta name="description" content="Design & Architecture" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+      <>
+        <div className={imageHomeContainer}>
+          <Image
+            className={imageHomeDesktop}
+            src={homeImage.desktopImage.url}
+            alt={homeImage.desktopImage.alt ?? homeImage.desktopImage.title}
+            width={homeImage.desktopImage.width}
+            height={homeImage.desktopImage.height}
+          />
+          <Image
+            className={imageHomeMobile}
+            src={homeImage.mobileImage.url}
+            alt={homeImage.mobileImage.alt ?? homeImage.mobileImage.title}
+            width={homeImage.mobileImage.width}
+            height={homeImage.mobileImage.height}
+          />
+        </div>
+        <DesignProductsListGrid designItems={designItems} />
+      </>
+    </div>
+  )
+}
 
 export const getStaticProps = getCustomGetStaticProps(async () => {
   const designItems = await fetchDesignItems()
+  const homeImage = await fetchHomeImage()
 
   return {
     designItems: designItems.filter((item) => item.displayOnHome),
+    homeImage,
   }
 })
 

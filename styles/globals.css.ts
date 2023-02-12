@@ -131,3 +131,51 @@ export const notFound = style({
   fontWeight: 700,
   textAlign: 'center',
 })
+
+export const imageHomeContainer = style({
+  width: '100%',
+
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      borderBottom: themeVars.borders.default,
+      height: `calc(100vh - ${themeVars.sizes.headerLogoHeight.desktop} - ${themeVars.sizes.navItemHeight.desktop})`,
+    },
+    [`${mediaQueries.mobile}`]: {
+      '::after': {
+        content: '',
+        height: '1px',
+        width: '100%',
+        backgroundColor: 'black',
+        position: 'absolute',
+        top: '100%',
+        left: 0,
+        zIndex: 1,
+      },
+      height: `calc(100vh - ${themeVars.sizes.headerLogoHeight.mobile} - ${themeVars.sizes.navItemHeight.mobile})`,
+    },
+  },
+})
+
+export const imageHomeDesktop = style({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+
+  '@media': {
+    [`${mediaQueries.mobile}`]: {
+      display: 'none',
+    },
+  },
+})
+
+export const imageHomeMobile = style({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+
+  '@media': {
+    [`${mediaQueries.desktop}`]: {
+      display: 'none',
+    },
+  },
+})
