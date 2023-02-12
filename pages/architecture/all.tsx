@@ -12,10 +12,7 @@ const ArchitectureProjectsPage: NextPage<
   <div>
     <Head>
       <title>JORIS POGGIOLI - Architecture</title>
-      <meta
-        name="description"
-        content="Joris Poggioli - Architecture projects"
-      />
+      <meta name="description" content="All architecture projects" />
       <link rel="icon" href="/favicon.png" />
     </Head>
     {architectureProjects && architectureProjects.length > 0 && (

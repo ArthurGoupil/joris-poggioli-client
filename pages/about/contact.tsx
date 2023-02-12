@@ -10,7 +10,7 @@ const AboutContactPage: NextPage<
   <>
     <Head>
       <title>JORIS POGGIOLI - Contact</title>
-      <meta name="description" content="Joris Poggioli - Contact" />
+      <meta name="description" content="Contact page" />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutContactText contactText={contactText} />

@@ -10,7 +10,7 @@ const AboutPressPage: NextPage<
   <>
     <Head>
       <title>JORIS POGGIOLI - Press</title>
-      <meta name="description" content="Joris Poggioli - Press" />
+      <meta name="description" content="Press articles" />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutPressGrid pressItems={pressItems} />

@@ -10,7 +10,7 @@ const JorisPoggioliPage: NextPage<
   <div>
     <Head>
       <title>JORIS POGGIOLI - Informations</title>
-      <meta name="description" content="Joris Poggioli - Informations" />
+      <meta name="description" content="Informations page" />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutInformationGrid textContent={textContent} image={image} />

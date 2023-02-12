@@ -10,10 +10,7 @@ const AboutPrivacyCookiePolicyPage: NextPage<
   <>
     <Head>
       <title>JORIS POGGIOLI - Privacy & Cookie policy</title>
-      <meta
-        name="description"
-        content="Joris Poggioli - Privacy & Cookie policy"
-      />
+      <meta name="description" content="Privacy & Cookie policy page" />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutPrivacyCookiePolicy {...props} />

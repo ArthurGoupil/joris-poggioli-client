@@ -13,7 +13,7 @@ const DesignArticlePage: NextPage<
       <>
         <Head>
           <title>JORIS POGGIOLI - Design</title>
-          <meta name="description" content="Joris Poggioli - Design item" />
+          <meta name="description" content={`${designItem.name} design item`} />
           <link rel="icon" href="/favicon.png" />
         </Head>
         <DesignProductGrid designItem={designItem} />

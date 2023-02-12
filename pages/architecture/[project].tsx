@@ -15,7 +15,7 @@ const ArchitectureProjectPage: NextPage<
           <title>JORIS POGGIOLI - Architecture</title>
           <meta
             name="description"
-            content="Joris Poggioli - Architecture project"
+            content={`Architecture ${architectureProject.name} project page`}
           />
           <link rel="icon" href="/favicon.png" />
         </Head>

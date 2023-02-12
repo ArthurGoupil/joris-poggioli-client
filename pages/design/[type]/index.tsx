@@ -18,7 +18,7 @@ const DesignCategoryPage: NextPage<
     <div>
       <Head>
         <title>JORIS POGGIOLI - Design</title>
-        <meta name="description" content="Joris Poggioli - Design items" />
+        <meta name="description" content="All design items" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <DesignProductsListGrid
