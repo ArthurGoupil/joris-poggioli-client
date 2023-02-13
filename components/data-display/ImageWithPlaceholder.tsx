@@ -22,6 +22,7 @@ export const ImageWithPlaceholder = ({
     <>
       <Image
         {...imageProps}
+        className={cc([styles.image, imageProps.className])}
         alt={imageProps.alt}
         onLoadingComplete={(img): void => {
           if (imageProps.onLoadingComplete) {

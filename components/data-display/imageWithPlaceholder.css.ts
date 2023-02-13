@@ -4,7 +4,7 @@ export const imageOpacityVar = createVar()
 export const placeholderOpacityVar = createVar()
 
 const image = style({
-  opacity: imageOpacityVar,
+  opacity: `${imageOpacityVar} !important`,
   transition: 'opacity 300ms',
 })
 

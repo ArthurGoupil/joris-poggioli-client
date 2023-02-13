@@ -5,7 +5,6 @@ import { getCustomGetStaticProps } from '../dev-tools/static-props/getCustomGetS
 import React from 'react'
 import { DesignProductsListGrid } from '../features/Design/presentation/DesignProductsListGrid/DesignProductsListGrid'
 import { fetchHomeImage } from '../features/Design/domain/repository/fetchHomeImage'
-import Image from 'next/image'
 import {
   imageHomeContainer,
   imageHomeDesktop,
@@ -13,6 +12,7 @@ import {
   mobileHeightVar,
 } from '../styles/globals.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { ImageWithPlaceholder } from '../components/data-display/ImageWithPlaceholder'
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   designItems,
@@ -50,19 +50,19 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             [mobileHeightVar]: clientHeight ?? '100vh',
           })}
         >
-          <Image
+          <ImageWithPlaceholder
             className={imageHomeDesktop}
             src={homeImage.desktopImage.url}
             alt={homeImage.desktopImage.alt ?? homeImage.desktopImage.title}
-            width={homeImage.desktopImage.width}
-            height={homeImage.desktopImage.height}
+            fill
+            placeholderUrl={homeImage.desktopImage.base64Thumbnail}
           />
-          <Image
+          <ImageWithPlaceholder
             className={imageHomeMobile}
             src={homeImage.mobileImage.url}
             alt={homeImage.mobileImage.alt ?? homeImage.mobileImage.title}
-            width={homeImage.mobileImage.width}
-            height={homeImage.mobileImage.height}
+            fill
+            placeholderUrl={homeImage.mobileImage.base64Thumbnail}
           />
         </div>
         <DesignProductsListGrid designItems={designItems} />
