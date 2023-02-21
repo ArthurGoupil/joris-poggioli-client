@@ -10,7 +10,10 @@ const AboutPressPage: NextPage<
   <>
     <Head>
       <title>JORIS POGGIOLI - Press</title>
-      <meta name="description" content="Press articles" />
+      <meta
+        name="description"
+        content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
+      />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutPressGrid pressItems={pressItems} />

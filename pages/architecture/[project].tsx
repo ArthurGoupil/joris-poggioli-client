@@ -15,7 +15,7 @@ const ArchitectureProjectPage: NextPage<
           <title>JORIS POGGIOLI - Architecture</title>
           <meta
             name="description"
-            content={`Architecture ${architectureProject.name} project page`}
+            content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
           />
           <link rel="icon" href="/favicon.png" />
         </Head>

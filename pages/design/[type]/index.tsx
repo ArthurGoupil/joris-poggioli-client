@@ -31,7 +31,10 @@ const DesignCategoryPage: NextPage<
     <div>
       <Head>
         <title>JORIS POGGIOLI - Design</title>
-        <meta name="description" content="All design items" />
+        <meta
+          name="description"
+          content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
+        />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <DesignProductsListGrid

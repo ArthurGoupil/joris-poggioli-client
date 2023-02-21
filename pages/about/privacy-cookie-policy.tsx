@@ -10,7 +10,10 @@ const AboutPrivacyCookiePolicyPage: NextPage<
   <>
     <Head>
       <title>JORIS POGGIOLI - Privacy & Cookie policy</title>
-      <meta name="description" content="Privacy & Cookie policy page" />
+      <meta
+        name="description"
+        content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
+      />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutPrivacyCookiePolicy {...props} />

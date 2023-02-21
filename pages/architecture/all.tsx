@@ -12,7 +12,10 @@ const ArchitectureProjectsPage: NextPage<
   <div>
     <Head>
       <title>JORIS POGGIOLI - Architecture</title>
-      <meta name="description" content="All architecture projects" />
+      <meta
+        name="description"
+        content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
+      />
       <link rel="icon" href="/favicon.png" />
     </Head>
     {architectureProjects && architectureProjects.length > 0 && (

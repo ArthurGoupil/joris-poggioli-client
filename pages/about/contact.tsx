@@ -10,7 +10,10 @@ const AboutContactPage: NextPage<
   <>
     <Head>
       <title>JORIS POGGIOLI - Contact</title>
-      <meta name="description" content="Contact page" />
+      <meta
+        name="description"
+        content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
+      />
       <link rel="icon" href="/favicon.png" />
     </Head>
     <AboutContactText contactText={contactText} />
