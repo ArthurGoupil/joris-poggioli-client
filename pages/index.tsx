@@ -39,8 +39,11 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   return (
     <div>
       <Head>
-        <title>JORIS POGGIOLI</title>
-        <meta name="description" content="Design & Architecture" />
+        <title>JORIS POGGIOLI - Design & Architecture</title>
+        <meta
+          name="description"
+          content="Discover the work of Joris Poggioli, architect and designer, member of AD100."
+        />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <>
